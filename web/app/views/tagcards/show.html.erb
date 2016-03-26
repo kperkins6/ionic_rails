@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @tagcard.user_id %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @tagcard.tags %>
+</p>
+
+<p>
+  <strong>Bcard:</strong>
+  <%= @tagcard.bcard_id %>
+</p>
+
+<%= link_to 'Edit', edit_tagcard_path(@tagcard) %> |
+<%= link_to 'Back', tagcards_path %>

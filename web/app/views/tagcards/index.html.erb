@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Tagcards</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>User</th>
+      <th>Tags</th>
+      <th>Bcard</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @tagcards.each do |tagcard| %>
+      <tr>
+        <td><%= tagcard.user_id %></td>
+        <td><%= tagcard.tags %></td>
+        <td><%= tagcard.bcard_id %></td>
+        <td><%= link_to 'Show', tagcard %></td>
+        <td><%= link_to 'Edit', edit_tagcard_path(tagcard) %></td>
+        <td><%= link_to 'Destroy', tagcard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Tagcard', new_tagcard_path %>

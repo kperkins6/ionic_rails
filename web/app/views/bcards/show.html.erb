@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Address:</strong>
+  <%= @bcard.address %>
+</p>
+
+<p>
+  <strong>Linkedin:</strong>
+  <%= @bcard.linkedin %>
+</p>
+
+<p>
+  <strong>Facebook:</strong>
+  <%= @bcard.facebook %>
+</p>
+
+<p>
+  <strong>Twitter:</strong>
+  <%= @bcard.twitter %>
+</p>
+
+<p>
+  <strong>Instagram:</strong>
+  <%= @bcard.instagram %>
+</p>
+
+<p>
+  <strong>Pinterest:</strong>
+  <%= @bcard.pinterest %>
+</p>
+
+<p>
+  <strong>First name:</strong>
+  <%= @bcard.first_name %>
+</p>
+
+<p>
+  <strong>Last name:</strong>
+  <%= @bcard.last_name %>
+</p>
+
+<%= link_to 'Edit', edit_bcard_path(@bcard) %> |
+<%= link_to 'Back', bcards_path %>
