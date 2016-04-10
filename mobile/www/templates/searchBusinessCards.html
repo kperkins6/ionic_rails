@@ -6,7 +6,15 @@
                 <input type="search" placeholder="Enter Name">
             </label>
         </form>
-        <ion-list>
+        <div class="list card" ng-repeat="bcard in bcards">
+              <div class="item item-divider">{{bcard.name}}</div>
+              <div class="item item-body">
+                <div>
+                  {{bcard.company}}
+                </div>
+              </div>
+        </div>
+        <!-- <ion-list>
             <ion-item ui-sref="viewBusinessCard">Item 1</ion-item>
             <ion-item ui-sref="viewBusinessCard">Item 2</ion-item>
             <ion-item ui-sref="viewBusinessCard">Item 3</ion-item>
@@ -15,6 +23,6 @@
             <ion-item ui-sref="viewBusinessCard">Item 1</ion-item>
             <ion-item ui-sref="viewBusinessCard">Item 2</ion-item>
             <ion-item ui-sref="viewBusinessCard">Item 3</ion-item>
-        </ion-list>
+        </ion-list> -->
     </ion-content>
 </ion-view>

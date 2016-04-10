@@ -4,7 +4,10 @@ angular.module('app.services', [])
 
 }])
 
+.factory('Bcard', function($resource) {
+  return $resource("http://localhost:3000/bcards/:id.json");
+})
+
 .service('BlankService', [function(){
 
 }]);
-
