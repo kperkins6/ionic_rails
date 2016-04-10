@@ -12,9 +12,6 @@ angular.module('app.controllers', [])
 
 })
 
-// .controller('loginctrl', function($scope) {
-//
-// })
 .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
 $scope.data = {};
 

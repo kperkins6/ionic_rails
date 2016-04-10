@@ -1,6 +1,7 @@
 angular.module('app.routes', ['ionicUIRouter'])
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
+// .config(function($stateProvider, $urlRouterProvider) {
   $httpProvider.defaults.withCredentials = true;
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -160,7 +161,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
 $urlRouterProvider.otherwise('/login');
-// $urlRouterProvider.otherwise('/page18');
+// $urlRouterProvider.otherwise('/page8');
 
 
 

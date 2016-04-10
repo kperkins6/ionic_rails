@@ -24,6 +24,7 @@ gem 'jbuilder', '~> 2.0'
 gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'tzinfo-data'
+gem 'active_model_serializers'
 #gem 'activerecord-postgis-adapter'  #Adds GIS data to rails, use for conferences
 gem 'postgres_ext' #add postgress extensions to rails
 gem 'bower-rails'
