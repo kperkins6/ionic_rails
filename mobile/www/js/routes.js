@@ -1,6 +1,6 @@
 angular.module('app.routes', ['ionicUIRouter'])
 
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, $httpProvider) {
   $httpProvider.defaults.withCredentials = true;
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
@@ -25,19 +25,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.myEvents'
-      2) Using $state.go programatically:
-        $state.go('tabsController.myEvents');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page3
-      /page1/tab2/page3
-  */
   .state('tabsController.myEvents', {
     url: '/page3',
     views: {
@@ -80,19 +67,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'searchBusinessCardsCtrl'
   })
 
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.addTags'
-      2) Using $state.go programatically:
-        $state.go('tabsController.addTags');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page8
-      /page1/tab2/page8
-  */
   .state('addTags', {
     url: '/page8',
     templateUrl: 'templates/addTags.html',
@@ -111,19 +85,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'viewDeckCtrl'
   })
 
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.viewBusinessCard'
-      2) Using $state.go programatically:
-        $state.go('tabsController.viewBusinessCard');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page11
-      /page1/tab2/page11
-  */
   .state('viewBusinessCard', {
     url: '/page11',
     templateUrl: 'templates/viewBusinessCard.html',
@@ -146,19 +107,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.event'
-      2) Using $state.go programatically:
-        $state.go('tabsController.event');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page14
-      /page1/tab2/page14
-  */
   .state('tabsController.event', {
     url: '/page14',
     views: {
@@ -197,19 +145,6 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'studyResultsCtrl'
   })
 
-  /*
-    The IonicUIRouter.js UI-Router Modification is being used for this route.
-    To navigate to this route, do NOT use a URL. Instead use one of the following:
-      1) Using the ui-sref HTML attribute:
-        ui-sref='tabsController.searchAttendees'
-      2) Using $state.go programatically:
-        $state.go('tabsController.searchAttendees');
-    This allows your app to figure out which Tab to open this page in on the fly.
-    If you're setting a Tabs default page or modifying the .otherwise for your app and
-    must use a URL, use one of the following:
-      /page1/tab1/page20
-      /page1/tab2/page20
-  */
   .state('tabsController.searchAttendees', {
     url: '/page20',
     views: {
@@ -224,7 +159,8 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-$urlRouterProvider.otherwise('/login')
+$urlRouterProvider.otherwise('/login');
+// $urlRouterProvider.otherwise('/page18');
 
 
 
