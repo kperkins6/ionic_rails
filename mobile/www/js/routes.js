@@ -1,7 +1,7 @@
 angular.module('app.routes', ['ionicUIRouter'])
 
 .config(function($stateProvider, $urlRouterProvider) {
-
+  $httpProvider.defaults.withCredentials = true;
   // Ionic uses AngularUI Router which uses the concept of states
   // Learn more here: https://github.com/angular-ui/ui-router
   // Set up the various states which the app can be in.
@@ -9,6 +9,11 @@ angular.module('app.routes', ['ionicUIRouter'])
   $stateProvider
 
 
+  .state('login', {
+      url: '/login',
+      templateUrl: 'templates/login.html',
+      controller: 'LoginCtrl'
+  })
 
   .state('tabsController.scheduleEvent', {
     url: '/page2',
@@ -219,7 +224,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     }
   })
 
-$urlRouterProvider.otherwise('/page1/tab2/page3')
+$urlRouterProvider.otherwise('/login')
 
 
 
