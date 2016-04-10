@@ -1,0 +1,21 @@
+<ion-view title="Event" id="page14" style="background-color:#295FBE;">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <h1 id="event-heading4" style="color:#FFFFFF;">Event Name</h1>
+        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; background-color: rgb(255, 255, 255);">
+            <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+        </div>
+        <div id="event-markdown3" style="color:#FFFFFF;">
+            <ul>
+                <li>Event Location</li>
+                <li>Event Description</li>
+                <li>Hosting Organization</li>
+                <li>Private</li>
+            </ul>
+        </div>
+        <form class="list">
+            <ion-checkbox name="Attending">Attending</ion-checkbox>
+            <a ui-sref="tabsController.searchAttendees" id="event-button19" class="button button-calm  button-block">Search Attendees</a>
+        </form>
+        <a ui-sref="tabsController.myEvents" id="event-button14" class="button button-assertive  button-block icon ion-android-arrow-dropleft-circle">Back to My Events</a>
+    </ion-content>
+</ion-view>

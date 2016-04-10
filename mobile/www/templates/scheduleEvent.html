@@ -1,0 +1,33 @@
+<ion-view title="Schedule Event" id="page2" style="background-color:#00C1FF;">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <form class="list">
+            <label class="item item-input" name="Event Name">
+                <span class="input-label">Event name</span>
+                <input type="text" placeholder="">
+            </label>
+            <label class="item item-select" name="Type">
+                <span class="input-label">Event Type</span>
+                <select></select>
+            </label>
+            <ion-checkbox name="Private">Private</ion-checkbox>
+            <label class="item item-input" name="Description">
+                <span class="input-label">Event Description</span>
+                <input type="text" placeholder="Discription">
+            </label>
+            <label class="item item-input" name="Event Location">
+                <span class="input-label">Event Location</span>
+                <input type="text" placeholder="Location">
+            </label>
+            <ion-item class="range range-positive">Public Range
+                <input type="range" value="50" min="1" max="500" name="Range">
+            </ion-item>
+            <label class="item item-input" name="Host">
+                <span class="input-label">Hosting Organization</span>
+                <input type="text" placeholder="Company">
+            </label>
+            <a ui-sref="tabsController.uploadImage" id="scheduleEvent-button15" class="button button-energized  button-block icon ion-camera">Upload Image</a>
+        </form>
+        <a ui-sref="tabsController.event" id="scheduleEvent-button13" class="button button-positive  button-block icon ion-android-calendar">Schedule Event</a>
+        <button id="scheduleEvent-button17" class="button button-assertive  button-block icon ion-android-cancel">Cancel</button>
+    </ion-content>
+</ion-view>

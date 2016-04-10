@@ -1,0 +1,19 @@
+<ion-view title="Near Me" id="page4" style="background-color:#FFB800;">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <form class="list">
+            <h1 id="nearMe-heading5" style="color:#000000;">Search Events</h1>
+            <ion-item class="range range-positive">Range
+                <input type="range" value="50" min="0" max="100">
+            </ion-item>
+            <label class="item item-select">
+                <span class="input-label">Event Type</span>
+                <select></select>
+            </label>
+            <label class="item item-input">
+                <span class="input-label">Event Name</span>
+                <input type="text" placeholder="">
+            </label>
+        </form>
+        <a ui-sref="tabsController.eventSearchResults" id="nearMe-button18" class="button button-positive  button-block icon ion-search">Search For Events</a>
+    </ion-content>
+</ion-view>

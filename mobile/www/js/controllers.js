@@ -1,31 +1,74 @@
-angular.module('starter.controllers', [])
+angular.module('app.controllers', [])
+  
+.controller('scheduleEventCtrl', function($scope) {
 
-.controller('DashCtrl', function($scope, Tag) {} {
-  BlogEntry.query().$promise.then(function(response){
-    $scope.blog_entries = response;
-  });
 })
-.controller('ChatsCtrl', function($scope, Chats) {
-  // With the new view caching in Ionic, Controllers are only called
-  // when they are recreated or on app start, instead of every page change.
-  // To listen for when this page is active (for example, to refresh data),
-  // listen for the $ionicView.enter event:
-  //
-  //$scope.$on('$ionicView.enter', function(e) {
-  //});
+   
+.controller('myEventsCtrl', function($scope) {
 
-  $scope.chats = Chats.all();
-  $scope.remove = function(chat) {
-    Chats.remove(chat);
-  };
 })
+   
+.controller('nearMeCtrl', function($scope) {
 
-.controller('ChatDetailCtrl', function($scope, $stateParams, Chats) {
-  $scope.chat = Chats.get($stateParams.chatId);
 })
+         
+.controller('loginCtrl', function($scope) {
 
-.controller('AccountCtrl', function($scope) {
-  $scope.settings = {
-    enableFriends: true
-  };
-});
+})
+   
+.controller('signupCtrl', function($scope) {
+
+})
+   
+.controller('searchBusinessCardsCtrl', function($scope) {
+
+})
+   
+.controller('addTagsCtrl', function($scope) {
+
+})
+   
+.controller('decksCtrl', function($scope) {
+
+})
+   
+.controller('viewDeckCtrl', function($scope) {
+
+})
+   
+.controller('viewBusinessCardCtrl', function($scope) {
+
+})
+   
+.controller('myCardCtrl', function($scope) {
+
+})
+   
+.controller('uploadImageCtrl', function($scope) {
+
+})
+   
+.controller('eventCtrl', function($scope) {
+
+})
+   
+.controller('studyCtrl', function($scope) {
+
+})
+   
+.controller('eventSearchResultsCtrl', function($scope) {
+
+})
+   
+.controller('studyDeckCtrl', function($scope) {
+
+})
+   
+.controller('studyResultsCtrl', function($scope) {
+
+})
+   
+.controller('searchAttendeesCtrl', function($scope) {
+
+})
+ 

@@ -1,7 +1,7 @@
 {
-  "name": "ionic_sp",
+  "name": "pnm",
   "version": "1.1.1",
-  "description": "ionic_sp: An Ionic project",
+  "description": "PNM: An Ionic project",
   "dependencies": {
     "gulp": "^3.5.6",
     "gulp-sass": "^2.0.4",
