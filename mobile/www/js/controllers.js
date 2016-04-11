@@ -49,31 +49,52 @@ $scope.data = {};
 
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
-  window.localStorage['userId'] = data.id;
-  window.localStorage['userName'] = data.name;
-  user_session.$save();
-  alert("Session Save");
-  //   function(data){
-  //     alert("Login data");
-  //
-      // window.localStorage['userId'] = data.id;
-      // window.localStorage['userName'] = data.name;
-  //     $location.path('/page1/tab2/page3');
-  //   },
-  //   function(err){
-  //     alert("Error");
-  //     var error = err["data"]["error"] || err.data.join('. ')
-  //     var confirmPopup = $ionicPopup.alert({
-  //       title: 'An error occured',
-  //       template: error
-  //     });
-  //   }
-  // );
+  // var user_session = new UserSession({ email: data.email, password: data.password });
+
+  // window.localStorage['userId'] = data.id;
+  // window.localStorage['userName'] = data.name;
+  // user_session.$save()
+  alert("Login");
+  // alert(data.email);
+  // alert(data.password);
+  user_session.$save(
+    function(data){
+      window.localStorage['userId'] = data.id;
+      window.localStorage['userName'] = data.name;
+      $location.path('/page1/tab2/page3');
+    },
+    function(err){
+      var error = err["data"]["error"] || err.data.join('. ')
+      var confirmPopup = $ionicPopup.alert({
+        title: 'An error occured',
+        template: error
+      });
+    }
+  );
 }
 })
 
 .controller('signupCtrl', function($scope) {
 
+})
+
+.controller('signoutCtrl', function($scope, UserSession) {
+  var session = UserSession.get({userId: window.localStorage['userId']});
+  if ( session == 'undefined'){
+    $location.path('/login');
+    window.location.reload();
+  }
+  else {
+  $http.delete('http://159.203.247.39:3000/users/sign_out', {
+  auth_token: session.userId // just a cookie storing my token from devise token authentication.
+  }).success( function(result) {
+    $cookieStore.remove('_pf_session');
+    $cookieStore.remove('_pf_name');
+    $cookieStore.remove('_pf_email');
+    location.reload(true); // I need to refresh the page to update cookies
+  }).error( function(result) {
+    console.log(result);
+  });
 })
 
 .controller('searchBusinessCardsCtrl', function($scope, Bcard) {
@@ -109,38 +130,48 @@ $scope.login = function() {
   $scope.quantity = 6;
 })
 
-.controller('viewBusinessCardCtrl', function($scope, Bcard, Tag) {
-  Bcard.query().$promise.then(function(response){
-    $scope.bcards = response;
-  });
-  Tag.query().$promise.then(function(response){
-    $scope.tags = response;
-  });
-  $scope.orderProp = 'hits';
-  $scope.quantity = 9;
+.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag) {
+  if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
+    $location.path('/login');
+    window.location.reload();
+  }
+  else {
+    Bcard.query().$promise.then(function(response){
+      $scope.bcards = response;
+    });
+    Tag.query().$promise.then(function(response){
+      $scope.tags = response;
+    });
+    $scope.orderProp = 'hits';
+    $scope.quantity = 9;
+  }
 })
 
-.controller('myCardCtrl', function($scope, Bcard, $location, $ionicPopup, $rootScope) {
+.controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope) {
   // Bcard.query().$promise.then(function(response){
   //   $scope.bcards = response;
   // });
   // $scope.data={};
-
-  Bcard.get({id:"2"}).$promise.then(function(bcard) {
+  if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
+    $location.path('/login');
+    window.location.reload();
+  }
+  else {
+  Bcard.get({id: window.localStorage['userId']}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
   });
 
   $scope.save_card = function() {
-    var bcard = Bcard.get({id:"2"});
+    var bcard = Bcard.get({id:window.localStorage['userId']});
     alert("Functional");
     // $scope.data={};
     // Bcard.get({id:"2"}, function(bcard, getResponseHeaders){
     //  var bcard = Bcard.get({id:"2"});
       bcard.pinterest = $scope.pinterest;
       // alert("Got!");
-      Bcard.update({ id:"2"}, bcard);
+      Bcard.update({ id:window.localStorage['userId']}, bcard);
       $location.path('/page1/tab2/page3');
-
+    }
   }
 })
 
