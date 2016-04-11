@@ -4,7 +4,7 @@ class CreateDecks < ActiveRecord::Migration
       t.integer :user_id
       t.string :description
       t.string :name
-      t.integer :tagcards
+      t.integer :tagcards, array:true, default: []
 
       t.timestamps null: false
     end
