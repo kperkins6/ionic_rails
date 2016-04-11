@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['app.services'])
+angular.module('app.controllers', ['app.services', 'Devise'])
 
 .controller('scheduleEventCtrl', function($scope) {
 
@@ -12,36 +12,36 @@ angular.module('app.controllers', ['app.services'])
 
 })
 
-// .controller('LoginCtrl', function($scope, $location, Auth) {
-//   $scope.login = function() {
-//     var credentials = {
-//         email: 'user@domain.com',
-//         password: 'password1'
-//     };
-//     var config = {
-//         headers: {
-//             'X-HTTP-Method-Override': 'POST'
-//         }
-//     };
-//
-//     Auth.login(credentials, config).then(function(user) {
-//         console.log(user); // => {id: 1, ect: '...'}
-//     }, function(error) {
-//         alert("authentication failed");
-//     });
-//
-//     $scope.$on('devise:login', function(event, currentUser) {
-//         // after a login, a hard refresh, a new tab
-//         $location.path('/page1/tab2/page3');
-//     });
-//
-//     $scope.$on('devise:new-session', function(event, currentUser) {
-//         // user logged in by Auth.login({...})
-//         alert("authentication successful");
-//
-//     });
-//   }
-// });
+.controller('LoginCtrl', function($scope, $location, Auth) {
+  $scope.login = function() {
+    var credentials = {
+        email: 'user@domain.com',
+        password: 'password1'
+    };
+    var config = {
+        headers: {
+            'X-HTTP-Method-Override': 'POST'
+        }
+    };
+
+    Auth.login(credentials, config).then(function(user) {
+        console.log(user); // => {id: 1, ect: '...'}
+    }, function(error) {
+        alert("authentication failed");
+    });
+
+    $scope.$on('devise:login', function(event, currentUser) {
+        // after a login, a hard refresh, a new tab
+        $location.path('/page1/tab2/page3');
+    });
+
+    $scope.$on('devise:new-session', function(event, currentUser) {
+        // user logged in by Auth.login({...})
+        alert("authentication successful");
+
+    });
+  }
+});
 
 //
 // .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
