@@ -1,5 +1,5 @@
 angular.module('app.services', ['ngResource'])
-<script src="js/services.js"></script>
+
 .factory('BlankFactory', [function(){
 
 }])
