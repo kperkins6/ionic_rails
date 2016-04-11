@@ -9,6 +9,7 @@ angular.module('app.services', ['ngResource'])
 })
 
 .factory('UserSession', function($resource) {
+  alert("Factory");
   return $resource("http://localhost:3000/users/sign_in.json");
 })
 
