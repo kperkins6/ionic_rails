@@ -3,50 +3,51 @@
         <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; background-color: rgb(255, 255, 255);">
             <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
         </div>
+        <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         <form class="list">
-            <label class="item item-input" name="Name">
+            <label class="item item-input" name="name">
                 <span class="input-label">My Name</span>
-                <input type="text" placeholder="Fname Lname">
+                <input type="text" placeholder={{bcard.name}}>
             </label>
-            <label class="item item-input" name="Number">
+            <label class="item item-input" name="number">
                 <span class="input-label">Phone Number</span>
-                <input type="text" placeholder="(555)555-5555">
+                <input type="text" placeholder={{bcard.number}}>
             </label>
             <label class="item item-input" name="email">
                 <span class="input-label">Email Address</span>
-                <input type="text" placeholder="my@email.com">
+                <input type="text" placeholder={{bcard.email}}>
             </label>
-            <label class="item item-input" name="Address">
+            <label class="item item-input" name="address">
                 <span class="input-label">Address</span>
-                <input type="text" placeholder="Your Address">
+                <input type="text" placeholder={{bcard.address}}>
             </label>
-            <label class="item item-input" name="Company">
+            <label class="item item-input" name="company">
                 <span class="input-label">Company</span>
-                <input type="text" placeholder="Your Company">
+                <input type="text" placeholder={{bcard.company}}>
             </label>
-            <label class="item item-input" name="Position">
+            <label class="item item-input" name="position">
                 <span class="input-label">Position</span>
                 <input type="text" placeholder="Your Position">
             </label>
-            <label class="item item-input" name="Facebook">
+            <label class="item item-input" name="facebook">
                 <span class="input-label">Facebook</span>
-                <input type="text" placeholder="handle">
+                <input type="text" placeholder={{bcard.facebook}}>
             </label>
-            <label class="item item-input" name="Pinterest">
+            <label class="item item-input" name="pinterest">
                 <span class="input-label">Pinterest</span>
-                <input type="text" placeholder="handle">
+                <input type="text" placeholder={{bcard.pinterest}}>
             </label>
-            <label class="item item-input" name="Instagram">
+            <label class="item item-input" name="instagram">
                 <span class="input-label">Instagram</span>
-                <input type="text" placeholder="handle">
+                <input type="text" placeholder={{bcard.instagram}}>
             </label>
-            <label class="item item-input" name="Twitter">
+            <label class="item item-input" name="twitter">
                 <span class="input-label">Twitter</span>
-                <input type="text" placeholder="handle">
+                <input type="text" placeholder={{bcard.twitter}}>
             </label>
-            <label class="item item-input" name="Website">
+            <label class="item item-input" name="website">
                 <span class="input-label">Website</span>
-                <input type="text" placeholder="www.yoursite.com">
+                <input type="text" placeholder={{bcard.website}}>
             </label>
             <a ui-sref="viewBusinessCard" id="myCard-button12" class="button button-positive  button-block">Save!</a>
         </form>

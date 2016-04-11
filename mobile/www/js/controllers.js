@@ -82,6 +82,9 @@ $scope.login = function() {
 })
 
 .controller('addTagsCtrl', function($scope, Tag) {
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
   Tag.query().$promise.then(function(response){
     $scope.tags = response;
   });
@@ -93,9 +96,12 @@ $scope.login = function() {
   });
 })
 
-.controller('viewDeckCtrl', function($scope, Deck) {
+.controller('viewDeckCtrl', function($scope, Deck, Bcard) {
   Deck.query().$promise.then(function(response){
     $scope.decks = response;
+  });
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
   });
 })
 
@@ -109,8 +115,15 @@ $scope.login = function() {
 })
 
 .controller('myCardCtrl', function($scope, Bcard) {
-  Bcard.query().$promise.then(function(response){
-    $scope.bcards = response;
+  // Bcard.query().$promise.then(function(response){
+  //   $scope.bcards = response;
+  // });
+  Bcard.get({id:"1"}).$promise.then(function(bcard, getResponseHeaders) {
+    $scope.bcard = bcard;
+    bcard.$save(function(bcard, putResponseHeaders) {
+      //user => saved user object
+      //putResponseHeaders => $http header getter
+    });
   });
 })
 
@@ -122,7 +135,7 @@ $scope.login = function() {
 
 })
 
-.controller('studyCtrl', function($scope, Bcard, Tagcard) {
+.controller('studyCtrl', function($scope, Deck, Tagcard) {
   Deck.query().$promise.then(function(response){
     $scope.decks = response;
   });

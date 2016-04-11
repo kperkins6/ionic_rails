@@ -10,7 +10,8 @@ class CreateBcards < ActiveRecord::Migration
       t.string :name
       t.integer :user_id
       t.string :company
-
+      t.sting :website
+      
       t.timestamps null: false
     end
   end

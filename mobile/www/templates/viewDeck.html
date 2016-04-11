@@ -4,15 +4,8 @@
         <div id="viewDeck-markdown1" style="color:#000000;">
             <p>Deck Description</p>
         </div>
-        <ion-list>
-            <ion-item ui-sref="viewBusinessCard">Bcard 1</ion-item>
-            <ion-item ui-sref="viewBusinessCard">Bcard 2</ion-item>
-            <ion-item ui-sref="viewBusinessCard">Bcard 3</ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-item ui-sref="viewBusinessCard">Bcard 4</ion-item>
-            <ion-item ui-sref="viewBusinessCard">Bcard 5</ion-item>
-            <ion-item ui-sref="viewBusinessCard">Bcard 6</ion-item>
+        <ion-list ng-repeat="bcard in bcards">
+            <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
