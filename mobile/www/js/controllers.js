@@ -126,5 +126,7 @@ $scope.login = function() {
 })
 
 .controller('searchAttendeesCtrl', function($scope) {
-
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
 })
