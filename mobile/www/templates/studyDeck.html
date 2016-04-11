@@ -2,10 +2,8 @@
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <h1 id="studyDeck-heading6" style="color:#FFFFFF;">Bcard Name</h1>
         <h1 id="studyDeck-heading7" style="color:#FFFFFF;">Company</h1>
-        <ion-list>
-            <ion-item ui-sref="studyResults">Option 1</ion-item>
-            <ion-item ui-sref="studyResults">Option 2</ion-item>
-            <ion-item ui-sref="studyResults">Option 3</ion-item>
+        <ion-list ng-repeat="tagcard in tagcards">
+            <ion-item ui-sref="studyResults">User: {{tagcard.user_id}}, Bcard: {{tagcard.bcard_id}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

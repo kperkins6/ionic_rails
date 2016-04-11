@@ -82,6 +82,9 @@ $scope.login = function() {
 })
 
 .controller('addTagsCtrl', function($scope, Tag) {
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
   Tag.query().$promise.then(function(response){
     $scope.tags = response;
   });
@@ -93,21 +96,34 @@ $scope.login = function() {
   });
 })
 
-.controller('viewDeckCtrl', function($scope, Deck) {
+.controller('viewDeckCtrl', function($scope, Deck, Bcard) {
   Deck.query().$promise.then(function(response){
     $scope.decks = response;
   });
-})
-
-.controller('viewBusinessCardCtrl', function($scope) {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });
 })
 
-.controller('myCardCtrl', function($scope) {
+.controller('viewBusinessCardCtrl', function($scope, Bcard, Tag) {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
+  });
+  Tag.query().$promise.then(function(response){
+    $scope.tags = response;
+  });
+})
+
+.controller('myCardCtrl', function($scope, Bcard) {
+  // Bcard.query().$promise.then(function(response){
+  //   $scope.bcards = response;
+  // });
+  Bcard.get({id:"1"}).$promise.then(function(bcard, getResponseHeaders) {
+    $scope.bcard = bcard;
+    bcard.$save(function(bcard, putResponseHeaders) {
+      //user => saved user object
+      //putResponseHeaders => $http header getter
+    });
   });
 })
 
@@ -119,23 +135,36 @@ $scope.login = function() {
 
 })
 
-.controller('studyCtrl', function($scope) {
-
+.controller('studyCtrl', function($scope, Deck, Tagcard) {
+  Deck.query().$promise.then(function(response){
+    $scope.decks = response;
+  });
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards = response;
+  });
 })
 
 .controller('eventSearchResultsCtrl', function($scope) {
 
 })
 
-.controller('studyDeckCtrl', function($scope) {
-
+.controller('studyDeckCtrl', function($scope, Deck, Tagcard, Bcard) {
+  Deck.query().$promise.then(function(response){
+    $scope.decks = response;
+  });
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards = response;
+  });
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
 })
 
 .controller('studyResultsCtrl', function($scope) {
 
 })
 
-.controller('searchAttendeesCtrl', function($scope) {
+.controller('searchAttendeesCtrl', function($scope, Bcard) {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });
