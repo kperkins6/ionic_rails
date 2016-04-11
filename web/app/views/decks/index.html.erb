@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>User</th>
+      <th>Name</th>
       <th>Description</th>
       <th>Tagcards</th>
       <th colspan="3"></th>
@@ -16,6 +17,7 @@
     <% @decks.each do |deck| %>
       <tr>
         <td><%= deck.user_id %></td>
+        <td><%= deck.name %></td>
         <td><%= deck.description %></td>
         <td><%= deck.tagcards %></td>
         <td><%= link_to 'Show', deck %></td>

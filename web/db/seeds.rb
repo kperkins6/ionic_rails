@@ -280,7 +280,7 @@ users.each do |user|
   for i in 0..rand(4)
     random_name = gen_tag
     random_desc = gen_tag
-    Deck.create(name: "Deck: " + i.to_s, description: random_desc, user_id: user.id)
+    Deck.create(name: random_name, description: random_desc, user_id: user.id)
   end
 end
 

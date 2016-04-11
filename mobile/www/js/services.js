@@ -5,16 +5,23 @@ angular.module('app.services', ['ngResource'])
 }])
 
 .factory('Bcard', function($resource) {
-  return $resource("http://159.203.247.39/:3000/bcards/:id.json");
+  return $resource("http://159.203.247.39:3000/bcards/:id.json");
 })
 
 .factory('Tag', function($resource) {
-  return $resource("http://159.203.247.39/:3000/tags/:id.json");
+  return $resource("http://159.203.247.39:3000/tags/:id.json");
+})
+
+.factory('Deck', function($resource) {
+  return $resource("http://159.203.247.39:3000/decks/:id.json");
+})
+
+.factory('Tagcard', function($resource) {
+  return $resource("http://159.203.247.39:3000/tagcards/:id.json");
 })
 
 .factory('UserSession', function($resource) {
-  alert("Factory");
-  return $resource("http://159.203.247.39/:3000/users/sign_in.json");
+  return $resource("http://159.203.247.39:3000/users/sign_in.json");
 })
 
 .service('BlankService', [function(){

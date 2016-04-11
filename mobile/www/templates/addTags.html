@@ -16,13 +16,8 @@
             <ion-item>Tag2</ion-item>
             <ion-item>Tag3</ion-item>
         </ion-list> -->
-        <div class="list card" ng-repeat="tag in tags">
-          <div class="item item-divider">{{tag.text}}</div>
-          <div class="item item-body">
-            <div>
-              {{tag.hits}}
-            </div>
-          </div>
-        </div>
+        <ion-list ng-repeat="tag in tags">
+            <ion-item>Text: {{tag.text}}, Hits: {{tag.hits}}</ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>

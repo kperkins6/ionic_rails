@@ -6,15 +6,8 @@
                 <input type="search" placeholder="Search Decks">
             </label>
         </form>
-        <ion-list>
-            <ion-item ui-sref="viewDeck">Deck1</ion-item>
-            <ion-item ui-sref="viewDeck">Deck2</ion-item>
-            <ion-item ui-sref="viewDeck">Deck3</ion-item>
-        </ion-list>
-        <ion-list>
-            <ion-item ui-sref="viewDeck">Deck4</ion-item>
-            <ion-item ui-sref="viewDeck">Deck5</ion-item>
-            <ion-item ui-sref="viewDeck">Deck6</ion-item>
+        <ion-list ng-repeat="deck in decks">
+            <ion-item>Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

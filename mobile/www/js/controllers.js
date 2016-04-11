@@ -81,26 +81,34 @@ $scope.login = function() {
   });
 })
 
-.controller('addTagsCtrl', function($scope) {
+.controller('addTagsCtrl', function($scope, Tag) {
   Tag.query().$promise.then(function(response){
     $scope.tags = response;
   });
 })
 
-.controller('decksCtrl', function($scope) {
-
+.controller('decksCtrl', function($scope, Deck) {
+  Deck.query().$promise.then(function(response){
+    $scope.decks = response;
+  });
 })
 
-.controller('viewDeckCtrl', function($scope) {
-
+.controller('viewDeckCtrl', function($scope, Deck) {
+  Deck.query().$promise.then(function(response){
+    $scope.decks = response;
+  });
 })
 
 .controller('viewBusinessCardCtrl', function($scope) {
-
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
 })
 
 .controller('myCardCtrl', function($scope) {
-
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
 })
 
 .controller('uploadImageCtrl', function($scope) {
