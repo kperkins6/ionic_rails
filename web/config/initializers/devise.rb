@@ -6,9 +6,8 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'ce2054ade0b173b93c1a8f077ee05f21b0512502300e2f86994bb27a2305e37c85942a757bc7b74a1748f2d01bee6c6fa30edfeef637cf914bcf7403d242bad7'
-  # config.http_authenticatable_on_xhr = false
-  # config.navigational_formats = ["*/*", :html, :json]
+  # config.secret_key = '1ed050557d36927f93a686b5d28c7eec9c2af50259dc2c59e2e6bba1d34e08d6216829fd0256c40bf49ef244ffb124c98d70a68a09d77bd410c0b1f95b108179'
+
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
@@ -100,10 +99,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = '7dcb7a6efed824f776fe7463a6fa4c00731f76f4bdde1c35a2e7ef19b4530aba7c16b0820dc760b92da6e6053e4e6b37e08d7e6275ca2468f281211651ab974a'
-
-  # Send a notification email when the user's password is changed
-  # config.send_password_change_notification = false
+  # config.pepper = '0b491cba6d410675c2ded24987f33af6bef1d98c52e11c23ede053cbbe33c71ba416b9c3d612fc5155379f933d46ffadb4163bb4f7d491f7e331d944b4a5b3c8'
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -132,7 +128,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :rememberable
   # The time the user will be remembered without asking for credentials again.
-  config.remember_for = 20.years
+  # config.remember_for = 2.weeks
 
   # Invalidates all the remember me tokens when the user signs out.
   config.expire_all_remember_me_on_sign_out = true
@@ -146,7 +142,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length.
-  config.password_length = 8..72
+  config.password_length = 1..128
 
   # Email regex used to validate email formats. It simply asserts that
   # one (and only one) @ exists in the given string. This is mainly

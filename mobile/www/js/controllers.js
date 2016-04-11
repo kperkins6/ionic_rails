@@ -50,24 +50,24 @@ $scope.data = {};
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
 
-  user_session.$save(
-    alert("Session Save");
-    function(data){
-      alert("Login data");
-
-      window.localStorage['userId'] = data.id;
-      window.localStorage['userName'] = data.name;
-      $location.path('/page1/tab2/page3');
-    },
-    function(err){
-      alert("Error");
-      var error = err["data"]["error"] || err.data.join('. ')
-      var confirmPopup = $ionicPopup.alert({
-        title: 'An error occured',
-        template: error
-      });
-    }
-  );
+  // user_session.$save(
+  //   alert("Session Save");
+  //   function(data){
+  //     alert("Login data");
+  //
+  //     window.localStorage['userId'] = data.id;
+  //     window.localStorage['userName'] = data.name;
+  //     $location.path('/page1/tab2/page3');
+  //   },
+  //   function(err){
+  //     alert("Error");
+  //     var error = err["data"]["error"] || err.data.join('. ')
+  //     var confirmPopup = $ionicPopup.alert({
+  //       title: 'An error occured',
+  //       template: error
+  //     });
+  //   }
+  // );
 }
 })
 
