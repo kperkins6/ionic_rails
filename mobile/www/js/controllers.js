@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['app.services'])
+angular.module('app.controllers', ['app.services', 'Devise'])
 
 .controller('scheduleEventCtrl', function($scope) {
 
@@ -12,32 +12,64 @@ angular.module('app.controllers', ['app.services'])
 
 })
 
-.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
-$scope.data = {};
+controller('LoginCtrl', function($scope, $location, Auth) {
+  $scope.login = function() {
+    var credentials = {
+        email: 'user@domain.com',
+        password: 'password1'
+    };
+    var config = {
+        headers: {
+            'X-HTTP-Method-Override': 'POST'
+        }
+    };
 
-$scope.login = function() {
-  var user_session = new UserSession({ user: $scope.data });
+    Auth.login(credentials, config).then(function(user) {
+        console.log(user); // => {id: 1, ect: '...'}
+    }, function(error) {
+        alert("authentication failed");
+    });
 
-  user_session.$save(
-    alert("Session Save");
-    function(data){
-      alert("Login data");
+    $scope.$on('devise:login', function(event, currentUser) {
+        // after a login, a hard refresh, a new tab
+        $location.path('/page1/tab2/page3');
+    });
 
-      window.localStorage['userId'] = data.id;
-      window.localStorage['userName'] = data.name;
-      $location.path('/page1/tab2/page3');
-    },
-    function(err){
-      alert("Error");
-      var error = err["data"]["error"] || err.data.join('. ')
-      var confirmPopup = $ionicPopup.alert({
-        title: 'An error occured',
-        template: error
-      });
-    }
-  );
-}
-})
+    $scope.$on('devise:new-session', function(event, currentUser) {
+        // user logged in by Auth.login({...})
+        alert("authentication successful");
+
+    });
+  }
+});
+
+//
+// .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
+// $scope.data = {};
+//
+// $scope.login = function() {
+//   var user_session = new UserSession({ user: $scope.data });
+//
+//   user_session.$save(
+//     alert("Session Save");
+//     function(data){
+//       alert("Login data");
+//
+//       window.localStorage['userId'] = data.id;
+//       window.localStorage['userName'] = data.name;
+//       $location.path('/page1/tab2/page3');
+//     },
+//     function(err){
+//       alert("Error");
+//       var error = err["data"]["error"] || err.data.join('. ')
+//       var confirmPopup = $ionicPopup.alert({
+//         title: 'An error occured',
+//         template: error
+//       });
+//     }
+//   );
+// }
+// })
 
 .controller('signupCtrl', function($scope) {
 
