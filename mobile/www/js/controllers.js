@@ -99,13 +99,16 @@ $scope.login = function() {
   });
 })
 
-.controller('viewBusinessCardCtrl', function($scope) {
+.controller('viewBusinessCardCtrl', function($scope, Bcard, Tag) {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });
+  Tag.query().$promise.then(function(response){
+    $scope.tags = response;
+  });
 })
 
-.controller('myCardCtrl', function($scope) {
+.controller('myCardCtrl', function($scope, Bcard) {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });
@@ -119,23 +122,36 @@ $scope.login = function() {
 
 })
 
-.controller('studyCtrl', function($scope) {
-
+.controller('studyCtrl', function($scope, Bcard, Tagcard) {
+  Deck.query().$promise.then(function(response){
+    $scope.decks = response;
+  });
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards = response;
+  });
 })
 
 .controller('eventSearchResultsCtrl', function($scope) {
 
 })
 
-.controller('studyDeckCtrl', function($scope) {
-
+.controller('studyDeckCtrl', function($scope, Deck, Tagcard, Bcard) {
+  Deck.query().$promise.then(function(response){
+    $scope.decks = response;
+  });
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards = response;
+  });
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards = response;
+  });
 })
 
 .controller('studyResultsCtrl', function($scope) {
 
 })
 
-.controller('searchAttendeesCtrl', function($scope) {
+.controller('searchAttendeesCtrl', function($scope, Bcard) {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });

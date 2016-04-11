@@ -11,13 +11,8 @@
                 <p>Position</p>
             </ion-item>
         </form> -->
-        <div class="list card" ng-repeat="bcard in bcards">
-              <div class="item item-divider">{{bcard.name}}</div>
-              <div class="item item-body">
-                <div>
-                  {{bcard.company}}
-                </div>
-              </div>
-        </div>
+        <ion-list ng-repeat="bcard in bcards">
+            <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+        </ion-list>
     </ion-content>
 </ion-view>
