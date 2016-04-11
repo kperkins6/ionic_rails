@@ -17,8 +17,12 @@ $scope.data = {};
 
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
+  alert("Login Function");
+
   user_session.$save(
     function(data){
+      alert("Login data");
+
       window.localStorage['userId'] = data.id;
       window.localStorage['userName'] = data.name;
       $location.path('/page1/tab2/page3');
