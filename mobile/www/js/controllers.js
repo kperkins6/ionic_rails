@@ -17,9 +17,9 @@ $scope.data = {};
 
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
-  alert("Login Function");
 
   user_session.$save(
+    alert("Session Save");
     function(data){
       alert("Login data");
 
