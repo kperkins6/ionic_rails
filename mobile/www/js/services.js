@@ -8,6 +8,10 @@ angular.module('app.services', ['ngResource'])
   return $resource("http://localhost:3000/bcards/:id.json");
 })
 
+.factory('Tag', function($resource) {
+  return $resource("http://localhost:3000/tags/:id.json");
+})
+
 .factory('UserSession', function($resource) {
   alert("Factory");
   return $resource("http://localhost:3000/users/sign_in.json");

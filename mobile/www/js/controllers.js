@@ -82,7 +82,9 @@ $scope.login = function() {
 })
 
 .controller('addTagsCtrl', function($scope) {
-
+  Tag.query().$promise.then(function(response){
+    $scope.tags = response;
+  });
 })
 
 .controller('decksCtrl', function($scope) {
