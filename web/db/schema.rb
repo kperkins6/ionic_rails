@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160410222738) do
+ActiveRecord::Schema.define(version: 20160411031441) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,8 +23,9 @@ ActiveRecord::Schema.define(version: 20160410222738) do
     t.string   "twitter"
     t.string   "instagram"
     t.string   "pinterest"
-    t.string   "first_name"
-    t.string   "last_name"
+    t.string   "name"
+    t.integer  "user_id"
+    t.string   "company"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -32,17 +33,18 @@ ActiveRecord::Schema.define(version: 20160410222738) do
   create_table "decks", force: :cascade do |t|
     t.integer  "user_id"
     t.string   "description"
-    t.integer  "tagcards"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "name"
+    t.integer  "tagcards",    default: [],              array: true
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
   end
 
   create_table "tagcards", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "tags"
+    t.integer  "tags",       default: [],              array: true
     t.integer  "bcard_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -65,6 +67,8 @@ ActiveRecord::Schema.define(version: 20160410222738) do
     t.inet     "last_sign_in_ip"
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
+    t.string   "name"
+    t.integer  "bcard_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
