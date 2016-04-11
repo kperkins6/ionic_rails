@@ -28,6 +28,7 @@ $scope.login = function() {
       $location.path('/page1/tab2/page3');
     },
     function(err){
+      alert("Error");
       var error = err["data"]["error"] || err.data.join('. ')
       var confirmPopup = $ionicPopup.alert({
         title: 'An error occured',
