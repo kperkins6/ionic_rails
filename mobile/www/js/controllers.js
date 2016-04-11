@@ -49,14 +49,15 @@ $scope.data = {};
 
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
-
-  // user_session.$save(
-  //   alert("Session Save");
+  window.localStorage['userId'] = data.id;
+  window.localStorage['userName'] = data.name;
+  user_session.$save();
+  alert("Session Save");
   //   function(data){
   //     alert("Login data");
   //
-  //     window.localStorage['userId'] = data.id;
-  //     window.localStorage['userName'] = data.name;
+      // window.localStorage['userId'] = data.id;
+      // window.localStorage['userName'] = data.name;
   //     $location.path('/page1/tab2/page3');
   //   },
   //   function(err){
@@ -79,6 +80,7 @@ $scope.login = function() {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });
+  $scope.quantity = 6;
 })
 
 .controller('addTagsCtrl', function($scope, Tag) {
@@ -94,6 +96,7 @@ $scope.login = function() {
   Deck.query().$promise.then(function(response){
     $scope.decks = response;
   });
+  $scope.quantity = 5;
 })
 
 .controller('viewDeckCtrl', function($scope, Deck, Bcard) {
@@ -103,6 +106,7 @@ $scope.login = function() {
   Bcard.query().$promise.then(function(response){
     $scope.bcards = response;
   });
+  $scope.quantity = 6;
 })
 
 .controller('viewBusinessCardCtrl', function($scope, Bcard, Tag) {
@@ -112,19 +116,32 @@ $scope.login = function() {
   Tag.query().$promise.then(function(response){
     $scope.tags = response;
   });
+  $scope.orderProp = 'hits';
+  $scope.quantity = 9;
 })
 
-.controller('myCardCtrl', function($scope, Bcard) {
+.controller('myCardCtrl', function($scope, Bcard, $location, $ionicPopup, $rootScope) {
   // Bcard.query().$promise.then(function(response){
   //   $scope.bcards = response;
   // });
-  Bcard.get({id:"1"}).$promise.then(function(bcard, getResponseHeaders) {
+  // $scope.data={};
+
+  Bcard.get({id:"2"}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
-    bcard.$save(function(bcard, putResponseHeaders) {
-      //user => saved user object
-      //putResponseHeaders => $http header getter
-    });
   });
+
+  $scope.save_card = function() {
+    var bcard = Bcard.get({id:"2"});
+    alert("Functional");
+    // $scope.data={};
+    // Bcard.get({id:"2"}, function(bcard, getResponseHeaders){
+    //  var bcard = Bcard.get({id:"2"});
+      bcard.pinterest = $scope.pinterest;
+      // alert("Got!");
+      Bcard.update({ id:"2"}, bcard);
+      $location.path('/page1/tab2/page3');
+
+  }
 })
 
 .controller('uploadImageCtrl', function($scope) {

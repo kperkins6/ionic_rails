@@ -5,7 +5,10 @@ angular.module('app.services', ['ngResource'])
 }])
 
 .factory('Bcard', function($resource) {
-  return $resource("http://159.203.247.39:3000/bcards/:id.json");
+  return $resource("http://159.203.247.39:3000/bcards/:id.json", null,
+  {
+      'update': { method:'PUT' }
+  });
 })
 
 .factory('Tag', function($resource) {

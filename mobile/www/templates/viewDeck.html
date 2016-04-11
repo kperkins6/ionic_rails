@@ -4,7 +4,7 @@
         <div id="viewDeck-markdown1" style="color:#000000;">
             <p>Deck Description</p>
         </div>
-        <ion-list ng-repeat="bcard in bcards">
+        <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
             <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         </ion-list>
     </ion-content>

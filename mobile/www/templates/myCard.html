@@ -35,7 +35,7 @@
             </label>
             <label class="item item-input" name="pinterest">
                 <span class="input-label">Pinterest</span>
-                <input type="text" placeholder={{bcard.pinterest}}>
+                <input type="pinterest" ng-model="pinterest" placeholder={{bcard.pinterest}}>
             </label>
             <label class="item item-input" name="instagram">
                 <span class="input-label">Instagram</span>
@@ -49,7 +49,10 @@
                 <span class="input-label">Website</span>
                 <input type="text" placeholder={{bcard.website}}>
             </label>
-            <a ui-sref="viewBusinessCard" id="myCard-button12" class="button button-positive  button-block">Save!</a>
+            <div class="padding">
+              <button class="button button-block button-positive" ng-click="save_card()">Save!</button>
+            </div>
+            <!-- <a ui-sref="viewBusinessCard" id="myCard-button12" class="button button-positive  button-block">Save!</a> -->
         </form>
     </ion-content>
 </ion-view>

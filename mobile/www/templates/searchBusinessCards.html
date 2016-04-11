@@ -6,7 +6,7 @@
                 <input type="search" placeholder="Enter Name">
             </label>
         </form>
-        <ion-list ng-repeat="bcard in bcards">
+        <ion-list ng-repeat="bcard in bcards | limitTo:quantity">
             <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         </ion-list>
     </ion-content>

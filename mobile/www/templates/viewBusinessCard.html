@@ -16,7 +16,7 @@
             </ul>
         </div>
         <a ui-sref="addTags" id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create">Add Tags</a>
-        <ion-list ng-repeat="tag in tags">
+        <ion-list ng-repeat="tag in tags | orderBy:orderProp | limitTo:quantity">
             <ion-item>text: {{tag.text}}, hits: {{tag.hits}}</ion-item>
         </ion-list>
     </ion-content>
