@@ -3,7 +3,7 @@
         <h1 id="studyDeck-heading6" style="color:#FFFFFF;">Bcard Name</h1>
         <h1 id="studyDeck-heading7" style="color:#FFFFFF;">Company</h1>
         <ion-list ng-repeat="tagcard in tagcards">
-            <ion-item ui-sref="studyResults">User: {{tagcard.user_id}}, Bcard: {{tagcard.bcard_id}}</ion-item>
+            <ion-item ui-sref="studyResults"  ng-click="click_card(tagcard)">User: {{tagcard.user_id}}, Bcard: {{tagcard.bcard_id}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

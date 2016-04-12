@@ -1,11 +1,11 @@
 <ion-view title="View Deck" id="page10" style="background-color:#008CFD;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <h1 id="viewDeck-heading1" style="color:#000000;">Deck Name</h1>
-        <div id="viewDeck-markdown1" style="color:#000000;">
-            <p>Deck Description</p>
+        <h1 id="viewDeck-heading1" style="color:#FFFFFF;">Deck Name: {{deck.name}}</h1>
+        <div id="viewDeck-markdown1" style="color:#DDDDDD;">
+            <p>Deck Description: {{deck.description}}</p>
         </div>
         <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
-            <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+            <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

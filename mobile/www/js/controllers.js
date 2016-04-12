@@ -71,6 +71,7 @@ $scope.login = function() {
       });
     }
   );
+  // window.location.reload();
 }
 })
 
@@ -86,15 +87,20 @@ $scope.login = function() {
   }
   else {
   $http.delete('http://159.203.247.39:3000/users/sign_out', {
-  auth_token: session.userId // just a cookie storing my token from devise token authentication.
+  // auth_token: session.userId // just a cookie storing my token from devise token authentication.
+
   }).success( function(result) {
-    $cookieStore.remove('_pf_session');
-    $cookieStore.remove('_pf_name');
-    $cookieStore.remove('_pf_email');
+    // $cookieStore.remove('_pf_session');
+    // $cookieStore.remove('_pf_name');
+    // $cookieStore.remove('_pf_email');
     location.reload(true); // I need to refresh the page to update cookies
   }).error( function(result) {
     console.log(result);
   });
+  }
+  alert("Sign Out Successfull");
+  $location.path('/login');
+  // window.location.reload();
 })
 
 .controller('searchBusinessCardsCtrl', function($scope, Bcard) {
@@ -113,47 +119,98 @@ $scope.login = function() {
   });
 })
 
-.controller('decksCtrl', function($scope, Deck) {
-  Deck.query().$promise.then(function(response){
-    $scope.decks = response;
-  });
-  $scope.quantity = 5;
+.controller('decksCtrl', function($scope, Deck, $rootScope, current_focus) {
+  // if(UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
+  //   alert("Please log in to continue");
+  //   $location.path('/login');
+  //   // window.location.reload();
+  // }
+  // else {
+    Deck.query().$promise.then(function(response){
+      $scope.decks=[]
+      angular.forEach(response, function(deck){
+        if(deck.user_id==window.localStorage['userId']) {
+          $scope.decks.push(deck);
+        }
+      });
+      return $scope.decks;
+    });
+    // }
+    $scope.click_deck = function(deck) {
+      // alert(deck.id);
+      current_focus.setDeck(deck.id);
+    }
 })
 
-.controller('viewDeckCtrl', function($scope, Deck, Bcard) {
-  Deck.query().$promise.then(function(response){
-    $scope.decks = response;
+.controller('viewDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
+  // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
+  //   $location.path('/login');
+  //   alert("Please log in to continue");
+  //   // window.location.reload();
+  // }
+  // else {
+  // alert(current_focus.getDeck());
+  Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+    $scope.deck = deck;
+  });
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards=[]
+    angular.forEach(response, function(tagcard){
+      // if(tagcard.id in deck.tagcards) {
+      if($scope.deck.tagcards.includes(tagcard.id)) {
+        $scope.tagcards.push(tagcard);
+      }
+    });
+    return $scope.tagcards;
   });
   Bcard.query().$promise.then(function(response){
-    $scope.bcards = response;
+    $scope.bcards=[]
+    angular.forEach($scope.tagcards, function(tagcard){
+      angular.forEach(response, function(bcard){
+      if(tagcard.bcard_id == bcard.id) {
+          $scope.bcards.push(bcard);
+        }
+      });
+    });
+    return $scope.bcards;
   });
-  $scope.quantity = 6;
+// }
+  $scope.click_card = function(card) {
+    // alert(card.id);
+    current_focus.setCard(card.id);
+  }
 })
 
-.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag) {
-  if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
-    $location.path('/login');
-    window.location.reload();
-  }
-  else {
-    Bcard.query().$promise.then(function(response){
-      $scope.bcards = response;
+.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, current_focus) {
+  // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
+  //   $location.path('/login');
+  //   alert("Please log in to continue");
+  //   // window.location.reload();
+  // }
+  // else {
+    // Bcard.query().$promise.then(function(response){
+    //   $scope.bcards = response;
+    // });
+    // alert(current_focus.getCard());
+    Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
+      $scope.bcard = bcard;
     });
     Tag.query().$promise.then(function(response){
       $scope.tags = response;
     });
     $scope.orderProp = 'hits';
     $scope.quantity = 9;
-  }
+  // }
 })
 
 .controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope) {
   // Bcard.query().$promise.then(function(response){
   //   $scope.bcards = response;
   // });
-  // $scope.data={};
+  $scope.card={};
   if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
     $location.path('/login');
+    alert("Please log in to continue");
     window.location.reload();
   }
   else {
@@ -162,17 +219,30 @@ $scope.login = function() {
   });
 
   $scope.save_card = function() {
-    var bcard = Bcard.get({id:window.localStorage['userId']});
-    alert("Functional");
+    $scope.bcard = Bcard.get({id: window.localStorage['userId']}, function() {
+        alert($scope.card.pinterest);
+        $scope.bcard.pinterest = $scope.card.pinterest
+        $scope.card.$update(function() {
+          //Updated in backend
+
+          alert($scope.bcard.pinterest);
+        });
+    });
     // $scope.data={};
-    // Bcard.get({id:"2"}, function(bcard, getResponseHeaders){
-    //  var bcard = Bcard.get({id:"2"});
-      bcard.pinterest = $scope.pinterest;
-      // alert("Got!");
-      Bcard.update({ id:window.localStorage['userId']}, bcard);
-      $location.path('/page1/tab2/page3');
-    }
+    // Bcard.get({id: "3"}, function(bcard, getResponseHeaders){
+    //   bcard.pinterest = $scope.card.pinterest;
+    //   alert("Got!");
+    //       bcard.$update(function() {
+    //         //Updated in backend
+    //
+    //         alert(bcard.pinterest);
+    //       });
+    //   // Bcard.update({ id: bcard.id}, bcard);
+    //   window.location.reload();
+    //   // $location.path('/page1/tab2/page3');
+    // });
   }
+}
 })
 
 .controller('uploadImageCtrl', function($scope) {
@@ -183,29 +253,59 @@ $scope.login = function() {
 
 })
 
-.controller('studyCtrl', function($scope, Deck, Tagcard) {
+.controller('studyCtrl', function($scope, Deck, $rootScope, current_focus) {
   Deck.query().$promise.then(function(response){
-    $scope.decks = response;
+    $scope.decks=[]
+    angular.forEach(response, function(deck){
+      if(deck.user_id==window.localStorage['userId']) {
+        $scope.decks.push(deck);
+      }
+    });
+    return $scope.decks;
   });
-  Tagcard.query().$promise.then(function(response){
-    $scope.tagcards = response;
-  });
+  // }
+  $scope.click_deck = function(deck) {
+    // alert(deck.id);
+    current_focus.setDeck(deck.id);
+  }
 })
 
 .controller('eventSearchResultsCtrl', function($scope) {
 
 })
 
-.controller('studyDeckCtrl', function($scope, Deck, Tagcard, Bcard) {
-  Deck.query().$promise.then(function(response){
-    $scope.decks = response;
+.controller('studyDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
+  alert(current_focus.getDeck());
+  alert("Error");
+  Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+    $scope.deck = deck;
   });
   Tagcard.query().$promise.then(function(response){
-    $scope.tagcards = response;
+    $scope.tagcards=[]
+    angular.forEach(response, function(tagcard){
+      // if(tagcard.id in deck.tagcards) {
+      if($scope.deck.tagcards.includes(tagcard.id)) {
+        $scope.tagcards.push(tagcard);
+      }
+    });
+    return $scope.tagcards;
   });
   Bcard.query().$promise.then(function(response){
-    $scope.bcards = response;
+    $scope.bcards=[]
+    angular.forEach($scope.tagcards, function(tagcard){
+      angular.forEach(response, function(bcard){
+      if(tagcard.bcard_id == bcard.id) {
+          $scope.bcards.push(bcard);
+        }
+      });
+    });
+    return $scope.bcards;
   });
+// }
+  $scope.click_card = function(card) {
+    // alert(card.id);
+    current_focus.setCard(card.id);
+  }
 })
 
 .controller('studyResultsCtrl', function($scope) {

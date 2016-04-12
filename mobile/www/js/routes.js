@@ -8,11 +8,16 @@ angular.module('app.routes', ['ionicUIRouter'])
   // Each state's controller can be found in controllers.js
   $stateProvider
 
-
   .state('login', {
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
+  })
+
+  .state('logout', {
+      // url: '/logout',
+      // templateUrl: 'templates/logout.html',
+      controller: 'signoutCtrl'
   })
 
   .state('tabsController.scheduleEvent', {

@@ -1,18 +1,18 @@
 <ion-view title="View Business Card" id="page11" style="background-color:#BDBDBD;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <h1 id="viewBusinessCard-heading2" style="color:#0C1C35;">Lname, Fname</h1>
+        <h1 id="viewBusinessCard-heading2" style="color:#0C1C35;">{{bcard.name}}</h1>
         <div id="viewBusinessCard-markdown2" style="color:#000000;">
             <ul>
-                <li>Address</li>
-                <li>Phone Number</li>
-                <li>Email Address</li>
-                <li>Company</li>
-                <li>Position</li>
-                <li>Facebook</li>
-                <li>Pinterest</li>
-                <li>Instagram</li>
-                <li>Twitter</li>
-                <li>Website</li>
+                <li>Address: {{bcard.address}}</li>
+                <li>Phone Number: {{bcard.number}}</li>
+                <li>Email Address: {{bcard.email}}</li>
+                <li>Company: {{bcard.company}}</li>
+                <li>Position: {{bcard.position}}</li>
+                <li>Facebook: {{bcard.facebook}}</li>
+                <li>Pinterest: {{bcard.pinterest}}</li>
+                <li>Instagram: {{bcard.instagram}}</li>
+                <li>Twitter: {{bcard.twitter}}</li>
+                <li>Website: {{bcard.website}}</li>
             </ul>
         </div>
         <a ui-sref="addTags" id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create">Add Tags</a>

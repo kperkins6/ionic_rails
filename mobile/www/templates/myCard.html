@@ -3,15 +3,15 @@
         <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; background-color: rgb(255, 255, 255);">
             <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
         </div>
-        <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+        <!-- <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item> -->
         <form class="list">
             <label class="item item-input" name="name">
                 <span class="input-label">My Name</span>
-                <input type="text" placeholder={{bcard.name}}>
+                <input type="text" placeholder={{bcard.name}} ng-model="card.name">
             </label>
             <label class="item item-input" name="number">
                 <span class="input-label">Phone Number</span>
-                <input type="text" placeholder={{bcard.number}}>
+                <input type="text" placeholder={{bcard.number}} ng-model="card.number">
             </label>
             <label class="item item-input" name="email">
                 <span class="input-label">Email Address</span>
@@ -35,7 +35,7 @@
             </label>
             <label class="item item-input" name="pinterest">
                 <span class="input-label">Pinterest</span>
-                <input type="pinterest" ng-model="pinterest" placeholder={{bcard.pinterest}}>
+                <input type="pinterest" placeholder={{bcard.pinterest}} ng-model="card.pinterest">
             </label>
             <label class="item item-input" name="instagram">
                 <span class="input-label">Instagram</span>
