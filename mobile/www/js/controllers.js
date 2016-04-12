@@ -103,11 +103,33 @@ $scope.login = function() {
   // window.location.reload();
 })
 
-.controller('searchBusinessCardsCtrl', function($scope, Bcard) {
-  Bcard.query().$promise.then(function(response){
-    $scope.bcards = response;
+.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
+
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards=[]
+    angular.forEach(response, function(tagcard){
+      if(tagcard.user_id == window.localStorage['userId']) {
+        $scope.tagcards.push(tagcard);
+      }
+    });
+    return $scope.tagcards;
   });
-  $scope.quantity = 6;
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards=[]
+    angular.forEach($scope.tagcards, function(tagcard){
+      angular.forEach(response, function(bcard){
+      if(tagcard.bcard_id == bcard.id && !$scope.bcards.includes(bcard)) {
+          $scope.bcards.push(bcard);
+        }
+      });
+    });
+    return $scope.bcards;
+  });
+
+  $scope.click_card = function(card) {
+    // alert(card.id);
+    current_focus.setCard(card.id);
+  }
 })
 
 .controller('addTagsCtrl', function($scope, Tag) {

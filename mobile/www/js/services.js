@@ -33,6 +33,7 @@ angular.module('app.services', ['ngResource'])
   var tagcards=[];
 
 })
+
 .service('current_focus', function() {
   var current_card="";
   var current_deck="";

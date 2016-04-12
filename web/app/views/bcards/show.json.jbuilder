@@ -1,1 +1,1 @@
-json.extract! @bcard, :id, :address, :linkedin, :facebook, :twitter, :instagram, :pinterest, :name, :created_at, :updated_at
+json.extract! @bcard, :id, :address, :linkedin, :facebook, :twitter, :instagram, :pinterest, :name, :company, :website, :created_at, :updated_at

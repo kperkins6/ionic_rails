@@ -53,7 +53,7 @@ users = User.create(
 
 bcards = Bcard.create(
   [
-    { name: "Mr. Aardvark", address: "1 West First Street, Chico CA 95926", pinterest: "f", user_id: 1 },
+    { name: "Mr. Aardvark", address: "1 West First Street, Chico CA 95926", facebook: "/ardiemisprime", pinterest: "/ardie12", instagram: "/ardie", twitter: "/ardie117", website: "www.mraardvark.com", company: "Deloitte Consulting", user_id: 1 },
     { name: "Mr. Bear", address: "2 West First Street, Chico CA 95926", pinterest: "f", user_id: 2 },
     { name: "Mr. Cat", address: "3 West First Street, Chico CA 95926", pinterest: "f", user_id: 3 },
     { name: "Mr. Dog", address: "4 West First Street, Chico CA 95926", pinterest: "t", user_id: 4 },

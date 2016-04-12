@@ -7,7 +7,7 @@
             </label>
         </form>
         <ion-list ng-repeat="bcard in bcards | limitTo:quantity">
-            <ion-item ui-sref="viewBusinessCard">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+            <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)" ">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
