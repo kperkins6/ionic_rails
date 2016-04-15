@@ -31,13 +31,17 @@
 </p>
 
 <p>
-  <strong>First name:</strong>
-  <%= @bcard.first_name %>
+  <strong>Name:</strong>
+  <%= @bcard.name %>
 </p>
 
 <p>
-  <strong>Last name:</strong>
-  <%= @bcard.last_name %>
+  <strong>Company:</strong>
+  <%= @bcard.company %>
+</p>
+<p>
+  <strong>Website:</strong>
+  <%= @bcard.website %>
 </p>
 
 <%= link_to 'Edit', edit_bcard_path(@bcard) %> |
