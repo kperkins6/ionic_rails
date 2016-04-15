@@ -5,7 +5,7 @@ angular.module('app.controllers', ['app.services'])
 })
 
 .controller('myEventsCtrl', function($scope) {
-
+  // $window.open('url', '_self')
 })
 
 .controller('nearMeCtrl', function($scope) {
@@ -61,7 +61,8 @@ $scope.login = function() {
     function(data){
       window.localStorage['userId'] = data.id;
       window.localStorage['userName'] = data.name;
-      $location.path('/page1/tab2/page3');
+      $scope.openPage('/page1/tab2/page3');
+      // $location.path('/page1/tab2/page3');
     },
     function(err){
       var error = err["data"]["error"] || err.data.join('. ')
@@ -72,6 +73,10 @@ $scope.login = function() {
     }
   );
   // window.location.reload();
+  $scope.openPage = function (pageName) {
+      window.location = '#' + pageName;
+      window.location.reload();
+  };
 }
 })
 
@@ -297,8 +302,8 @@ $scope.login = function() {
 })
 
 .controller('studyDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
-  alert(current_focus.getDeck());
-  alert("Error");
+  // alert(current_focus.getDeck());
+  // alert("Error");
   Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
     $scope.deck = deck;
   });

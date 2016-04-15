@@ -11,8 +11,9 @@
       <th>Twitter</th>
       <th>Instagram</th>
       <th>Pinterest</th>
-      <th>First name</th>
-      <th>Last name</th>
+      <th>Name</th>
+      <th>Company</th>
+      <th>Website</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -27,6 +28,8 @@
         <td><%= bcard.instagram %></td>
         <td><%= bcard.pinterest %></td>
         <td><%= bcard.name %></td>
+        <td><%= bcard.company %></td>
+        <td><%= bcard.website %></td>
         <td><%= link_to 'Show', bcard %></td>
         <td><%= link_to 'Edit', edit_bcard_path(bcard) %></td>
         <td><%= link_to 'Destroy', bcard, method: :delete, data: { confirm: 'Are you sure?' } %></td>
