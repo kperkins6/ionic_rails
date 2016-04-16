@@ -3,10 +3,11 @@ Rails.application.routes.draw do
   # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
   scope '/bcards' do
-    get '/' => 'bcards_controller#index'
-    post '/' => 'bcards_controller#create'
-    patch '/' => 'bcards_controller#update'
+    get '/' => 'bcards#index'
+    post '/' => 'bcards#create'
+    patch '/' => 'bcards#update'
   end
+
   resources :decks
   resources :tagcards
   resources :bcards
