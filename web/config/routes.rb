@@ -2,7 +2,11 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => {sessions: 'user/sessions', registrations: 'user/registrations', passwords: 'user/passwords' }
   # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
-
+  scope '/bcards' do
+    get '/' => 'bcards_controller#index'
+    post '/' => 'bcards_controller#create'
+    patch '/' => 'bcards_controller#update'
+  end
   resources :decks
   resources :tagcards
   resources :bcards
