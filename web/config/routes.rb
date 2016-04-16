@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   scope '/bcards' do
     get '/' => 'bcards#index'
     post '/' => 'bcards#create'
-    patch '/' => 'bcards#update'
+    put '/' => 'bcards#update'
   end
 
   resources :decks
