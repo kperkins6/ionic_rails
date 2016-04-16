@@ -1,6 +1,8 @@
 <ion-view title="View Business Card" id="page11" style="background-color:#BDBDBD;">
+  <div class="card">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
         <h1 id="viewBusinessCard-heading2" style="color:#0C1C35;">{{bcard.name}}</h1>
+        <img class="full-image" src={{bcard.picture}}>
         <div id="viewBusinessCard-markdown2" style="color:#000000;">
             <ul>
                 <li>Address: {{bcard.address}}</li>
@@ -20,4 +22,5 @@
             <ion-item>text: {{tag.text}}, hits: {{tag.hits}}</ion-item>
         </ion-list>
     </ion-content>
+  </div>
 </ion-view>

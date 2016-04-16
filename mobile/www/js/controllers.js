@@ -54,13 +54,16 @@ $scope.login = function() {
   // window.localStorage['userId'] = data.id;
   // window.localStorage['userName'] = data.name;
   // user_session.$save()
-  alert("Login");
   // alert(data.email);
   // alert(data.password);
   user_session.$save(
     function(data){
       window.localStorage['userId'] = data.id;
       window.localStorage['userName'] = data.name;
+      var confirmPopup = $ionicPopup.alert({
+        title: 'Login Successful!',
+        template: 'Success!'
+      });
       $scope.openPage('/page1/tab2/page3');
       // $location.path('/page1/tab2/page3');
     },
@@ -230,7 +233,7 @@ $scope.login = function() {
   // }
 })
 
-.controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope) {
+.controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope, $http) {
   // Bcard.query().$promise.then(function(response){
   //   $scope.bcards = response;
   // });
@@ -246,15 +249,34 @@ $scope.login = function() {
   });
 
   $scope.save_card = function() {
-    $scope.bcard = Bcard.get({id: window.localStorage['userId']}, function() {
-        alert($scope.card.pinterest);
-        $scope.bcard.pinterest = $scope.card.pinterest
-        $scope.card.$update(function() {
-          //Updated in backend
 
-          alert($scope.bcard.pinterest);
-        });
-    });
+    $scope.bcard.address = $scope.card.address;
+    $scope.bcard = Bcard.update($scope.bcard);
+    alert('Saved');
+    // $scope.bcard = Bcard.get({id: window.localStorage['userId']}, function(card) {
+    //   alert("http://159.203.247.39:3000/bcards/" + card.id);
+    //     $http({
+    //       url: "http://159.203.247.39:3000/bcards/" + card.id,
+    //       method: 'POST',
+    //       data: $scope.bcard
+    //     })
+    //     .then(function(res){
+    //       alert('save_successufl');
+    //       window.location.reload();
+    //     })
+    //     .catch(function(res){
+    //       alert(res.status);
+    //       alert(res.statusText);
+    //
+    //     });
+    //     // alert($scope.card.pinterest);
+    //     // $scope.bcard.pinterest = $scope.card.pinterest
+    //     // $scope.card.$update(function() {
+    //     //   //Updated in backend
+    //     //
+    //     //   alert($scope.bcard.pinterest);
+    //     // });
+    // });
     // $scope.data={};
     // Bcard.get({id: "3"}, function(bcard, getResponseHeaders){
     //   bcard.pinterest = $scope.card.pinterest;
@@ -269,7 +291,7 @@ $scope.login = function() {
     //   // $location.path('/page1/tab2/page3');
     // });
   }
-}
+  }
 })
 
 .controller('uploadImageCtrl', function($scope) {

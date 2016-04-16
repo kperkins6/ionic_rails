@@ -5,7 +5,10 @@
             <p>Deck Description: {{deck.description}}</p>
         </div>
         <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
+          <div class="item item-avatar">
+            <img src="my-image.png">
             <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
-        </ion-list>
+        </div>
+       </ion-list>
     </ion-content>
 </ion-view>

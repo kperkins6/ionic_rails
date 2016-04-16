@@ -25,6 +25,8 @@ class BcardsController < ApplicationController
   # POST /bcards.json
   def create
     @bcard = Bcard.new(bcard_params)
+    puts 'Bcards_controller.create!!!!!'
+    puts bcard_params.inspect
 
     respond_to do |format|
       if @bcard.save
@@ -40,6 +42,9 @@ class BcardsController < ApplicationController
   # PATCH/PUT /bcards/1
   # PATCH/PUT /bcards/1.json
   def update
+    puts 'Bcards_controller.UPDATE!!!!!'
+    puts bcard_params.inspect
+
     respond_to do |format|
       if @bcard.update(bcard_params)
         format.html { redirect_to @bcard, notice: 'Bcard was successfully updated.' }
@@ -69,6 +74,6 @@ class BcardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def bcard_params
-      params.require(:bcard).permit(:address, :linkedin, :facebook, :twitter, :instagram, :pinterest, :name, :company, :website, :user_id)
+      params.require(:bcard).permit(:id, :address, :linkedin, :facebook, :twitter, :instagram, :pinterest, :name, :company, :website, :user_id, :created_at, :updated_at)
     end
 end
