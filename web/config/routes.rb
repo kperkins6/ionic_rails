@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {sessions: 'user/sessions', registrations: 'user/registrations', passwords: 'user/passwords' }
-  match "/bcards" => "application#index", via: :options
+  # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
 
   resources :decks
