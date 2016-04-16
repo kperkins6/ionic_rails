@@ -252,7 +252,7 @@ $scope.login = function() {
 
     $scope.bcard.address = $scope.card.address;
     $scope.bcard = Bcard.update($scope.bcard);
-    alert('Saved');
+    alert('Saved ' + $scope.bcard.address);
     // $scope.bcard = Bcard.get({id: window.localStorage['userId']}, function(card) {
     //   alert("http://159.203.247.39:3000/bcards/" + card.id);
     //     $http({
