@@ -8,7 +8,7 @@ angular.module('app.services', ['ngResource'])
   var bcards =
   $resource("http://159.203.247.39:3000/bcards/:id.json", {bcard: 'bcards'},
   {
-      update: { method:'POST', isArray: false},
+      update: { method:'PATCH', isArray: false},
       query: { method:'GET' , isArray: true},
       save: { method:'POST' , isArray: false}
   });

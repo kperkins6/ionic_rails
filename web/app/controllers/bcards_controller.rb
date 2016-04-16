@@ -47,10 +47,10 @@ class BcardsController < ApplicationController
 
     respond_to do |format|
       if @bcard.update(bcard_params)
-        format.html { redirect_to @bcard, notice: 'Bcard was successfully updated.' }
+        # format.html { redirect_to @bcard, notice: 'Bcard was successfully updated.' }
         format.json { render :show, status: :ok, location: @bcard }
       else
-        format.html { render :edit }
+        # format.html { render :edit }
         format.json { render json: @bcard.errors, status: :unprocessable_entity }
       end
     end
@@ -66,6 +66,9 @@ class BcardsController < ApplicationController
     end
   end
 
+  def index
+  end
+  
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_bcard
