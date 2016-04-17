@@ -302,7 +302,7 @@ bcards.each do |bcard|
       #assign each deck new business cards with tags using Tagcard
       decks.each do |deck|
         if deck.user_id == user_id
-          tcard = Tagcard.where(bcard_id: bcard.id, user_id: user_id).first_or_create
+          tCard = Tagcard.where(bcard_id: bcard.id, user_id: user_id).first_or_create
           #create Tags
           for i in 0..rand(4)
               random_tag_string = gen_tag
