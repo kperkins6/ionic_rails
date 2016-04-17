@@ -30,10 +30,10 @@ class BcardsController < ApplicationController
 
     respond_to do |format|
       if @bcard.save
-        format.html { redirect_to @bcard, notice: 'Bcard was successfully created.' }
+        # format.html { redirect_to @bcard, notice: 'Bcard was successfully created.' }
         format.json { render :show, status: :created, location: @bcard }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @bcard.errors, status: :unprocessable_entity }
       end
     end

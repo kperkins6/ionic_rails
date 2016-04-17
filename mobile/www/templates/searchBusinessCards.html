@@ -3,14 +3,14 @@
         <form class="list">
             <label class="item item-input" name="Search Bcard">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="Enter Name">
+                <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Address, Etc...">
             </label>
         </form>
-        <ion-list ng-repeat="bcard in bcards | limitTo:quantity">
+        <ion-list ng-repeat="bcard in bcards | filter: search">
           <div class="item item-avatar">
             <img src="my-image.png">
             <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
-          </div
+          </div>
         </ion-list>
     </ion-content>
 </ion-view>

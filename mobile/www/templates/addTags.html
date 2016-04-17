@@ -1,23 +1,41 @@
 <ion-view title="Add Tags" id="page8">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <form class="list"></form>
         <ion-list>
+          <ion-item class="item-divider">Create Tags</ion-item>
+          <!-- <form class="list">
+            <label class="item item-input" name="Add Tags">
+            <input ng-model="createTag" name="tagText" type="text" autofocus class="form-control" placeholder="Type A Tag ex: Studies Engineering">
+            <input type="text" placeholder="Type A Tag ex: Studies Engineering" ng-model="createTag.tagtext" autofocus class="form-control">
+            <button class="button button-md button-calm" ng-click="create_tag()" type="submit">Create Tag</button>
+          </label> -->
+
+          <label class="item item-input item-floating-label">
+            <!-- <span class="input-label">Tag Text</span> -->
+            <input type="text" placeholder="Enter A New Tag" ng-model="newTag.text">
+          </label>
+          <div class="padding">
+            <button type="submit" class="button button-block button-calm" ng-click="create_tag()">Create Tag!</button>
+          </div>
+
+
+
+          <ion-item class="item-divider">Search Tags</ion-item>
+          <form class="list">
             <label class="item item-input" name="Search Tags">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="Type A Tag ex: Studies Engineering">
             </label>
-            <ion-item>Suggested Tag</ion-item>
-            <ion-item>Suggested Tag</ion-item>
-            <ion-item>Suggested Tag</ion-item>
-            <ion-item class="item-divider">Current Tags</ion-item>
-        </ion-list>
-        <!-- <ion-list>
-            <ion-item>Tag1</ion-item>
-            <ion-item>Tag2</ion-item>
-            <ion-item>Tag3</ion-item>
-        </ion-list> -->
-        <ion-list ng-repeat="tag in tags">
+            <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Search for a Tag ex: Studies Computer Science">
+
+          </form>
+          </form>
+          <ion-item class="item-divider">Suggested Tags</ion-item>
+          <ion-list ng-repeat="tag in suggested_tags | filter: search | orderBy:orderProp:true | limitTo:quantity">
             <ion-item>Text: {{tag.text}}, Hits: {{tag.hits}}</ion-item>
+          </ion-list>
+          <ion-item class="item-divider">Current Tags</ion-item>
+        </ion-list>
+        <ion-list ng-repeat="tag in tags | orderBy:orderProp">
+          <ion-item>Text: {{tag.text}}, Hits: {{tag.hits}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

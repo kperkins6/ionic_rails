@@ -25,13 +25,14 @@ class TagsController < ApplicationController
   # POST /tags.json
   def create
     @tag = Tag.new(tag_params)
+    puts tag_params.inspect
 
     respond_to do |format|
       if @tag.save
-        format.html { redirect_to @tag, notice: 'Tag was successfully created.' }
+        # format.html { redirect_to @tag, notice: 'Tag was successfully created.' }
         format.json { render :show, status: :created, location: @tag }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @tag.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +70,6 @@ class TagsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tag_params
-      params.require(:tag).permit(:text, :hits)
+      params.permit(:text, :hits, :created_at, :updated_at)
     end
 end
