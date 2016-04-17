@@ -302,7 +302,7 @@ bcards.each do |bcard|
       #assign each deck new business cards with tags using Tagcard
       decks.each do |deck|
         if deck.user_id == user_id
-          tCard=Tagcard.create(bcard_id: bcard.id, user_id: user_id)
+          tcard = Tagcard.where(bcard_id: bcard.id, user_id: user_id).first_or_create
           #create Tags
           for i in 0..rand(4)
               random_tag_string = gen_tag
@@ -311,7 +311,9 @@ bcards.each do |bcard|
               #     nTag.hits = nTag.hits + 1
               #     puts "Incremented " + nTag.text + ".hits by 1"
               # else
-                nTag=Tag.create(text: random_tag_string, hits: user_id)
+                nTag=Tag.where(text: random_tag_string).first_or_initialize
+                nTag.hits = nTag.hits + 1
+                nTag.save!
               # end
               tCard.tags.push(nTag.id)
           end

@@ -19,7 +19,11 @@
         </div>
         <a ui-sref="addTags" id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create" ng-click="click_tags(bcard)">Add Tags</a>
         <ion-list ng-repeat="tag in tags | orderBy:orderProp">
-            <ion-item>text: {{tag.text}}, hits: {{tag.hits}}</ion-item>
+          <div class="buttons">
+            <ion-item>text: {{tag.text}}, hits: {{tag.hits}}
+              <ion-option-button class="button button-assertive icon ion-android-delete" id="deleteTag" ng-click="delete_tag(tag.id)">Delete Tag?</ion-option-button>
+            </ion-item>
+          </div>
         </ion-list>
     </ion-content>
   </div>

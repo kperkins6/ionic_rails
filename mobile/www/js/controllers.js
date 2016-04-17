@@ -315,6 +315,19 @@ $scope.login = function() {
       // alert(card.id);
       current_focus.setCard(card.id);
     }
+    $scope.delete_tag = function(tag) {
+      angular.forEach($scope.tag_ids, function(tag_list){
+          var index = tag_list.indexOf(tag);
+          if (index >= "0") {
+            tag_list.splice(index, 1);
+            tag_list = Tagcard.update(tag_list.id);
+            alert("Deleted from Tagcard");
+          }
+        });
+        index = $scope.tags.indexOf(tag)
+        $scope.tags.splice(index, 1);
+        alert("Deleted from View");
+      }
 })
 
 .controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope, $http) {
