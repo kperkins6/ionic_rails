@@ -31,15 +31,15 @@ angular.module('app.services', ['ngResource'])
 })
 
 .factory('Tagcard', function($resource) {
-  return $resource("http://159.203.247.39:3000/tagcards/:id.json");
-  // var tagcards =
-  // $resource("http://159.203.247.39:3000/tagcards/:id.json"), {tagcard: 'tagcards'},
-  // {
-  //     update: { method:'PUT', isArray: false},
-  //     query: { method:'GET' , isArray: true},
-  //     save: { method:'POST' , isArray: false}
-  // });
-  // return tagcards;
+  // return $resource("http://159.203.247.39:3000/tagcards/:id.json");
+  var tagcards =
+  $resource("http://159.203.247.39:3000/tagcards/:id.json", {tagcard: 'tagcards'},
+  {
+      update: { method:'PUT', isArray: false},
+      query: { method:'GET' , isArray: true},
+      save: { method:'POST' , isArray: false}
+  });
+  return tagcards;
 })
 
 .factory('UserSession', function($resource) {

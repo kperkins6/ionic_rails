@@ -7,7 +7,12 @@ Rails.application.routes.draw do
     post '/' => 'bcards#create'
     put '/' => 'bcards#update'
   end
-
+  scope '/tagcards' do
+    get '/' => 'tagcards#index'
+    post '/' => 'tagcards#create'
+    put '/' => 'tagcards#update'
+  end
+  
   resources :decks
   resources :tagcards
   resources :bcards

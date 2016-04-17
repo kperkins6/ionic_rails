@@ -141,6 +141,7 @@ $scope.login = function() {
 })
 
 .controller('addTagsCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $location, $ionicPopup, $rootScope, $http) {
+  $scope.newTag = {};
   Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
     alert($scope.bcard.id);
@@ -177,25 +178,29 @@ $scope.login = function() {
   }
 
   $scope.create_tag = function() {
-      // alert($scope.new_Tag.text);
-    // alert($scope.createTag.tagtext);
-    $scope.new_Tag = new Tag();
-      alert("Tag Created");
-    // $scope.new_Tag.text = $scope.newTag.text;
-    $scope.new_Tag.hits="0";
-      alert("Tag Params Set");
-    $scope.new_Tag = Tag.save($scope.new_Tag);
-    // $scope.new_Tag = Tag.save({}, function(tag) {
-    //   // tag.hits=0;{text: $scope.newTag.text}
-    //   // tag.text=keywords;
-      alert("Tag Saved");
-    // });
-    // $scope.tagcard.tags.push($scope.new_Tag);
-    //   alert("Tag Pushed");
-    // $scope.tagcard = Tagcard.update($scope.tagcard);
-    //   alert("Tagcard Updated");
-    // $scope.tags.push($scope.new_Tag);
-    //   alert("View Updated");
+    var new_tag= new Tag({ text: $scope.newTag.text, hits: "0" });
+
+    new_tag.$save(
+      function(newTag){
+        var confirmPopup = $ionicPopup.alert({
+          title: 'Tag Successful!',
+          template: 'Success!'
+        });
+        $scope.tagcard.tags.push(newTag.id);
+          alert($scope.tagcard.tags);
+        $scope.tagcard = Tagcard.update($scope.tagcard);
+          alert("Tagcard Updated");
+        $scope.tags.push(newTag);
+          alert("View Updated");
+      },
+      function(err){
+        var error = err["data"]["error"] || err.data.join('. ')
+        var confirmPopup = $ionicPopup.alert({
+          title: 'An error occured',
+          template: error
+        });
+      }
+    );
   }
 
 })

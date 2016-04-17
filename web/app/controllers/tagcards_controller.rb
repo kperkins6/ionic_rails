@@ -28,10 +28,10 @@ class TagcardsController < ApplicationController
 
     respond_to do |format|
       if @tagcard.save
-        format.html { redirect_to @tagcard, notice: 'Tagcard was successfully created.' }
+        # format.html { redirect_to @tagcard, notice: 'Tagcard was successfully created.' }
         format.json { render :show, status: :created, location: @tagcard }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @tagcard.errors, status: :unprocessable_entity }
       end
     end
@@ -42,10 +42,10 @@ class TagcardsController < ApplicationController
   def update
     respond_to do |format|
       if @tagcard.update(tagcard_params)
-        format.html { redirect_to @tagcard, notice: 'Tagcard was successfully updated.' }
+        # format.html { redirect_to @tagcard, notice: 'Tagcard was successfully updated.' }
         format.json { render :show, status: :ok, location: @tagcard }
       else
-        format.html { render :edit }
+        # format.html { render :edit }
         format.json { render json: @tagcard.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +69,6 @@ class TagcardsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def tagcard_params
-      params.require(:tagcard).permit(:user_id, :tags, :bcard_id)
+      params.permit(:id, :user_id, :tags, :bcard_id)
     end
 end
