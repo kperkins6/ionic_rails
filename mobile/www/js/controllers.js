@@ -178,29 +178,37 @@ $scope.login = function() {
   }
 
   $scope.create_tag = function() {
-    var new_tag= new Tag({ text: $scope.newTag.text, hits: "0" });
+    // var oldTag = Tag.get({text: $scope.newTag.text}).$promise.then(function(tag) {
+    //   alert("Exists");
+    //   $scope.tagcard.tags.push(tag.id);
+    //   $scope.tagcard = Tagcard.update($scope.tagcard);
+    //   $scope.tags.push(tag);
+    // });
+    // if (oldtag != undefined) {
+      var new_tag= new Tag({ text: $scope.newTag.text, hits: "0" });
 
-    new_tag.$save(
-      function(newTag){
-        var confirmPopup = $ionicPopup.alert({
-          title: 'Tag Successful!',
-          template: 'Success!'
-        });
-        $scope.tagcard.tags.push(newTag.id);
-          alert($scope.tagcard.tags);
-        $scope.tagcard = Tagcard.update($scope.tagcard);
-          alert("Tagcard Updated");
-        $scope.tags.push(newTag);
-          alert("View Updated");
-      },
-      function(err){
-        var error = err["data"]["error"] || err.data.join('. ')
-        var confirmPopup = $ionicPopup.alert({
-          title: 'An error occured',
-          template: error
-        });
-      }
-    );
+      new_tag.$save(
+        function(newTag){
+          var confirmPopup = $ionicPopup.alert({
+            title: 'Tag Successful!',
+            template: 'Success!'
+          });
+          $scope.tagcard.tags.push(newTag.id);
+            alert($scope.tagcard.tags);
+          $scope.tagcard = Tagcard.update($scope.tagcard);
+            alert("Tagcard Updated");
+          $scope.tags.push(newTag);
+            alert("View Updated");
+        },
+        function(err){
+          var error = err["data"]["error"] || err.data.join('. ')
+          var confirmPopup = $ionicPopup.alert({
+            title: 'An error occured',
+            template: error
+          });
+        }
+      );
+      // }
   }
 
 })
