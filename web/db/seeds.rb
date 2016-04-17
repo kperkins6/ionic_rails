@@ -311,9 +311,7 @@ bcards.each do |bcard|
               #     nTag.hits = nTag.hits + 1
               #     puts "Incremented " + nTag.text + ".hits by 1"
               # else
-                nTag=Tag.where(text: random_tag_string).first_or_initialize
-                nTag.hits = nTag.hits + 1
-                nTag.save!
+                nTag=Tag.where(text: random_tag_string, hits: user_id).first_or_create
               # end
               tCard.tags.push(nTag.id)
           end
