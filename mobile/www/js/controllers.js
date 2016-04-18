@@ -239,15 +239,16 @@ $scope.login = function() {
     }
 
     $scope.create_deck = function() {
-      alert($scope.newDeck.name);
-      var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description });
+      var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description, user_id: window.localStorage['userId'] });
+      alert("Deck Created!");
+      $scope.decks.push(newDeck);
+
       new_deck.$save(
         function(newDeck){
           var confirmPopup = $ionicPopup.alert({
             title: 'Deck Successful!',
             template: 'Success!'
           });
-          $scope.decks.push(newDeck);
         },
         function(err){
           var error = err["data"]["error"] || err.data.join('. ')
