@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {sessions: 'user/sessions', registrations: 'user/registrations', passwords: 'user/passwords' }
-  match 'users/sign_out' => "devise/sessions#destroy"
+  # match 'users/sign_out' => "devise/sessions#destroy"
   # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
   scope '/bcards' do
