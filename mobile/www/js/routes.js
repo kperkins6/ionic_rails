@@ -75,6 +75,12 @@ angular.module('app.routes', ['ionicUIRouter'])
     controller: 'searchBusinessCardsCtrl'
   })
 
+  .state('addBusinessCards', {
+    url: '/page27',
+    templateUrl: 'templates/addBusinessCards.html',
+    controller: 'addBusinessCardsCtrl'
+  })
+
   .state('addTags', {
     url: '/page8',
     templateUrl: 'templates/addTags.html',

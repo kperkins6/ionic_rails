@@ -196,11 +196,11 @@ $scope.login = function() {
             template: 'Success!'
           });
           $scope.tagcard.tags.push(newTag.id);
-            alert($scope.tagcard.tags);
+            // alert($scope.tagcard.tags);
           $scope.tagcard = Tagcard.update($scope.tagcard);
-            alert("Tagcard Updated");
+            // alert("Tagcard Updated");
           $scope.tags.push(newTag);
-            alert("View Updated");
+            // alert("View Updated");
         },
         function(err){
           var error = err["data"]["error"] || err.data.join('. ')
@@ -223,8 +223,9 @@ $scope.login = function() {
   // }
   // else {
   $scope.newDeck = {};
+  $scope.decks=[];
+
     Deck.query().$promise.then(function(response){
-      $scope.decks=[]
       angular.forEach(response, function(deck){
         if(deck.user_id==window.localStorage['userId']) {
           $scope.decks.push(deck);
@@ -239,9 +240,9 @@ $scope.login = function() {
     }
 
     $scope.create_deck = function() {
-      var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description, user_id: window.localStorage['userId'] });
+      var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description, user_id: window.localStorage['userId']});
       alert("Deck Created!");
-      $scope.decks.push(newDeck);
+      // $scope.decks.push(newDeck);
 
       new_deck.$save(
         function(newDeck){
@@ -258,6 +259,7 @@ $scope.login = function() {
           });
         }
       );
+      window.location.reload();
     }
 })
 
@@ -293,11 +295,110 @@ $scope.login = function() {
     });
     return $scope.bcards;
   });
+  // current_focus.setDeck($scope.deck.id);
+
 // }
   $scope.click_card = function(card) {
     // alert(card.id);
     current_focus.setCard(card.id);
   }
+})
+
+.controller('addBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
+  Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+    $scope.deck = deck;
+    // alert($scope.deck.id);
+  });
+  Tagcard.query().$promise.then(function(response){
+    $scope.tagcards=[]
+    angular.forEach(response, function(tagcard){
+      if(tagcard.user_id == window.localStorage['userId']) {
+        $scope.tagcards.push(tagcard);
+      }
+    });
+    return $scope.tagcards;
+  });
+  $scope.bcards = [];
+  Bcard.query().$promise.then(function(response){
+    $scope.bcards= response;
+    // angular.forEach($scope.tagcards, function(tagcard){
+    //   angular.forEach(response, function(bcard){
+    //   if(tagcard.bcard_id == bcard.id && !$scope.bcards.includes(bcard)) {
+    //       $scope.bcards.push(bcard);
+    //     }
+    //   });
+    // });
+    // return $scope.bcards;
+  });
+
+  $scope.click_card = function(card) {
+    // alert(card.id);
+
+    // var deck = current_focus.getDeck();
+    var tCard = {};
+    tCard.id = "-1";
+
+      Tagcard.query().$promise.then(function(response){
+        $scope.tagcards=[];
+        angular.forEach(response, function(tagcard){
+          if(card.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
+            // $scope.tagcards.push(tagcard);
+            // alert(tagcard.id);
+            tCard.id = tagcard.id;
+          }
+        });
+        // return $scope.tagcards;
+      // });
+
+      // Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+      //   $scope.deck = deck;
+      // });
+      if (tCard.id >= "0") {
+        // alert($scope.deck.id);
+        var index = $scope.deck.tagcards.indexOf(tCard.id);
+        // alert("Index");
+        if (index >= "0") {
+          alert(index);
+        } else {
+          $scope.deck.tagcards.push(tCard.id);
+          Deck.update($scope.deck);
+          // alert("Deck Updated!");
+          window.location.reload();
+        }
+      } else {
+        // alert("Unset Tag Card");
+
+        var new_tagcard= new Tagcard({user_id: window.localStorage['userId'], bcard_id: card.id});
+
+        new_tagcard.$save(
+          function(newTagcard){
+            var confirmPopup = $ionicPopup.alert({
+              title: 'Tag Successful!',
+              template: 'Success!'
+            });
+            // $scope.tagcard.tags.push(newTagcard.id);
+            //   alert($scope.tagcard.tags);
+            // $scope.tagcard = Tagcard.update($scope.tagcard);
+            //   alert("Tagcard Updated");
+            // $scope.tags.push(newTag);
+            //   alert("View Updated");
+          },
+          function(err){
+            var error = err["data"]["error"] || err.data.join('. ')
+            var confirmPopup = $ionicPopup.alert({
+              title: 'An error occured',
+              template: error
+            });
+          }
+        );
+
+      }
+      // alert("After Loopa");
+    });
+  }
+  $scope.orderProp = 'name';
+  $scope.quantity = "10";
+
 })
 
 .controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup) {
