@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users, :controllers => {sessions: 'user/sessions', registrations: 'user/registrations', passwords: 'user/passwords' }
+  match 'users/sign_out' => "devise/sessions#destroy"
   # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
   scope '/bcards' do
@@ -12,7 +13,7 @@ Rails.application.routes.draw do
     post '/' => 'tagcards#create'
     put '/' => 'tagcards#update'
   end
-  
+
   resources :decks
   resources :tagcards
   resources :bcards
