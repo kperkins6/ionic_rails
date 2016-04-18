@@ -88,24 +88,26 @@ $scope.login = function() {
 })
 
 .controller('signoutCtrl', function($scope, UserSession) {
-  // var session = UserSession.get({userId: window.localStorage['userId']});
+  var session = UserSession.get({userId: window.localStorage['userId']});
+  alert("Got Session");
+  UserSession.delete(session);
   // if ( session == 'undefined'){
   //   $location.path('/login');
   //   window.location.reload();
   // }
   // else {
-  $http.get('http://159.203.247.39:3000/users/sign_out', {
-  // auth_token: session.userId // just a cookie storing my token from devise token authentication.
-
-  }).success( function(result) {
-    // $cookieStore.remove('_pf_session');
-    // $cookieStore.remove('_pf_name');
-    // $cookieStore.remove('_pf_email');
-    alert("Sign Out Successfull");
-    location.reload(true); // I need to refresh the page to update cookies
-  }).error( function(result) {
-    console.log(result);
-  });
+  // $http.get('http://159.203.247.39:3000/users/sign_out', {
+  // // auth_token: session.userId // just a cookie storing my token from devise token authentication.
+  //
+  // }).success( function(result) {
+  //   // $cookieStore.remove('_pf_session');
+  //   // $cookieStore.remove('_pf_name');
+  //   // $cookieStore.remove('_pf_email');
+  //   alert("Sign Out Successfull");
+  //   location.reload(true); // I need to refresh the page to update cookies
+  // }).error( function(result) {
+  //   console.log(result);
+  // });
   // }
 
   $location.path('/login');
