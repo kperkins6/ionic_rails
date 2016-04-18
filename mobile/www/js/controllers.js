@@ -83,14 +83,67 @@ $scope.login = function() {
 }
 })
 
-.controller('signupCtrl', function($scope) {
+.controller('signupCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, NewUser) {
+  $scope.data = {};
 
+  $scope.sign_up = function() {
+    var new_user = new NewUser({user: $scope.data});
+    new_user.$save(
+      function(data){
+        window.localStorage['userId'] = data.id;
+        window.localStorage['userName'] = data.name;
+        var confirmPopup = $ionicPopup.alert({
+          title: 'Sign_Up Successful!',
+          template: 'Success!'
+        });
+        $scope.openPage('/page1/tab2/page3');
+        // $location.path('/page1/tab2/page3');
+      },
+      function(err){
+        var error = err["data"]["error"] || err.data.join('. ')
+        var confirmPopup = $ionicPopup.alert({
+          title: 'An error occured',
+          template: error
+        });
+      }
+    );
+    // var user_session = new UserSession({ user: $scope.data });
+    // user_session.$save(
+    //   function(data){
+    //     window.localStorage['userId'] = data.id;
+    //     window.localStorage['userName'] = data.name;
+    //     var confirmPopup = $ionicPopup.alert({
+    //       title: 'Login Successful!',
+    //       template: 'Success!'
+    //     });
+    //     $scope.openPage('/page1/tab2/page3');
+    //     // $location.path('/page1/tab2/page3');
+    //   },
+    //   function(err){
+    //     var error = err["data"]["error"] || err.data.join('. ')
+    //     var confirmPopup = $ionicPopup.alert({
+    //       title: 'An error occured',
+    //       template: error
+    //     });
+    //   }
+    // );
+    // window.location.reload();
+    $scope.openPage = function (pageName) {
+        window.location = '#' + pageName;
+        window.location.reload();
+    };
+  }
 })
 
-.controller('signoutCtrl', function($scope, UserSession) {
-  var session = UserSession.get({userId: window.localStorage['userId']});
-  alert("Got Session");
-  UserSession.delete(session);
+.controller('signoutCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory) {
+  // var session = UserSession.get({userId: window.localStorage['userId']});
+  window.localStorage.clear();
+  alert("Storage Cleared");
+  $ionicHistory.clearCache();
+  alert("Cache Cleared");
+  $ionicHistory.clearHistory();
+  alert("History Cleared");
+  // UserSession.delete(session);
   // if ( session == 'undefined'){
   //   $location.path('/login');
   //   window.location.reload();
@@ -110,7 +163,7 @@ $scope.login = function() {
   // });
   // }
 
-  $location.path('/login');
+  // $location.path('/login');
   // window.location.reload();
 })
 
@@ -485,7 +538,7 @@ $scope.login = function() {
     window.location.reload();
   }
   else {
-  Bcard.get({id: window.localStorage['userId']}).$promise.then(function(bcard) {
+  Bcard.get({id: window.localStorage['userId']}).first_or_create.$promise.then(function(bcard) { //-----------------------------------first_or_create MAY BE WRONG---------------
     $scope.bcard = bcard;
   });
 

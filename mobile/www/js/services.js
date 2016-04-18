@@ -54,6 +54,10 @@ angular.module('app.services', ['ngResource'])
   return $resource("http://159.203.247.39:3000/users/sign_in.json");
 })
 
+.factory('NewUser', function($resource) {
+  return $resource("http://159.203.247.39:3000/users/sign_up.json");
+})
+
 .service('StudySession', function(){
   var total="0";
   var score="0";

@@ -18,8 +18,8 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('logout', {
-      // url: '/logout',
-      // templateUrl: 'templates/logout.html',
+      url: '/logout',
+      templateUrl: 'templates/logout.html',
       controller: 'signoutCtrl'
   })
 
