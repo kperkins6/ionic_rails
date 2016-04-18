@@ -88,12 +88,12 @@ $scope.login = function() {
 })
 
 .controller('signoutCtrl', function($scope, UserSession) {
-  var session = UserSession.get({userId: window.localStorage['userId']});
-  if ( session == 'undefined'){
-    $location.path('/login');
-    window.location.reload();
-  }
-  else {
+  // var session = UserSession.get({userId: window.localStorage['userId']});
+  // if ( session == 'undefined'){
+  //   $location.path('/login');
+  //   window.location.reload();
+  // }
+  // else {
   $http.delete('http://159.203.247.39:3000/users/sign_out', {
   // auth_token: session.userId // just a cookie storing my token from devise token authentication.
 
@@ -101,12 +101,13 @@ $scope.login = function() {
     // $cookieStore.remove('_pf_session');
     // $cookieStore.remove('_pf_name');
     // $cookieStore.remove('_pf_email');
+    alert("Sign Out Successfull");
     location.reload(true); // I need to refresh the page to update cookies
   }).error( function(result) {
     console.log(result);
   });
-  }
-  alert("Sign Out Successfull");
+  // }
+
   $location.path('/login');
   // window.location.reload();
 })
