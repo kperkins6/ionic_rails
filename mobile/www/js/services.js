@@ -27,7 +27,15 @@ angular.module('app.services', ['ngResource'])
 })
 
 .factory('Deck', function($resource) {
-  return $resource("http://159.203.247.39:3000/decks/:id.json");
+  // return $resource("http://159.203.247.39:3000/decks/:id.json");
+  var decks =
+  $resource("http://159.203.247.39:3000/decks/:id.json", {deck: 'decks'},
+  {
+      update: { method:'PUT', isArray: false},
+      query: { method:'GET' , isArray: true},
+      save: { method:'POST' , isArray: false}
+  });
+  return decks;
 })
 
 .factory('Tagcard', function($resource) {

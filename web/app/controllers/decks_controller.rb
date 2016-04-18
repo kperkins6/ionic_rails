@@ -28,10 +28,10 @@ class DecksController < ApplicationController
 
     respond_to do |format|
       if @deck.save
-        format.html { redirect_to @deck, notice: 'Deck was successfully created.' }
+        # format.html { redirect_to @deck, notice: 'Deck was successfully created.' }
         format.json { render :show, status: :created, location: @deck }
       else
-        format.html { render :new }
+        # format.html { render :new }
         format.json { render json: @deck.errors, status: :unprocessable_entity }
       end
     end
@@ -42,10 +42,10 @@ class DecksController < ApplicationController
   def update
     respond_to do |format|
       if @deck.update(deck_params)
-        format.html { redirect_to @deck, notice: 'Deck was successfully updated.' }
+        # format.html { redirect_to @deck, notice: 'Deck was successfully updated.' }
         format.json { render :show, status: :ok, location: @deck }
       else
-        format.html { render :edit }
+        # format.html { render :edit }
         format.json { render json: @deck.errors, status: :unprocessable_entity }
       end
     end
@@ -69,6 +69,6 @@ class DecksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deck_params
-      params.require(:deck).permit(:user_id, :description, :tagcards)
+      params.permit(:user_id, :description, :tagcards)
     end
 end

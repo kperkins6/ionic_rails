@@ -138,13 +138,15 @@ $scope.login = function() {
     // alert(card.id);
     current_focus.setCard(card.id);
   }
+  $scope.orderProp = 'name';
+
 })
 
 .controller('addTagsCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $location, $ionicPopup, $rootScope, $http) {
   $scope.newTag = {};
   Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
-    alert($scope.bcard.id);
+    // alert($scope.bcard.id);
 
   // alert(user_card);
 
@@ -185,7 +187,7 @@ $scope.login = function() {
     //   $scope.tags.push(tag);
     // });
     // if (oldtag != undefined) {
-      var new_tag= new Tag({ text: $scope.newTag.text, hits: "0" });
+      var new_tag= new Tag({ text: $scope.newTag.text, hits: "1" });
 
       new_tag.$save(
         function(newTag){
@@ -220,6 +222,7 @@ $scope.login = function() {
   //   // window.location.reload();
   // }
   // else {
+  $scope.newDeck = {};
     Deck.query().$promise.then(function(response){
       $scope.decks=[]
       angular.forEach(response, function(deck){
@@ -233,6 +236,27 @@ $scope.login = function() {
     $scope.click_deck = function(deck) {
       // alert(deck.id);
       current_focus.setDeck(deck.id);
+    }
+
+    $scope.create_deck = function() {
+      alert($scope.newDeck.name);
+      var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description });
+      new_deck.$save(
+        function(newDeck){
+          var confirmPopup = $ionicPopup.alert({
+            title: 'Deck Successful!',
+            template: 'Success!'
+          });
+          $scope.decks.push(newDeck);
+        },
+        function(err){
+          var error = err["data"]["error"] || err.data.join('. ')
+          var confirmPopup = $ionicPopup.alert({
+            title: 'An error occured',
+            template: error
+          });
+        }
+      );
     }
 })
 
@@ -275,7 +299,7 @@ $scope.login = function() {
   }
 })
 
-.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus) {
+.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup) {
   // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
   //   $location.path('/login');
   //   alert("Please log in to continue");
@@ -316,17 +340,32 @@ $scope.login = function() {
       current_focus.setCard(card.id);
     }
     $scope.delete_tag = function(tag) {
-      angular.forEach($scope.tag_ids, function(tag_list){
-          var index = tag_list.indexOf(tag);
-          if (index >= "0") {
-            tag_list.splice(index, 1);
-            tag_list = Tagcard.update(tag_list.id);
-            alert("Deleted from Tagcard");
+      var tCard = {};
+      // Tagcard.get({bcard_id: $scope.bcard.id, user_id: window.localStorage['userId']}).$promise.then(function(tagcard){
+      Tagcard.query().$promise.then(function(response){
+        angular.forEach(response, function(tagcard){
+          // console.log(response.user_id + " " + response.bcard_id);
+          if ($scope.bcard.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
+            // alert("Tag Found!");
+            tCard = tagcard;
           }
         });
-        index = $scope.tags.indexOf(tag)
-        $scope.tags.splice(index, 1);
-        alert("Deleted from View");
+        if (tCard != undefined) {
+          var index = tCard.tags.indexOf(tag);
+          if (index >= "0") {
+            // alert(tCard.tags.inspect);
+            tCard.tags.splice(index, 1);
+            // alert(tCard.tags.inspect);
+            tCard = Tagcard.update(tCard);
+            // alert("Deleted from Tagcard");
+            index = $scope.tags.indexOf(tag)
+            $scope.tags.splice(index, 1);
+            // alert("Deleted from View");
+            tagcard = Tagcard.update(tCard);
+            alert("Tag Deleted!")
+          }
+        }
+        });
       }
 })
 

@@ -6,7 +6,7 @@
                 <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Address, Etc...">
             </label>
         </form>
-        <ion-list ng-repeat="bcard in bcards | filter: search">
+        <ion-list ng-repeat="bcard in bcards | filter: search | orderBy:orderProp">
           <div class="item item-avatar">
             <img src="my-image.png">
             <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>

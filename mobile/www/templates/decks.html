@@ -1,5 +1,18 @@
 <ion-view title="Decks" id="page9" style="background-color:#008FFF;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
+      <label class="item item-input">
+        <span class="input-label">Deck Name</span>
+        <input type="name" placeholder="Enter A Deck Name" ng-model="newDeck.name">
+      </label>
+      <label class="item item-input">
+        <span class="input-label">Deck Description</span>
+        <input type="description" placeholder="Enter A Description" ng-model="newDeck.description">
+      </label>
+      <div class="padding">
+        <button type="submit" class="button button-block button-calm" ng-click="create_deck()">Create Deck!</button>
+      </div>
+
+      <ion-item class="item-divider">Search Decks</ion-item>
         <form class="list">
             <label class="item item-input" name="Search Decks">
                 <i class="icon ion-search placeholder-icon"></i>
