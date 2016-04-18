@@ -94,7 +94,7 @@ $scope.login = function() {
   //   window.location.reload();
   // }
   // else {
-  $http.delete('http://159.203.247.39:3000/users/sign_out', {
+  $http.get('http://159.203.247.39:3000/users/sign_out', {
   // auth_token: session.userId // just a cookie storing my token from devise token authentication.
 
   }).success( function(result) {
