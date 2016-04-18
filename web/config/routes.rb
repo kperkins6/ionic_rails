@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # devise_for :users, :controllers => {sessions: 'sessions'}
   devise_scope :users do
     # get '/logout' => '/user/sessions#destroy'
-    post 'users' => 'registrations#create', :as => 'user_registration'
+    post '/users' => 'registrations#create', :as => 'user_registration'
   end
   scope '/bcards' do
     get '/' => 'bcards#index'

@@ -88,6 +88,7 @@ $scope.login = function() {
 
   $scope.sign_up = function() {
     var new_user = new NewUser({user: $scope.data});
+
     new_user.$save(
       function(data){
         window.localStorage['userId'] = data.id;
