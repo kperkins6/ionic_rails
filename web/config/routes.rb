@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
   scope devise_for :users do
-    post '/users' => 'user/sessions#destroy'
+    get '/users' => 'user/sessions#destroy'
   end
   scope '/bcards' do
     get '/' => 'bcards#index'
