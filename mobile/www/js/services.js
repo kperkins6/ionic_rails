@@ -8,9 +8,9 @@ angular.module('app.services', ['ngResource'])
   var bcards =
   $resource("http://159.203.247.39:3000/bcards/:id.json", {bcard: 'bcards'},
   {
-      update: { method:'PUT', isArray: false},
-      query: { method:'GET' , isArray: true},
-      save: { method:'POST' , isArray: false}
+      update: { method:'PUT', isArray: false  },
+      query:  { method:'GET' , isArray: true  },
+      save:   { method:'POST' , isArray: false}
   });
   return bcards;
 })
@@ -20,8 +20,8 @@ angular.module('app.services', ['ngResource'])
   $resource("http://159.203.247.39:3000/tags/:id.json", {tag: 'tags'},
   {
       update: { method:'PUT', isArray: false},
-      query: { method:'GET' , isArray: true},
-      save: { method:'POST' , isArray: false}
+      query:  { method:'GET' , isArray: true},
+      save:   { method:'POST' , isArray: false}
   });
   return tags;
 })
@@ -32,8 +32,8 @@ angular.module('app.services', ['ngResource'])
   $resource("http://159.203.247.39:3000/decks/:id.json", {deck: 'decks'},
   {
       update: { method:'PUT', isArray: false},
-      query: { method:'GET' , isArray: true},
-      save: { method:'POST' , isArray: false}
+      query:  { method:'GET' , isArray: true},
+      save:   { method:'POST' , isArray: false}
   });
   return decks;
 })
@@ -44,14 +44,18 @@ angular.module('app.services', ['ngResource'])
   $resource("http://159.203.247.39:3000/tagcards/:id.json", {tagcard: 'tagcards'},
   {
       update: { method:'PUT', isArray: false},
-      query: { method:'GET' , isArray: true},
-      save: { method:'POST' , isArray: false}
+      query:  { method:'GET' , isArray: true},
+      save:   { method:'POST' , isArray: false}
   });
   return tagcards;
 })
 
 .factory('UserSession', function($resource) {
   return $resource("http://159.203.247.39:3000/users/sign_in.json");
+})
+
+.factory('NewUser', function($resource) {
+  return $resource("http://159.203.247.39:3000/users/sign_up.json");
 })
 
 .service('StudySession', function(){

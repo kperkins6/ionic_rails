@@ -18,8 +18,8 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('logout', {
-      // url: '/logout',
-      // templateUrl: 'templates/logout.html',
+      url: '/logout',
+      templateUrl: 'templates/logout.html',
       controller: 'signoutCtrl'
   })
 
@@ -64,10 +64,11 @@ angular.module('app.routes', ['ionicUIRouter'])
   })
 
   .state('signup', {
-    url: '/page6',
-    templateUrl: 'templates/signup.html',
-    controller: 'signupCtrl'
-  })
+     url: '/page6',
+     templateUrl: 'templates/signup.html',
+     controller: 'signupCtrl'
+   })
+
 
   .state('searchBusinessCards', {
     url: '/page7',

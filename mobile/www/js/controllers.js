@@ -83,32 +83,87 @@ $scope.login = function() {
 }
 })
 
-.controller('signupCtrl', function($scope) {
+.controller('signupCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, NewUser) {
+  $scope.data = {};
 
+  $scope.sign_up = function() {
+    var new_user = new NewUser({user: $scope.data});
+    new_user.$save(
+      function(data){
+        window.localStorage['userId'] = data.id;
+        window.localStorage['userName'] = data.name;
+        var confirmPopup = $ionicPopup.alert({
+          title: 'Sign_Up Successful!',
+          template: 'Success!'
+        });
+        $scope.openPage('/page1/tab2/page3');
+        // $location.path('/page1/tab2/page3');
+      },
+      function(err){
+        var error = err["data"]["error"] || err.data.join('. ')
+        var confirmPopup = $ionicPopup.alert({
+          title: 'An error occured',
+          template: error
+        });
+      }
+    );
+    // var user_session = new UserSession({ user: $scope.data });
+    // user_session.$save(
+    //   function(data){
+    //     window.localStorage['userId'] = data.id;
+    //     window.localStorage['userName'] = data.name;
+    //     var confirmPopup = $ionicPopup.alert({
+    //       title: 'Login Successful!',
+    //       template: 'Success!'
+    //     });
+    //     $scope.openPage('/page1/tab2/page3');
+    //     // $location.path('/page1/tab2/page3');
+    //   },
+    //   function(err){
+    //     var error = err["data"]["error"] || err.data.join('. ')
+    //     var confirmPopup = $ionicPopup.alert({
+    //       title: 'An error occured',
+    //       template: error
+    //     });
+    //   }
+    // );
+    // window.location.reload();
+    $scope.openPage = function (pageName) {
+        window.location = '#' + pageName;
+        window.location.reload();
+    };
+  }
 })
 
-.controller('signoutCtrl', function($scope, UserSession) {
+.controller('signoutCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory) {
   // var session = UserSession.get({userId: window.localStorage['userId']});
+  window.localStorage.clear();
+  alert("Storage Cleared");
+  $ionicHistory.clearCache();
+  alert("Cache Cleared");
+  $ionicHistory.clearHistory();
+  alert("History Cleared");
+  // UserSession.delete(session);
   // if ( session == 'undefined'){
   //   $location.path('/login');
   //   window.location.reload();
   // }
   // else {
-  $http.delete('http://159.203.247.39:3000/users/sign_out', {
-  // auth_token: session.userId // just a cookie storing my token from devise token authentication.
-
-  }).success( function(result) {
-    // $cookieStore.remove('_pf_session');
-    // $cookieStore.remove('_pf_name');
-    // $cookieStore.remove('_pf_email');
-    alert("Sign Out Successfull");
-    location.reload(true); // I need to refresh the page to update cookies
-  }).error( function(result) {
-    console.log(result);
-  });
+  // $http.get('http://159.203.247.39:3000/users/sign_out', {
+  // // auth_token: session.userId // just a cookie storing my token from devise token authentication.
+  //
+  // }).success( function(result) {
+  //   // $cookieStore.remove('_pf_session');
+  //   // $cookieStore.remove('_pf_name');
+  //   // $cookieStore.remove('_pf_email');
+  //   alert("Sign Out Successfull");
+  //   location.reload(true); // I need to refresh the page to update cookies
+  // }).error( function(result) {
+  //   console.log(result);
+  // });
   // }
 
-  $location.path('/login');
+  // $location.path('/login');
   // window.location.reload();
 })
 
@@ -483,7 +538,7 @@ $scope.login = function() {
     window.location.reload();
   }
   else {
-  Bcard.get({id: window.localStorage['userId']}).$promise.then(function(bcard) {
+  Bcard.get({id: window.localStorage['userId']}).first_or_create.$promise.then(function(bcard) { //-----------------------------------first_or_create MAY BE WRONG---------------
     $scope.bcard = bcard;
   });
 
