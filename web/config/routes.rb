@@ -6,10 +6,11 @@ Rails.application.routes.draw do
   # scope devise_for :users do
     # get '/users' => 'user/sessions#destroy'
   # end\
-  devise_scope :users do
-  # get '/logout' => '/user/sessions#destroy'
-    post 'users' => 'user/registrations#create', :as => 'user_registration'
-  end
+  # devise_scope :users do
+  # # get '/logout' => '/user/sessions#destroy'
+  #   post 'users' => 'user/registrations#create', :as => 'user_registration'
+  # end
+
   scope '/bcards' do
     get '/' => 'bcards#index'
     post '/' => 'bcards#create'
