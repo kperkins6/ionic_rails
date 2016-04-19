@@ -44,9 +44,18 @@ angular.module('app.controllers', ['app.services'])
 // });
 
 
-.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope) {
+.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory, $ionicSideMenuDelegate) {
 $scope.data = {};
 
+
+$scope.$on('$ionicView.enter', function(){
+    $ionicSideMenuDelegate.canDragContent(false);
+    $ionicHistory.clearHistory();
+    $ionicHistory.clearCache();
+  });
+$scope.$on('$ionicView.leave', function(){
+    $ionicSideMenuDelegate.canDragContent(true);
+  });
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
   // var user_session = new UserSession({ email: data.email, password: data.password });
@@ -83,9 +92,16 @@ $scope.login = function() {
 }
 })
 
-.controller('signupCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, NewUser) {
+.controller('signupCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, NewUser, $ionicHistory) {
   $scope.data = {};
-
+  $scope.$on('$ionicView.enter', function(){
+      $ionicSideMenuDelegate.canDragContent(false);
+      // $ionicHistory.clearHistory();
+      // $ionicHistory.clearCache();
+    });
+  $scope.$on('$ionicView.leave', function(){
+      $ionicSideMenuDelegate.canDragContent(true);
+    });
   $scope.sign_up = function() {
     var new_user = new NewUser({user: $scope.data});
     new_user.$save(
@@ -130,19 +146,26 @@ $scope.login = function() {
     // window.location.reload();
     $scope.openPage = function (pageName) {
         window.location = '#' + pageName;
-        window.location.reload();
+        // window.location.reload();
     };
   }
 })
 
 .controller('signoutCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory) {
+  $scope.$on('$ionicView.enter', function(){
+    $ionicSideMenuDelegate.canDragContent(false);
+    window.localStorage.clear();
+    // alert("Storage Cleared");
+    $ionicHistory.clearCache();
+    // alert("Cache Cleared");
+    $ionicHistory.clearHistory();
+  });
+  $scope.$on('$ionicView.leave', function(){
+    $ionicSideMenuDelegate.canDragContent(true);
+    alert("Sign Out Successful");
+  });
   // var session = UserSession.get({userId: window.localStorage['userId']});
-  window.localStorage.clear();
-  alert("Storage Cleared");
-  $ionicHistory.clearCache();
-  alert("Cache Cleared");
-  $ionicHistory.clearHistory();
-  alert("History Cleared");
+
   // UserSession.delete(session);
   // if ( session == 'undefined'){
   //   $location.path('/login');
@@ -620,8 +643,9 @@ $scope.login = function() {
   }
 })
 
-.controller('studyResultsCtrl', function($scope) {
-
+.controller('studyResultsCtrl', function($scope, $ionicHistory) {
+  // $ionicHistory.clearHistory();
+  // $ionicHistory.clearCache();
 })
 
 .controller('searchAttendeesCtrl', function($scope, Bcard) {

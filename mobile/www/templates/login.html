@@ -1,4 +1,10 @@
 <ion-view name="login-view">
+  <ion-nav-bar class="bar-stable bar-positive">
+      <ion-nav-back-button></ion-nav-back-button>
+      <ion-nav-buttons side="left">
+          <!-- <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button> -->
+      </ion-nav-buttons>
+  </ion-nav-bar>
   <div class="bar bar-subheader bar-balanced">
      <h1 class="title">Please Enter Your Credentials</h1>
   </div>
@@ -16,6 +22,7 @@
 
     <div class="padding">
       <button type="submit" class="button button-block button-calm" ng-click="login()">Login</button>
+      <a ui-sref="signup" class="button button-block button-assertive icon-left ion-android-add-circle">Sign Up!</a>
     </div>
   </ion-content>
 </ion-view>

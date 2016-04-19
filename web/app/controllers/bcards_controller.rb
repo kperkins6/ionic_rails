@@ -1,6 +1,6 @@
 class BcardsController < ApplicationController
   before_action :set_bcard, only: [:show, :edit, :update, :destroy]
-    before_filter :authenticate_user!
+    # before_filter :authenticate_user!
 
     respond_to :json
     # GET /bcards
