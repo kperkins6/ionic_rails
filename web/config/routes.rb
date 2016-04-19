@@ -3,6 +3,9 @@ Rails.application.routes.draw do
   delete 'users/sign_out' => "devise/sessions#destroy"
   # match "/bcards" => "application#index", via: :options
   # devise_for :users, :controllers => {sessions: 'sessions'}
+  scope devise_for :users do
+    post '/users' => 'user/sessions#destroy'
+  end
   scope '/bcards' do
     get '/' => 'bcards#index'
     post '/' => 'bcards#create'
