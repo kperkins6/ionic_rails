@@ -554,14 +554,14 @@ $scope.login = function() {
   // Bcard.query().$promise.then(function(response){
   //   $scope.bcards = response;
   // });
-  $scope.card={};
-  if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
-    $location.path('/login');
-    alert("Please log in to continue");
-    window.location.reload();
-  }
-  else {
-  Bcard.get({id: window.localStorage['userId']}).first_or_create.$promise.then(function(bcard) { //-----------------------------------first_or_create MAY BE WRONG---------------
+  // $scope.card={};
+  // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
+  //   $location.path('/login');
+  //   alert("Please log in to continue");
+  //   window.location.reload();
+  // }
+  // else {
+  Bcard.get({id: window.localStorage['userId']}).$promise.then(function(bcard) { //-----------------------------------first_or_create MAY BE WRONG---------------
     $scope.bcard = bcard;
   });
 
@@ -577,7 +577,7 @@ $scope.login = function() {
     $scope.bcard = Bcard.update($scope.bcard);
     window.location.reload();
   }
-  }
+  // }
 })
 
 .controller('uploadImageCtrl', function($scope) {
