@@ -1,9 +1,12 @@
 <ion-view title="Study Deck" id="page17" style="background-color:#FF5300;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <h1 id="studyDeck-heading6" style="color:#FFFFFF;">Bcard Name</h1>
-        <h1 id="studyDeck-heading7" style="color:#FFFFFF;">Company</h1>
-        <ion-list ng-repeat="tagcard in tagcards">
-            <ion-item ui-sref="studyResults"  ng-click="click_card(tagcard)">User: {{tagcard.user_id}}, Bcard: {{tagcard.bcard_id}}</ion-item>
+        <h1 id="studyDeck-heading6" style="color:#FFFFFF;">{{focus_bcard.name}}</h1>
+        <h1 id="studyDeck-heading7" style="color:#FFFFFF;">{{focus_bcard.address}}</h1>
+        <ion-list ng-repeat="tag in tags">
+            <ion-item >{{tag.text}}</ion-item>
+             <!-- ui-sref="studyResults"  -->
         </ion-list>
+        <button class="button button-block button-positive icon icon-right ion-chevron-right front" ng-click="flip_card()">{{flip_next}}</button>
+        <button class="button button-block button-assertive icon-left ion-android-cancel" ng-click="last_card(deck)">{{skip_results}}</button>
     </ion-content>
 </ion-view>

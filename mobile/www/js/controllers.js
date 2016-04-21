@@ -44,7 +44,7 @@ angular.module('app.controllers', ['app.services'])
 // });
 
 
-.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory, $ionicSideMenuDelegate) {
+.controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory, $ionicSideMenuDelegate, $state) {
 $scope.data = {};
 
 
@@ -73,7 +73,11 @@ $scope.login = function() {
         title: 'Login Successful!',
         template: 'Success!'
       });
-      $scope.openPage('/page1/tab2/page3');
+      $state.go('myCard');
+      window.location.reload();
+
+      // $ionicHistory.clearHistory();
+      // $scope.openPage('/page1/tab2/page3');
       // $location.path('/page1/tab2/page3');
     },
     function(err){
@@ -190,7 +194,16 @@ $scope.login = function() {
   // window.location.reload();
 })
 
-.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
+.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $state) {
+  $scope.$on('$ionicView.enter', function(){
+    // window.location.reload();
+    // $ionicSideMenuDelegate.canDragContent(false);
+    // window.localStorage.clear();
+    // // alert("Storage Cleared");
+    $ionicHistory.clearCache();
+    // // alert("Cache Cleared");
+    $ionicHistory.clearHistory();
+  });
 
   Tagcard.query().$promise.then(function(response){
     $scope.tagcards=[]
@@ -212,13 +225,17 @@ $scope.login = function() {
     });
     return $scope.bcards;
   });
+  // window.location.reload();
 
   $scope.click_card = function(card) {
     // alert(card.id);
     current_focus.setCard(card.id);
+    $state.go('viewBusinessCard');
   }
   $scope.orderProp = 'name';
-
+ // $scope.reload = function() {
+ //   window.location.reload();
+ // }
 })
 
 .controller('addTagsCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $location, $ionicPopup, $rootScope, $http) {
@@ -588,7 +605,7 @@ $scope.login = function() {
 
 })
 
-.controller('studyCtrl', function($scope, Deck, $rootScope, current_focus) {
+.controller('studyCtrl', function($scope, Deck, $rootScope, current_focus, $state, $stateParams) {
   Deck.query().$promise.then(function(response){
     $scope.decks=[]
     angular.forEach(response, function(deck){
@@ -602,6 +619,7 @@ $scope.login = function() {
   $scope.click_deck = function(deck) {
     // alert(deck.id);
     current_focus.setDeck(deck.id);
+    $state.go('studyDeck', {param1: deck.id});
   }
 })
 
@@ -609,14 +627,24 @@ $scope.login = function() {
 
 })
 
-.controller('studyDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
-  // alert(current_focus.getDeck());
-  // alert("Error");
-  Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+.controller('studyDeckCtrl', function($scope, Deck, Bcard, Tagcard, Tag, $rootScope, current_focus, $state, $stateParams, $ionicPopup) {
+  // alert($stateParams.param1);
+  // alert("Error"); current_focus.getDeck()
+  $scope.tagcards=[];
+  $scope.bcards=[];
+  $scope.focus_bcard = {};
+  $scope.focus_tcard = {};
+  $scope.tags = [];
+  $scope.texts = [];
+  $scope.score = 0;
+  $scope.total = 0;
+  $scope.flip_next = "Flip";
+  $scope.skip_results = "Skip to Results";
+
+  Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
     $scope.deck = deck;
   });
   Tagcard.query().$promise.then(function(response){
-    $scope.tagcards=[]
     angular.forEach(response, function(tagcard){
       // if(tagcard.id in deck.tagcards) {
       if($scope.deck.tagcards.includes(tagcard.id)) {
@@ -626,26 +654,159 @@ $scope.login = function() {
     return $scope.tagcards;
   });
   Bcard.query().$promise.then(function(response){
-    $scope.bcards=[]
     angular.forEach($scope.tagcards, function(tagcard){
       angular.forEach(response, function(bcard){
       if(tagcard.bcard_id == bcard.id) {
           $scope.bcards.push(bcard);
+          // alert(bcard.name);
+          $scope.total = $scope.total+1;
         }
       });
     });
+    // alert($scope.total);
+    $scope.set_view();
     return $scope.bcards;
   });
-// }
-  $scope.click_card = function(card) {
-    // alert(card.id);
-    current_focus.setCard(card.id);
+
+  $scope.set_view = function() {
+    $scope.focus_bcard = $scope.bcards.pop();
+    $scope.focus_tcard = $scope.tagcards.pop();
+
+    if ($scope.focus_tcard == undefined || $scope.focus_bcard == undefined) {
+      // alert("Finished!");
+      $scope.skip_results = "See My Results!";
+      $scope.flip_next = "Finished!";
+    }
+    else {
+      $scope.tags = [];
+      $scope.texts = [];
+      $scope.total++;
+      angular.forEach($scope.focus_tcard.tags, function(tag_id){
+        // alert("tag.each");
+        Tag.get({id: tag_id}).$promise.then(function(tag) {
+          $scope.texts.push(tag.text);
+          tag.text = "*****"
+          $scope.tags.push(tag);
+          // var str = $scope.tag.text;
+          // str = str.replace(/[a-zA-Z]/g, "*");
+          // alert(str);
+        });
+      });
+    }
+    // alert($scope.tags[0].text);
+  }
+
+  $scope.flip_card = function() {
+    if ($scope.flip_next == "Flip") {
+      angular.forEach($scope.tags, function(tag){
+        tag.text = $scope.texts.pop();
+      });
+      $scope.flip_next = "Next";
+    }
+    else if ($scope.flip_next == "Next"){
+      // MAKE THE BUTTON SAY FLIP? -> then NEXT?
+      // Pass in an indicator to set_view that this is just a flip, not a reset
+      // Fill in the data for the tags
+      var myPopup = $ionicPopup.show({
+        template: 'Were you Correct?',
+        title: 'Right or Wrong?',
+        subTitle: 'Be honest, this studying is for you!',
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Correct!',
+            type: 'button-balanced',
+            onTap: function(e) {
+              $scope.score++;
+            }
+          },
+          {
+            text: 'Incorrect!',
+            type: 'button-assertive',
+            onTap: function(e) {
+                    // $scope.set_view();
+            }
+          }
+        ]
+      });
+        $scope.flip_next = "Flip";
+        $scope.set_view();
+    }
+  }
+
+  $scope.click_tag = function(tag) {
+    // Maybe something about marking the tag as a correct/not correct?
+    $scope.set_view();
+  }
+
+  $scope.last_card = function(deck) {
+    if ($scope.skip_results == "Skip to Results") {
+      var confirmPopup = $ionicPopup.alert({
+        title: 'Skip the rest of the deck?',
+        template: 'Are you sure you are done studying?',
+        buttons: [
+          {
+            text: 'Yes!',
+            type: 'button-balanced',
+            onTap: function(e) {
+              // alert($scope.score);
+              $state.go('studyResults', {
+                param1: deck.id,
+                param2: $scope.score,
+                param3: $scope.total
+              }); //Make param2 the total score
+            }
+          },
+          {
+            text: 'Cancel',
+            type: 'button-assertive',
+            onTap: function(e) {
+                    // $scope.set_view();
+            }
+          }
+        ]
+      });
+    }
+    else {
+      // alert($scope.score);
+      $state.go('studyResults', {
+        param1: deck.id,
+        param2: $scope.score,
+        param3: $scope.total
+      }); //Make param2 the total score
+    }
   }
 })
 
-.controller('studyResultsCtrl', function($scope, $ionicHistory) {
+.controller('studyResultsCtrl', function($scope, $ionicHistory, Deck, $state, $stateParams) {
   // $ionicHistory.clearHistory();
   // $ionicHistory.clearCache();
+  // alert($stateParams.param1);
+  $scope.deck = {};
+  $scope.score = $stateParams.param2;
+  $scope.total = $stateParams.param3;
+  if ($scope.total == 0) {
+    $scope.mesage = "You just studied an empty deck! Add some Cards!";
+  }
+  else {
+    var percent = ($scope.score / $scope.total) * 100;
+    if (percent < 60) {
+      $scope.message = "You should keep studying..."
+    }
+    else if (percent < 85) {
+      $scope.message = "You did well! Practice makes perfect, you should study later today!"
+    }
+    else {
+      $scope.mesasge = "WOW! Great Job! Seems like you have this down!"
+    }
+  }
+  Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
+    $scope.deck = deck;
+  });
+  $scope.back_to_study = function() {
+    $state.go('study');
+    window.location.reload();
+  }
 })
 
 .controller('searchAttendeesCtrl', function($scope, Bcard) {

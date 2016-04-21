@@ -6,10 +6,12 @@
                 <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Address, Etc...">
             </label>
         </form>
+        <!-- <button id="searchBusinessCards-button8" class="button button-stable  button-block button-calm" ng-click="reload()">Search!</button> -->
         <ion-list ng-repeat="bcard in bcards | filter: search | orderBy:orderProp">
           <div class="item item-avatar">
-            <img src="my-image.png">
-            <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+            <!-- <img src="my-image.png"> -->
+            <ion-item ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+            <!-- ui-sref="viewBusinessCard" -->
           </div>
         </ion-list>
     </ion-content>

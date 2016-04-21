@@ -11,15 +11,15 @@
       <div class="padding">
         <button type="submit" class="button button-block button-calm" ng-click="create_deck()">Create Deck!</button>
       </div>
-      
+
       <ion-item class="item-divider">Search Decks</ion-item>
         <form class="list">
             <label class="item item-input" name="Search Decks">
                 <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="Search Decks">
+                <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
             </label>
         </form>
-        <ion-list ng-repeat="deck in decks| limitTo:quantity">
+        <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity">
             <ion-item ui-sref="viewDeck" ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
         </ion-list>
     </ion-content>

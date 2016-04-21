@@ -12,6 +12,7 @@ angular.module('app.routes', ['ionicUIRouter'])
   $stateProvider
 
   .state('login', {
+      cache: false,
       url: '/login',
       templateUrl: 'templates/login.html',
       controller: 'LoginCtrl'
@@ -71,6 +72,7 @@ angular.module('app.routes', ['ionicUIRouter'])
 
 
   .state('searchBusinessCards', {
+    // cache: false,
     url: '/page7',
     templateUrl: 'templates/searchBusinessCards.html',
     controller: 'searchBusinessCardsCtrl'
@@ -151,13 +153,15 @@ angular.module('app.routes', ['ionicUIRouter'])
   .state('studyDeck', {
     url: '/page17',
     templateUrl: 'templates/studyDeck.html',
-    controller: 'studyDeckCtrl'
+    controller: 'studyDeckCtrl',
+    params: { param1: undefined }
   })
 
   .state('studyResults', {
     url: '/page18',
     templateUrl: 'templates/studyResults.html',
-    controller: 'studyResultsCtrl'
+    controller: 'studyResultsCtrl',
+    params: { param1: null, param2: null, param3: null }
   })
 
   .state('tabsController.searchAttendees', {

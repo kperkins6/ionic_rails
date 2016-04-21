@@ -1,11 +1,13 @@
 <ion-view title="Study Results" id="page18">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <h1 id="studyResults-heading8" style="color:#000000;">Deck Name</h1>
+        <h1 id="studyResults-heading8" style="color:#000000;">{{deck.name}}</h1>
         <div id="studyResults-markdown4" style="color:#000000;">
             <ul>
-                <li>Results Here</li>
+              <li>Score: {{score}}/{{total}}</li>
+              <li>{{message}}</li>
             </ul>
         </div>
-        <a href="#/study" id="studyResults-button16" class="button button-positive  button-block">Back to Study</a>
+        <!-- <a href="#/study" id="studyResults-button16" class="button button-positive  button-block">Back to Study</a> -->
+        <button class="button button-block button-positive" ng-click="back_to_study()">Back To Study</button>
     </ion-content>
 </ion-view>
