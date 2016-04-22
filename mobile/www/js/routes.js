@@ -81,7 +81,9 @@ angular.module('app.routes', ['ionicUIRouter'])
   .state('addBusinessCards', {
     url: '/page27',
     templateUrl: 'templates/addBusinessCards.html',
-    controller: 'addBusinessCardsCtrl'
+    controller: 'addBusinessCardsCtrl',
+    params: { param1: null }
+
   })
 
   .state('addTags', {
@@ -99,7 +101,8 @@ angular.module('app.routes', ['ionicUIRouter'])
   .state('viewDeck', {
     url: '/page10',
     templateUrl: 'templates/viewDeck.html',
-    controller: 'viewDeckCtrl'
+    controller: 'viewDeckCtrl',
+    params: { param1: null }
   })
 
   .state('viewBusinessCard', {
@@ -154,7 +157,7 @@ angular.module('app.routes', ['ionicUIRouter'])
     url: '/page17',
     templateUrl: 'templates/studyDeck.html',
     controller: 'studyDeckCtrl',
-    params: { param1: undefined }
+    params: { param1: null }
   })
 
   .state('studyResults', {

@@ -21,6 +21,16 @@ Rails.application.routes.draw do
     post '/' => 'tagcards#create'
     put '/' => 'tagcards#update'
   end
+  scope '/decks' do
+    get '/' => 'decks#index'
+    post '/' => 'decks#create'
+    put '/' => 'decks#update'
+  end
+  scope '/tags' do
+    get '/' => 'tags#index'
+    post '/' => 'tags#create'
+    put '/' => 'tags#update'
+  end
 
   resources :decks
   resources :tagcards

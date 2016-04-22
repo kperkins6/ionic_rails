@@ -359,7 +359,7 @@ $scope.login = function() {
     }
 })
 
-.controller('viewDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
+.controller('viewDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $stateParams, $state) {
   // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
   //   $location.path('/login');
   //   alert("Please log in to continue");
@@ -398,12 +398,18 @@ $scope.login = function() {
     // alert(card.id);
     current_focus.setCard(card.id);
   }
+  $scope.add_cards = function(deck) {
+    $state.go('addBusinessCards', {param1: deck.id});
+  }
 })
 
-.controller('addBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus) {
-  Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+.controller('addBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $stateParams, $state, $ionicPopup) {
+  $scope.deck= {};
+  $scope.tagcards = [];
+  $scope.tagcard = {};
+
+  Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
     $scope.deck = deck;
-    // alert($scope.deck.id);
   });
   Tagcard.query().$promise.then(function(response){
     $scope.tagcards=[]
@@ -417,80 +423,136 @@ $scope.login = function() {
   $scope.bcards = [];
   Bcard.query().$promise.then(function(response){
     $scope.bcards= response;
-    // angular.forEach($scope.tagcards, function(tagcard){
-    //   angular.forEach(response, function(bcard){
-    //   if(tagcard.bcard_id == bcard.id && !$scope.bcards.includes(bcard)) {
-    //       $scope.bcards.push(bcard);
-    //     }
-    //   });
-    // });
-    // return $scope.bcards;
   });
 
   $scope.click_card = function(card) {
-    // alert(card.id);
-
+    console.log(card.id);
+    console.log($scope.deck.id);
     // var deck = current_focus.getDeck();
     var tCard = {};
-    tCard.id = "-1";
-
-      Tagcard.query().$promise.then(function(response){
-        $scope.tagcards=[];
-        angular.forEach(response, function(tagcard){
-          if(card.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
-            // $scope.tagcards.push(tagcard);
-            // alert(tagcard.id);
-            tCard.id = tagcard.id;
-          }
+    Tagcard.query({user_id: window.localStorage['userId'], bcard_id: card.id}).$promise.then(function(tagcard) {
+      $scope.tagcard = tagcard;
+      if (!$scope.deck.tagcards.includes(tagcard.id)) {
+        $scope.deck.tagcards.push(tagcard.id);
+        $scope.deck = Deck.update($scope.deck);
+        console.log(tagcard.id);
+        console.log($scope.deck.tagcards);
+        var confirmPopup = $ionicPopup.alert({
+          title: 'Card Added!',
+          template: 'Success!'
         });
-        // return $scope.tagcards;
-      // });
-
-      // Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
-      //   $scope.deck = deck;
-      // });
-      if (tCard.id >= "0") {
-        // alert($scope.deck.id);
-        var index = $scope.deck.tagcards.indexOf(tCard.id);
-        // alert("Index");
-        if (index >= "0") {
-          alert(index);
-        } else {
-          $scope.deck.tagcards.push(tCard.id);
-          Deck.update($scope.deck);
-          // alert("Deck Updated!");
-          window.location.reload();
-        }
-      } else {
-        // alert("Unset Tag Card");
-
-        var new_tagcard= new Tagcard({user_id: window.localStorage['userId'], bcard_id: card.id});
-
-        new_tagcard.$save(
-          function(newTagcard){
-            var confirmPopup = $ionicPopup.alert({
-              title: 'Tag Successful!',
-              template: 'Success!'
-            });
-            // $scope.tagcard.tags.push(newTagcard.id);
-            //   alert($scope.tagcard.tags);
-            // $scope.tagcard = Tagcard.update($scope.tagcard);
-            //   alert("Tagcard Updated");
-            // $scope.tags.push(newTag);
-            //   alert("View Updated");
-          },
-          function(err){
-            var error = err["data"]["error"] || err.data.join('. ')
-            var confirmPopup = $ionicPopup.alert({
-              title: 'An error occured',
-              template: error
-            });
-          }
-        );
-
       }
-      // alert("After Loopa");
+    }, function(error) {
+          var new_tagcard= new Tagcard({user_id: window.localStorage['userId'], bcard_id: card.id});
+          new_tagcard.$save(
+            function(newTagcard){
+
+              $scope.deck.tagcards.push(newTagcard);
+              $scope.deck = Deck.update($scope.deck);
+              var confirmPopup = $ionicPopup.alert({
+                title: 'Card Added!',
+                template: 'Success!'
+              });
+              // $scope.tagcard.tags.push(newTagcard.id);
+              //   alert($scope.tagcard.tags);
+              // $scope.tagcard = Tagcard.update($scope.tagcard);
+              //   alert("Tagcard Updated");
+              // $scope.tags.push(newTag);
+              //   alert("View Updated");
+            },
+            function(err){
+              var error = err["data"]["error"] || err.data.join('. ')
+              var confirmPopup = $ionicPopup.alert({
+                title: 'An error occured',
+                template: error
+              });
+            }
+          );
     });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //
+    // tCard.id = "-1";
+    //
+    //   Tagcard.query().$promise.then(function(response){
+    //     $scope.tagcards=[];
+    //     angular.forEach(response, function(tagcard){
+    //       if(card.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
+    //         // $scope.tagcards.push(tagcard);
+    //         // alert(tagcard.id);
+    //         tCard.id = tagcard.id;
+    //       }
+    //     });
+    //     // return $scope.tagcards;
+    //   // });
+    //
+    //   // Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+    //   //   $scope.deck = deck;
+    //   // });
+    //   if (tCard.id >= "0") {
+    //     // alert($scope.deck.id);
+    //     var index = $scope.deck.tagcards.indexOf(tCard.id);
+    //     // alert("Index");
+    //     if (index >= "0") {
+    //       alert(index);
+    //     } else {
+    //       $scope.deck.tagcards.push(tCard.id);
+    //       Deck.update($scope.deck);
+    //       // alert("Deck Updated!");
+    //       window.location.reload();
+    //     }
+    //   } else {
+    //     // alert("Unset Tag Card");
+    //
+    //     var new_tagcard= new Tagcard({user_id: window.localStorage['userId'], bcard_id: card.id});
+    //
+    //     new_tagcard.$save(
+    //       function(newTagcard){
+    //         var confirmPopup = $ionicPopup.alert({
+    //           title: 'Tag Successful!',
+    //           template: 'Success!'
+    //         });
+    //         // $scope.tagcard.tags.push(newTagcard.id);
+    //         //   alert($scope.tagcard.tags);
+    //         // $scope.tagcard = Tagcard.update($scope.tagcard);
+    //         //   alert("Tagcard Updated");
+    //         // $scope.tags.push(newTag);
+    //         //   alert("View Updated");
+    //       },
+    //       function(err){
+    //         var error = err["data"]["error"] || err.data.join('. ')
+    //         var confirmPopup = $ionicPopup.alert({
+    //           title: 'An error occured',
+    //           template: error
+    //         });
+    //       }
+    //     );
+    //
+    //   }
+    //   // alert("After Loopa");
+    // });
   }
   $scope.orderProp = 'name';
   $scope.quantity = "10";

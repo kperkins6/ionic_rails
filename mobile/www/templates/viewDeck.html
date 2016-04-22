@@ -4,7 +4,7 @@
         <div id="viewDeck-markdown1" style="color:#DDDDDD;">
             <p>Deck Description: {{deck.description}}</p>
         </div>
-        <a ui-sref="addBusinessCards" id="addBcards" class="button button-energized  button-block icon-left ion-android-add-circle" data-componentid="button7">Add Business Cards</a>
+        <button ng-click="add_cards(deck)" class="button button-energized  button-block icon-left ion-android-add-circle">Add Business Cards</button>
 
         <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
           <div class="item item-avatar">
