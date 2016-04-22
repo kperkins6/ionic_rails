@@ -44,9 +44,12 @@ angular.module('app.services', ['ngResource'])
   var tagcards =
   $resource("http://159.203.247.39:3000/tagcards/:id.json", {tagcard: 'tagcards'},
   {
+      get:    {method:'GET', isArray: false},
       update: { method:'PUT', isArray: false},
       query:  { method:'GET' , isArray: true},
-      save:   { method:'POST' , isArray: false}
+      save:   { method:'POST' , isArray: false},
+      remove: {method:'DELETE'},
+      delete: {method:'DELETE'}
   });
   return tagcards;
 })

@@ -430,12 +430,12 @@ $scope.login = function() {
     console.log($scope.deck.id);
     // var deck = current_focus.getDeck();
     var tCard = {};
-    Tagcard.query({user_id: window.localStorage['userId'], bcard_id: card.id}).$promise.then(function(tagcard) {
-      $scope.tagcard = tagcard;
+    Tagcard.get({user_id: window.localStorage['userId'], bcard_id: card.id}).$promise.then(function(tagcard) {
+      $scope.tagcard = tagcard[0];
+      console.log(tagcard[0]);
       if (!$scope.deck.tagcards.includes(tagcard.id)) {
         $scope.deck.tagcards.push(tagcard.id);
         $scope.deck = Deck.update($scope.deck);
-        console.log(tagcard.id);
         console.log($scope.deck.tagcards);
         var confirmPopup = $ionicPopup.alert({
           title: 'Card Added!',
@@ -447,6 +447,7 @@ $scope.login = function() {
           new_tagcard.$save(
             function(newTagcard){
 
+              $scope.deck.tagcards = [];
               $scope.deck.tagcards.push(newTagcard);
               $scope.deck = Deck.update($scope.deck);
               var confirmPopup = $ionicPopup.alert({

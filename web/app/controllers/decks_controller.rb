@@ -71,6 +71,6 @@ class DecksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deck_params
-      params.permit(:user_id, :name, :description, :tagcards)
+      params.permit(:id, :user_id, :name, :description, :tagcards)
     end
 end
