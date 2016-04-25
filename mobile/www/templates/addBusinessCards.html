@@ -1,0 +1,16 @@
+<ion-view title="Add Business Cards to Deck" id="page7" style="background-color:#00A2FF;">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+        <form class="list">
+            <label class="item item-input" name="Search Bcard">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Address, Etc...">
+            </label>
+        </form>
+        <ion-list ng-repeat="bcard in bcards | filter: search | orderBy:orderProp | limitTo:quantity">
+          <div class="item item-avatar">
+            <img src="my-image.png">
+            <ion-item ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+          </div>
+        </ion-list>
+    </ion-content>
+</ion-view>
