@@ -58,7 +58,7 @@ class DecksController < ApplicationController
   def destroy
     @deck.destroy
     respond_to do |format|
-      format.html { redirect_to decks_url, notice: 'Deck was successfully destroyed.' }
+      # format.html { redirect_to decks_url, notice: 'Deck was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -71,6 +71,6 @@ class DecksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def deck_params
-      params.permit(:id, :user_id, :name, :description, :tagcards)
+      params.permit(:id, :user_id, :name, :description, :tagcards => [])
     end
 end

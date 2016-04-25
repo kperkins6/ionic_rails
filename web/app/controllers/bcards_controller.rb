@@ -1,6 +1,6 @@
 class BcardsController < ApplicationController
   before_action :set_bcard, only: [:show, :edit, :update, :destroy]
-    # before_filter :authenticate_user!
+    before_filter :authenticate_user!
 
     respond_to :json
     # GET /bcards
@@ -27,8 +27,6 @@ class BcardsController < ApplicationController
     # POST /bcards.json
     def create
       @bcard = Bcard.new(bcard_params)
-      puts 'Bcards_controller.create!!!!!'
-      puts bcard_params.inspect
 
       respond_to do |format|
         if @bcard.save
@@ -44,8 +42,6 @@ class BcardsController < ApplicationController
     # PATCH/PUT /bcards/1
     # PATCH/PUT /bcards/1.json
     def update
-      puts 'Bcards_controller.UPDATE!!!!!'
-      puts bcard_params.inspect
 
       respond_to do |format|
         if @bcard.update(bcard_params)
