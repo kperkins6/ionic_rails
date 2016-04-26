@@ -452,11 +452,11 @@ $scope.login = function() {
         if (tagcard.bcard_id == card.id  && tagcard.user_id == window.localStorage['userId']) {
           // $scope.tag_ids.push(tagcard.id);
           $scope.tagcard = tagcard;
-          console.log(tagcard);
+          console.log(tagcard.inspect);
         }
       });
     //  console.log($scope.tag_ids);
-     console.log($scope.tagcard);
+     console.log($scope.tagcard.id);
 
   //    $scope.tagcard = $scope.tag_ids[0];
      if ($scope.tagcard != null && !($scope.deck.tagcards.includes($scope.tagcard.id))) {

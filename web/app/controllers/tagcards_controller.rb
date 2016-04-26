@@ -71,6 +71,6 @@ class TagcardsController < ApplicationController
 
      # Never trust parameters from the scary internet, only allow the white list through.
      def tagcard_params
-       params.permit(:id, :user_id, :bcard_id, :tags => [])
+       params.permit(:tagcard, :id, :user_id, :bcard_id, :tags => [])
      end
  end
