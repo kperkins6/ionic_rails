@@ -89,7 +89,8 @@ angular.module('app.routes', ['ionicUIRouter'])
   .state('addTags', {
     url: '/page8',
     templateUrl: 'templates/addTags.html',
-    controller: 'addTagsCtrl'
+    controller: 'addTagsCtrl',
+    params: { param1: null }
   })
 
   .state('decks', {
@@ -108,7 +109,8 @@ angular.module('app.routes', ['ionicUIRouter'])
   .state('viewBusinessCard', {
     url: '/page11',
     templateUrl: 'templates/viewBusinessCard.html',
-    controller: 'viewBusinessCardCtrl'
+    controller: 'viewBusinessCardCtrl',
+    params: { param1: null }
   })
 
   .state('myCard', {

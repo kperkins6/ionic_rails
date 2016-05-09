@@ -20,7 +20,7 @@
             </label>
         </form>
         <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity">
-            <ion-item ui-sref="viewDeck" ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
+            <ion-item ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>

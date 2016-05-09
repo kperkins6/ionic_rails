@@ -241,10 +241,14 @@ $scope.login = function() {
  // }
 })
 
-.controller('addTagsCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $location, $ionicPopup, $rootScope, $http) {
+.controller('addTagsCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $location, $ionicPopup, $rootScope, $http, $stateParams, $state) {
   $scope.newTag = {};
-  Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
+  $scope.bcard = {};
+  Bcard.get({id: $stateParams.param1}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
+  });
+  // Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
+  //   $scope.bcard = bcard;
     // alert($scope.bcard.id);
 
   // alert(user_card);
@@ -268,7 +272,7 @@ $scope.login = function() {
       });
     });
   });
-  });
+  // });
   $scope.orderProp = 'hits';
   $scope.quantity = "10";
 
@@ -314,7 +318,7 @@ $scope.login = function() {
 
 })
 
-.controller('decksCtrl', function($scope, Deck, $rootScope, current_focus) {
+.controller('decksCtrl', function($scope, Deck, $rootScope, current_focus, $stateParams, $state) {
   // if(UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
   //   alert("Please log in to continue");
   //   $location.path('/login');
@@ -336,6 +340,7 @@ $scope.login = function() {
     $scope.click_deck = function(deck) {
       // alert(deck.id);
       current_focus.setDeck(deck.id);
+      $state.go('viewDeck', {param1: deck.id});
     }
 
     $scope.create_deck = function() {
@@ -371,14 +376,19 @@ $scope.login = function() {
   // else {
   // alert(current_focus.getDeck());
 
-  Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+  // Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
+  //   $scope.deck = deck;
+  //   if ($scope.deck.tagcards == null) {
+  //     $scope.deck.tagcards = ["0"];
+  //   }
+  // });
+  $scope.deck= {};
+  $scope.tagcards = [];
+  Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
     $scope.deck = deck;
-    if ($scope.deck.tagcards == null) {
-      $scope.deck.tagcards = ["0"];
-    }
   });
   Tagcard.query().$promise.then(function(response){
-    $scope.tagcards=[]
+    // $scope.tagcards=[]
     angular.forEach(response, function(tagcard){
       // if(tagcard.id in deck.tagcards) {
       if($scope.deck.tagcards.includes(tagcard.id)) {
@@ -404,6 +414,7 @@ $scope.login = function() {
   $scope.click_card = function(card) {
     // alert(card.id);
     current_focus.setCard(card.id);
+    $state.go('viewBusinessCard', {param1: card.id});
   }
   $scope.add_cards = function(deck) {
     $state.go('addBusinessCards', {param1: deck.id});
@@ -456,7 +467,7 @@ $scope.login = function() {
       });
 
      if ($scope.tagcard.id != "-1" && !($scope.deck.tagcards.includes($scope.tagcard.id))) {
-       alert("Adding Tcard");
+      //  alert("Adding Tcard");
        $scope.deck.tagcards.push($scope.tagcard.id);
        $scope.deck = Deck.update($scope.deck);
        console.log($scope.deck.tagcards);
@@ -470,7 +481,7 @@ $scope.login = function() {
        template: 'Card Already Added'
      });
    } else {
-        alert("Making Tcard");
+        // alert("Making Tcard");
          var new_tagcard= new Tagcard({user_id: window.localStorage['userId'], bcard_id: card.id, tags: ["0"]});
          new_tagcard.$save(
            function(newTagcard){
@@ -504,7 +515,7 @@ $scope.login = function() {
 
 })
 
-.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup) {
+.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup, $stateParams, $state) {
   // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
   //   $location.path('/login');
   //   alert("Please log in to continue");
@@ -543,6 +554,7 @@ $scope.login = function() {
     $scope.click_tags = function(card) {
       // alert(card.id);
       current_focus.setCard(card.id);
+      $state.go('addTags', {param1: card.id});
     }
     $scope.delete_tag = function(tag) {
       var tCard = {};
@@ -596,6 +608,9 @@ $scope.login = function() {
     $scope.bcard.facebook = $scope.card.facebook;
     $scope.bcard.pinterest = $scope.card.pinterest;
     $scope.bcard.instagram = $scope.card.instagram;
+    $scope.bcard.phone = $scope.card.phone;
+    $scope.bcard.email_address = $scope.card.email_address;
+    $scope.bcard.position = $scope.card.position;
     $scope.bcard.twitter = $scope.card.twitter;
     $scope.bcard.website = $scope.card.website;
     $scope.bcard = Bcard.update($scope.bcard);

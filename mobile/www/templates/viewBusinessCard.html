@@ -6,8 +6,8 @@
         <div id="viewBusinessCard-markdown2" style="color:#000000;">
             <ul>
                 <li>Address: {{bcard.address}}</li>
-                <li>Phone Number: {{bcard.number}}</li>
-                <li>Email Address: {{bcard.email}}</li>
+                <li>Phone Number: {{bcard.phone}}</li>
+                <li>Email Address: {{bcard.email_address}}</li>
                 <li>Company: {{bcard.company}}</li>
                 <li>Position: {{bcard.position}}</li>
                 <li>Facebook: {{bcard.facebook}}</li>
@@ -17,7 +17,7 @@
                 <li>Website: {{bcard.website}}</li>
             </ul>
         </div>
-        <a ui-sref="addTags" id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create" ng-click="click_tags(bcard)">Add Tags</a>
+        <button id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create" ng-click="click_tags(bcard)">Add Tags</button>
         <ion-list ng-repeat="tag in tags | orderBy:orderProp">
           <div class="buttons">
             <ion-item>text: {{tag.text}}, hits: {{tag.hits}}

@@ -72,6 +72,6 @@ class BcardsController < ApplicationController
 
       # Never trust parameters from the scary internet, only allow the white list through.
       def bcard_params
-        params.permit(:id, :address, :linkedin, :facebook, :twitter, :instagram, :pinterest, :name, :company, :website, :user_id, :created_at, :updated_at)
+        params.permit(:id, :address, :linkedin, :position, :phone, :email_address, :facebook, :twitter, :instagram, :pinterest, :name, :company, :website, :user_id, :created_at, :updated_at)
       end
   end
