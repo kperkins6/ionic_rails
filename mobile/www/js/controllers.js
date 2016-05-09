@@ -12,38 +12,6 @@ angular.module('app.controllers', ['app.services'])
 
 })
 
-// .controller('LoginCtrl', function($scope, $location, Auth) {
-//   $scope.login = function() {
-//     var credentials = {
-//         email: 'user@domain.com',
-//         password: 'password1'
-//     };
-//     var config = {
-//         headers: {
-//             'X-HTTP-Method-Override': 'POST'
-//         }
-//     };
-//
-//     Auth.login(credentials, config).then(function(user) {
-//         console.log(user); // => {id: 1, ect: '...'}
-//     }, function(error) {
-//         alert("authentication failed");
-//     });
-//
-//     $scope.$on('devise:login', function(event, currentUser) {
-//         // after a login, a hard refresh, a new tab
-//         $location.path('/page1/tab2/page3');
-//     });
-//
-//     $scope.$on('devise:new-session', function(event, currentUser) {
-//         // user logged in by Auth.login({...})
-//         alert("authentication successful");
-//
-//     });
-//   }
-// });
-
-
 .controller('LoginCtrl', function($scope, $location, UserSession, $ionicPopup, $rootScope, $ionicHistory, $ionicSideMenuDelegate, $state) {
 $scope.data = {};
 
@@ -244,6 +212,7 @@ $scope.login = function() {
 .controller('addTagsCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $location, $ionicPopup, $rootScope, $http, $stateParams, $state) {
   $scope.newTag = {};
   $scope.bcard = {};
+  $scope.suggested_tags = [];
   Bcard.get({id: $stateParams.param1}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
   });
@@ -252,8 +221,8 @@ $scope.login = function() {
     // alert($scope.bcard.id);
 
   // alert(user_card);
-
   $scope.suggested_tags = Tag.query();
+
   Tagcard.query().$promise.then(function(response){
     $scope.tag_ids = []
     $scope.tags = [];
@@ -271,15 +240,21 @@ $scope.login = function() {
         });
       });
     });
+
   });
-  // });
+
+
+
   $scope.orderProp = 'hits';
   $scope.quantity = "10";
 
   $scope.add_tag = function(tag) {
-    $scope.tagcard.tags.push(tag);
+    $scope.tagcard.tags.push(tag.id);
     $scope.tagcard = Tagcard.update($scope.tagcard);
     $scope.tags.push(tag);
+    var index = $scope.suggested_tags.indexOf(tag);
+    console.log(index);
+    $scope.suggested_tags.splice(index, 1);
   }
 
   $scope.create_tag = function() {
@@ -299,11 +274,8 @@ $scope.login = function() {
             template: 'Success!'
           });
           $scope.tagcard.tags.push(newTag.id);
-            // alert($scope.tagcard.tags);
           $scope.tagcard = Tagcard.update($scope.tagcard);
-            // alert("Tagcard Updated");
           $scope.tags.push(newTag);
-            // alert("View Updated");
         },
         function(err){
           var error = err["data"]["error"] || err.data.join('. ')
@@ -313,18 +285,12 @@ $scope.login = function() {
           });
         }
       );
-      // }
   }
 
 })
 
 .controller('decksCtrl', function($scope, Deck, $rootScope, current_focus, $stateParams, $state) {
-  // if(UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
-  //   alert("Please log in to continue");
-  //   $location.path('/login');
-  //   // window.location.reload();
-  // }
-  // else {
+
   $scope.newDeck = {};
   $scope.decks=[];
 
@@ -368,29 +334,13 @@ $scope.login = function() {
 })
 
 .controller('viewDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $stateParams, $state) {
-  // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
-  //   $location.path('/login');
-  //   alert("Please log in to continue");
-  //   // window.location.reload();
-  // }
-  // else {
-  // alert(current_focus.getDeck());
-
-  // Deck.get({id: current_focus.getDeck()}).$promise.then(function(deck) {
-  //   $scope.deck = deck;
-  //   if ($scope.deck.tagcards == null) {
-  //     $scope.deck.tagcards = ["0"];
-  //   }
-  // });
   $scope.deck= {};
   $scope.tagcards = [];
   Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
     $scope.deck = deck;
   });
   Tagcard.query().$promise.then(function(response){
-    // $scope.tagcards=[]
     angular.forEach(response, function(tagcard){
-      // if(tagcard.id in deck.tagcards) {
       if($scope.deck.tagcards.includes(tagcard.id)) {
         $scope.tagcards.push(tagcard);
       }
@@ -408,11 +358,8 @@ $scope.login = function() {
     });
     return $scope.bcards;
   });
-  // current_focus.setDeck($scope.deck.id);
 
-// }
   $scope.click_card = function(card) {
-    // alert(card.id);
     current_focus.setCard(card.id);
     $state.go('viewBusinessCard', {param1: card.id});
   }
@@ -590,7 +537,9 @@ $scope.login = function() {
   // Bcard.query().$promise.then(function(response){
   //   $scope.bcards = response;
   // });
-  // $scope.card={};
+  // window.location.reload();
+  $scope.card={};
+  $scope.bcard={};
   // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
   //   $location.path('/login');
   //   alert("Please log in to continue");
@@ -614,9 +563,11 @@ $scope.login = function() {
     $scope.bcard.twitter = $scope.card.twitter;
     $scope.bcard.website = $scope.card.website;
     $scope.bcard = Bcard.update($scope.bcard);
-    window.location.reload();
+    var confirmPopup = $ionicPopup.alert({
+      title: 'Update Successful!',
+      template: 'Business Card Updated!'
+    });
   }
-  // }
 })
 
 .controller('uploadImageCtrl', function($scope) {
@@ -702,20 +653,15 @@ $scope.login = function() {
     else {
       $scope.tags = [];
       $scope.texts = [];
-      $scope.total++;
+      // $scope.total++;
       angular.forEach($scope.focus_tcard.tags, function(tag_id){
-        // alert("tag.each");
         Tag.get({id: tag_id}).$promise.then(function(tag) {
           $scope.texts.push(tag.text);
           tag.text = "*****"
           $scope.tags.push(tag);
-          // var str = $scope.tag.text;
-          // str = str.replace(/[a-zA-Z]/g, "*");
-          // alert(str);
         });
       });
     }
-    // alert($scope.tags[0].text);
   }
 
   $scope.flip_card = function() {
@@ -726,9 +672,6 @@ $scope.login = function() {
       $scope.flip_next = "Next";
     }
     else if ($scope.flip_next == "Next"){
-      // MAKE THE BUTTON SAY FLIP? -> then NEXT?
-      // Pass in an indicator to set_view that this is just a flip, not a reset
-      // Fill in the data for the tags
       var myPopup = $ionicPopup.show({
         template: 'Were you Correct?',
         title: 'Right or Wrong?',
@@ -808,7 +751,7 @@ $scope.login = function() {
   $scope.score = $stateParams.param2;
   $scope.total = $stateParams.param3;
   if ($scope.total == 0) {
-    $scope.mesage = "You just studied an empty deck! Add some Cards!";
+    $scope.mesage = "You just studied an empty deck! Add some Cards :)";
   }
   else {
     var percent = ($scope.score / $scope.total) * 100;

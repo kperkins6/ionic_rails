@@ -27,12 +27,12 @@
           </form>
           <ion-item class="item-divider">Suggested Tags</ion-item>
           <ion-list ng-repeat="tag in suggested_tags | filter: search | orderBy:orderProp:true | limitTo:quantity">
-            <ion-item>Text: {{tag.text}}, Hits: {{tag.hits}}</ion-item>
+            <ion-item ng-click=add_tag(tag)>{{tag.text}}</ion-item>
           </ion-list>
           <ion-item class="item-divider">Current Tags</ion-item>
         </ion-list>
         <ion-list ng-repeat="tag in tags | orderBy:orderProp">
-          <ion-item>Text: {{tag.text}}, Hits: {{tag.hits}}</ion-item>
+          <ion-item>{{tag.text}}</ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
