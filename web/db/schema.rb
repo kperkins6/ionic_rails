@@ -19,6 +19,9 @@ ActiveRecord::Schema.define(version: 20160411031441) do
   create_table "bcards", force: :cascade do |t|
     t.text     "address"
     t.string   "linkedin"
+    t.string   "phone"
+    t.string   "email_address"
+    t.string   "position"
     t.string   "facebook"
     t.string   "twitter"
     t.string   "instagram"
@@ -27,8 +30,8 @@ ActiveRecord::Schema.define(version: 20160411031441) do
     t.integer  "user_id"
     t.string   "company"
     t.string   "website"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
   create_table "decks", force: :cascade do |t|

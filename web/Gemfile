@@ -34,7 +34,7 @@ gem 'therubyracer',  platforms: :ruby
 gem 'devise'
 gem 'pg'
 gem 'rack-cors', :require => 'rack/cors'
-
+gem 'devise_token_auth'
 
 #gem 'selenium-phantomjs'
 
