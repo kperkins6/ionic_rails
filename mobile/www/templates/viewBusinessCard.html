@@ -20,7 +20,7 @@
         <button id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create" ng-click="click_tags(bcard)">Add Tags</button>
         <ion-list ng-repeat="tag in tags | orderBy:orderProp">
           <div class="buttons">
-            <ion-item>text: {{tag.text}}, hits: {{tag.hits}}
+            <ion-item>{{tag.text}}
               <ion-option-button class="button button-assertive icon ion-android-delete" id="deleteTag" ng-click="delete_tag(tag.id)">Delete Tag?</ion-option-button>
             </ion-item>
           </div>

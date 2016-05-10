@@ -26,13 +26,7 @@ $scope.$on('$ionicView.leave', function(){
   });
 $scope.login = function() {
   var user_session = new UserSession({ user: $scope.data });
-  // var user_session = new UserSession({ email: data.email, password: data.password });
 
-  // window.localStorage['userId'] = data.id;
-  // window.localStorage['userName'] = data.name;
-  // user_session.$save()
-  // alert(data.email);
-  // alert(data.password);
   user_session.$save(
     function(data){
       window.localStorage['userId'] = data.id;
@@ -44,9 +38,6 @@ $scope.login = function() {
       $state.go('myCard');
       window.location.reload();
 
-      // $ionicHistory.clearHistory();
-      // $scope.openPage('/page1/tab2/page3');
-      // $location.path('/page1/tab2/page3');
     },
     function(err){
       var error = err["data"]["error"] || err.data.join('. ')
@@ -56,7 +47,7 @@ $scope.login = function() {
       });
     }
   );
-  // window.location.reload();
+
   $scope.openPage = function (pageName) {
       window.location = '#' + pageName;
       window.location.reload();
@@ -95,27 +86,7 @@ $scope.login = function() {
         });
       }
     );
-    // var user_session = new UserSession({ user: $scope.data });
-    // user_session.$save(
-    //   function(data){
-    //     window.localStorage['userId'] = data.id;
-    //     window.localStorage['userName'] = data.name;
-    //     var confirmPopup = $ionicPopup.alert({
-    //       title: 'Login Successful!',
-    //       template: 'Success!'
-    //     });
-    //     $scope.openPage('/page1/tab2/page3');
-    //     // $location.path('/page1/tab2/page3');
-    //   },
-    //   function(err){
-    //     var error = err["data"]["error"] || err.data.join('. ')
-    //     var confirmPopup = $ionicPopup.alert({
-    //       title: 'An error occured',
-    //       template: error
-    //     });
-    //   }
-    // );
-    // window.location.reload();
+
     $scope.openPage = function (pageName) {
         window.location = '#' + pageName;
         // window.location.reload();
@@ -139,33 +110,10 @@ $scope.login = function() {
   $scope.$on('$ionicView.leave', function(){
     $ionicSideMenuDelegate.canDragContent(true);
   });
-  // var session = UserSession.get({userId: window.localStorage['userId']});
 
-  // UserSession.delete(session);
-  // if ( session == 'undefined'){
-  //   $location.path('/login');
-  //   window.location.reload();
-  // }
-  // else {
-  // $http.get('http://159.203.247.39:3000/users/sign_out', {
-  // // auth_token: session.userId // just a cookie storing my token from devise token authentication.
-  //
-  // }).success( function(result) {
-  //   // $cookieStore.remove('_pf_session');
-  //   // $cookieStore.remove('_pf_name');
-  //   // $cookieStore.remove('_pf_email');
-  //   alert("Sign Out Successfull");
-  //   location.reload(true); // I need to refresh the page to update cookies
-  // }).error( function(result) {
-  //   console.log(result);
-  // });
-  // }
-
-  // $location.path('/login');
-  // window.location.reload();
 })
 
-.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, $ionicHistory, current_focus, $state) {
+.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, $ionicHistory, current_focus, $state, $stateParams) {
   $scope.$on('$ionicView.enter', function(){
     // window.location.reload();
     // $ionicSideMenuDelegate.canDragContent(false);
@@ -243,13 +191,13 @@ $scope.login = function() {
 
   });
 
-
-
   $scope.orderProp = 'hits';
   $scope.quantity = "10";
 
   $scope.add_tag = function(tag) {
     $scope.tagcard.tags.push(tag.id);
+    tag.hits++;
+    tag = Tag.update(tag);
     $scope.tagcard = Tagcard.update($scope.tagcard);
     $scope.tags.push(tag);
     var index = $scope.suggested_tags.indexOf(tag);
@@ -258,13 +206,7 @@ $scope.login = function() {
   }
 
   $scope.create_tag = function() {
-    // var oldTag = Tag.get({text: $scope.newTag.text}).$promise.then(function(tag) {
-    //   alert("Exists");
-    //   $scope.tagcard.tags.push(tag.id);
-    //   $scope.tagcard = Tagcard.update($scope.tagcard);
-    //   $scope.tags.push(tag);
-    // });
-    // if (oldtag != undefined) {
+
       var new_tag= new Tag({ text: $scope.newTag.text, hits: "1" });
 
       new_tag.$save(
@@ -463,16 +405,7 @@ $scope.login = function() {
 })
 
 .controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup, $stateParams, $state) {
-  // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
-  //   $location.path('/login');
-  //   alert("Please log in to continue");
-  //   // window.location.reload();
-  // }
-  // else {
-    // Bcard.query().$promise.then(function(response){
-    //   $scope.bcards = response;
-    // });
-    // alert(current_focus.getCard());
+
     Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
       $scope.bcard = bcard;
     });
@@ -534,18 +467,10 @@ $scope.login = function() {
 })
 
 .controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope, $http) {
-  // Bcard.query().$promise.then(function(response){
-  //   $scope.bcards = response;
-  // });
-  // window.location.reload();
+
   $scope.card={};
   $scope.bcard={};
-  // if (UserSession.get({userId: window.localStorage['userId']}) == 'undefined'){
-  //   $location.path('/login');
-  //   alert("Please log in to continue");
-  //   window.location.reload();
-  // }
-  // else {
+
   Bcard.get({id: window.localStorage['userId']}).$promise.then(function(bcard) { //-----------------------------------first_or_create MAY BE WRONG---------------
     $scope.bcard = bcard;
   });

@@ -10,7 +10,7 @@
         <ion-list ng-repeat="bcard in bcards | filter: search | orderBy:orderProp">
           <div class="item item-avatar">
             <!-- <img src="my-image.png"> -->
-            <ion-item ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
+            <ion-item ng-click="click_card(bcard)">{{bcard.name}} : {{bcard.address}}</ion-item>
             <!-- ui-sref="viewBusinessCard" -->
           </div>
         </ion-list>
