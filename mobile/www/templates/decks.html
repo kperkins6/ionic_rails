@@ -1,26 +1,30 @@
-<ion-view title="Decks" id="page9" style="background-color:#008FFF;">
+<ion-view title="Decks" id="page9" style="background-color:#E2E0FC;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
+      <form class="list">
+      <ion-item class="item-divider">Create a New Deck</ion-item>
       <label class="item item-input">
-        <span class="input-label">Deck Name</span>
-        <input type="name" placeholder="Enter A Deck Name" ng-model="newDeck.name">
+        <i class="icon ion-ios-plus-empty placeholder-icon"></i>
+        <input name="name" type="text" placeholder="Enter A Deck Name" ng-model="newDeck.name" type="text" autofocus class="form-control" >
       </label>
-      <label class="item item-input">
-        <span class="input-label">Deck Description</span>
-        <input type="description" placeholder="Enter A Description" ng-model="newDeck.description">
-      </label>
-      <div class="padding">
-        <button type="submit" class="button button-block button-calm" ng-click="create_deck()">Create Deck!</button>
-      </div>
+      <!-- <ion-item class="item-divider">Description</ion-item> -->
+        <label class="item item-input" name"Enter Desc">
+          <i class="icon ion-ios-plus-empty placeholder-icon"></i>
+          <input ng-model="newDeck.description" name="description" type="text" autofocus class="form-control" placeholder="Enter A Description">
+        </label>
+      </form>
 
-      <ion-item class="item-divider">Search Decks</ion-item>
-        <form class="list">
-            <label class="item item-input" name="Search Decks">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
-            </label>
-        </form>
-        <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity">
-            <ion-item ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
-        </ion-list>
+      <div class="padding">
+        <button type="submit" class="button button-block button-calm icon-left ion-edit" ng-click="create_deck()">Create Deck!</button>
+      </div>
+      <form class="list">
+        <ion-item class="item-divider">Search</ion-item>
+        <label class="item item-input" name="Search Decks">
+          <i class="icon ion-search placeholder-icon"></i>
+          <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
+        </label>
+      </form>
+      <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity">
+        <ion-item ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
+      </ion-list>
     </ion-content>
 </ion-view>

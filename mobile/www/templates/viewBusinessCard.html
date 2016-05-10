@@ -1,8 +1,9 @@
-<ion-view title="View Business Card" id="page11" style="background-color:#BDBDBD;">
+<ion-view title="View Business Card" id="page11" style="background-color:#0097EF;">
   <div class="card">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
+      <div class="card">
         <h1 id="viewBusinessCard-heading2" style="color:#0C1C35;">{{bcard.name}}</h1>
-        <img class="full-image" src={{bcard.picture}}>
+        <!-- <img class="full-image" src={{bcard.picture}}> -->
         <div id="viewBusinessCard-markdown2" style="color:#000000;">
             <ul>
                 <li>Address: {{bcard.address}}</li>
@@ -17,7 +18,8 @@
                 <li>Website: {{bcard.website}}</li>
             </ul>
         </div>
-        <button id="viewBusinessCard-button9" class="button button-positive  button-block icon ion-android-create" ng-click="click_tags(bcard)">Add Tags</button>
+      </div>
+        <button id="viewBusinessCard-button9" class="button button-positive  button-block icon-left ion-plus-circled" ng-click="click_tags(bcard)">Add Tags</button>
         <ion-list ng-repeat="tag in tags | orderBy:orderProp">
           <div class="buttons">
             <ion-item>{{tag.text}}

@@ -681,13 +681,19 @@ $scope.login = function() {
   else {
     var percent = ($scope.score / $scope.total) * 100;
     if (percent < 60) {
-      $scope.message = "You should keep studying..."
+      $scope.message = "Grade: [F] -- You should keep studying..."
     }
-    else if (percent < 85) {
-      $scope.message = "You did well! Practice makes perfect, you should study later today!"
+    if (percent < 70) {
+      $scope.message = "Grade: [D] -- You should keep studying..."
+    }
+    if (percent < 80) {
+      $scope.message = "Grade: [C] -- You should keep studying..."
+    }
+    else if (percent < 90) {
+      $scope.message = "Grade: [B] -- You did well! Practice makes perfect, you should study later today!"
     }
     else {
-      $scope.mesasge = "WOW! Great Job! Seems like you have this down!"
+      $scope.mesasge = "Grade: [A] -- WOW! Great Job! Seems like you have this down!"
     }
   }
   Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {

@@ -1,10 +1,10 @@
-<ion-view title="View Deck" id="page10" style="background-color:#008CFD;">
+<ion-view title="View Deck" id="page10" style="background-color:#E2E0FC;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <h1 id="viewDeck-heading1" style="color:#FFFFFF;">Deck Name: {{deck.name}}</h1>
-        <div id="viewDeck-markdown1" style="color:#DDDDDD;">
+        <h1 id="viewDeck-heading1" >Deck Name: {{deck.name}}</h1>
+        <div id="viewDeck-markdown1" >
             <p>Deck Description: {{deck.description}}</p>
         </div>
-        <button ng-click="add_cards(deck)" class="button button-energized  button-block icon-left ion-android-add-circle">Add Business Cards</button>
+        <button ng-click="add_cards(deck)" class="button button-positive  button-block icon-left ion-android-add-circle">Add Business Cards</button>
 
         <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
           <div class="item item-avatar">

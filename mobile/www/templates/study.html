@@ -1,12 +1,12 @@
-<ion-view title="Study" id="page15" style="background-color:#F50058;">
+<ion-view title="Study" id="page15" style="background-color:#59448E;">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-      <ion-item class="item-divider">Search Decks To Study</ion-item>
-        <form class="list">
-            <label class="item item-input" name="Search Decks">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
-            </label>
-        </form>
+      <form class="list">
+        <ion-item class="item-divider">Search Decks To Study</ion-item>
+        <label class="item item-input" name="Search Decks">
+            <i class="icon ion-search placeholder-icon"></i>
+            <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
+        </label>
+      </form>
       <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity">
           <ion-item ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
       </ion-list>
