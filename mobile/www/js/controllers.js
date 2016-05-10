@@ -683,10 +683,10 @@ $scope.login = function() {
     if (percent < 60) {
       $scope.message = "Grade: [F] -- You should keep studying..."
     }
-    if (percent < 70) {
+    else if (percent < 70) {
       $scope.message = "Grade: [D] -- You should keep studying..."
     }
-    if (percent < 80) {
+    else if (percent < 80) {
       $scope.message = "Grade: [C] -- You should keep studying..."
     }
     else if (percent < 90) {

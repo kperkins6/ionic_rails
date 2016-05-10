@@ -85,9 +85,10 @@ bcards = Bcard.create(
     { name: "Jack Smith", address: "81 West First Street, Chico CA 95926", pinterest: "f", user_id: 2 },
     { name: "Arnold Palmer", address: "100 West First Street, Chico CA 95926", pinterest: "f", user_id: 25 },
     { name: "Kevin Perkins", address: "1337 Leet Street", pinterest: "kevinnopinterest", company: "Deloitte Consulting LLP", position: "Business Technology Analyst", facebook: "/hashtaghashbrown", instagram: "kevinnoinsta", twitter: "kevinnotwitter", website: "159.203.247.39", user_id: 27, phone: "5555555555", email_address: "kevin@aol.com"},
-    { name: "Tyson Henry", address: "136 West First Street, Chico CA 95926", pinterest: "f", user_id: 7 },
+    { name: "Tyson Henry", address: "136 West First Street, Chico CA 95926", pinterest: "Tysonlovespinterest", instagram: "YoboyeeTyson" user_id: 7 },
     { name: "Rick Sanchez", address: "163 West First Street, Chico CA 95926", pinterest: "f", user_id: 24 },
-    { name: "Jan Michael Vincent", address: "187 West First Street, Chico CA 95926", pinterest: "f", user_id: 10 }
+    { name: "Jan Michael Vincent", address: "187 West First Street, Chico CA 95926", pinterest: "f", user_id: 10 },
+    { name: "Kevin Buffardi", address: "189 West First Street, Chico CA 95926", pinterest: "Too Cool For Pinterest!", user_id: 10 }
   ]
 )
 
