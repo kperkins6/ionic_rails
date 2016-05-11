@@ -26,8 +26,8 @@
           </form>
           </form>
           <ion-item class="item-divider">Suggested Tags</ion-item>
-          <ion-list ng-repeat="tag in suggested_tags | filter: search | orderBy:orderProp:true | limitTo:quantity">
-            <ion-item ng-click=add_tag(tag)>{{tag.text}}</ion-item>
+          <ion-list ng-repeat="tag in suggested_tags | filter: search  | limitTo:quantity | orderBy : orderProp">
+            <ion-item ng-click="add_tag(tag, $index)">{{tag.text}}</ion-item>
           </ion-list>
           <ion-item class="item-divider">Current Tags</ion-item>
         </ion-list>

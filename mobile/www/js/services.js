@@ -34,7 +34,9 @@ angular.module('app.services', ['ngResource'])
   {
       update: { method:'PUT', isArray: false},
       query:  { method:'GET' , isArray: true},
-      save:   { method:'POST' , isArray: false}
+      save:   { method:'POST' , isArray: false},
+      'remove': {method:'DELETE'},
+      delete: { method:'DELETE'}
   });
   return decks;
 })

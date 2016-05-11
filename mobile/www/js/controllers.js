@@ -172,15 +172,15 @@ $scope.login = function() {
   $scope.orderProp = 'hits';
   $scope.quantity = "10";
 
-  $scope.add_tag = function(tag) {
+  $scope.add_tag = function(tag, tag_index) {
     $scope.tagcard.tags.push(tag.id);
     tag.hits++;
     tag = Tag.update(tag);
     $scope.tagcard = Tagcard.update($scope.tagcard);
     $scope.tags.push(tag);
-    var index = $scope.suggested_tags.indexOf(tag);
-    console.log(index);
-    $scope.suggested_tags.splice(index, 1);
+    // var index = $scope.suggested_tags.indexOf(tag);
+    // $scope.suggested_tags.splice(tag_index, 1);
+    // $scope.suggested_tags.splice( $scope.suggested_tags.indexOf(tag), 1);
   }
 
   $scope.create_tag = function() {
@@ -263,6 +263,15 @@ $scope.login = function() {
         }
       );
       window.location.reload();
+    }
+
+    $scope.delete_deck = function(deck, deck_index) {
+        var deck = {};
+        $scope.decks.splice(deck_index, 1);
+        // Deck.delete({id: deck.id});
+        Deck.delete(deck);
+        // Deck.remove(deck);
+
     }
 })
 
@@ -392,19 +401,15 @@ $scope.login = function() {
 
 })
 
-.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup, $stateParams, $state, $locale, $ionicHistory) {
-  // $scope.$on('$ionicView.enter', function(){
-  //   $ionicHistory.clearCache();
-  //   $ionicHistory.clearHistory();
-  // });
+.controller('viewBusinessCardCtrl', function($scope, Bcard, UserSession, Tag, Tagcard, current_focus, $ionicPopup, $stateParams, $state, $locale, $ionicHistory, $ionicPopover, $ionicModal, $ionicActionSheet) {
 
-
+  $scope.shouldShowDelete = true;
   $scope.tag_ids = [];
   $scope.tags = [];
+  $scope.to_delete = [];
 
   Bcard.get({id: current_focus.getCard()}).$promise.then(function(bcard) {
     $scope.bcard = bcard;
-  // });
 
     Tagcard.query().$promise.then(function(response){
 
@@ -426,49 +431,38 @@ $scope.login = function() {
     });
   });
 
-    $scope.orderProp = 'hits';
+  $scope.orderProp = 'hits';
 
-    $scope.click_tags = function(card) {
-      current_focus.setCard(card.id);
-      $state.go('addTags', {param1: card.id});
-    }
-    $scope.delete_tag = function(tag) {
-      var tCard = {};
-      // Tagcard.get({bcard_id: $scope.bcard.id, user_id: window.localStorage['userId']}).$promise.then(function(tagcard){
-      Tagcard.query().$promise.then(function(response){
-        angular.forEach(response, function(tagcard){
-          // console.log(response.user_id + " " + response.bcard_id);
-          if ($scope.bcard.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
-            tCard = tagcard;
-          }
-        });
-        if (tCard != undefined) {
-          var index = tCard.tags.indexOf(tag);
-          if (index >= "0") {
-            tCard.tags.splice(index, 1);
-            tCard = Tagcard.update(tCard);
-            index = $scope.tags.indexOf(tag)
-            $scope.tags.splice(index, 1);
-            tagcard = Tagcard.update(tCard);
-            var confirmPopup = $ionicPopup.alert({
-              title: 'Tag Deleted!',
-              template: 'Tag Deleted'
-            });
-          }
+  $scope.delete_tag = function(tag, tag_index) {
+    var tCard = {};
+    Tagcard.query().$promise.then(function(response){
+      angular.forEach(response, function(tagcard){
+        if ($scope.bcard.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
+          tCard = tagcard;
         }
-        });
+      });
+      if (tCard != undefined) {
+        var index = tCard.tags.indexOf(tag.id);
+        if (index >= "0") {
+          tCard.tags.splice(index, 1);
+          tCard = Tagcard.update(tCard);
+          // index = $scope.tags.indexOf(tag)
+          $scope.tags.splice(tag_index, 1);
+          tagcard = Tagcard.update(tCard);
+          // var confirmPopup = $ionicPopup.alert({
+          //   title: 'Tag Deleted',
+          //   template: 'Deleted'
+          // });
+        }
       }
+      });
+  }
 
-  // $scope.reload = function() {
-  //   return $state.transitionTo($state.current, $stateParams, {
-  //     reload: true
-  //   }).then(function() {
-  //     $scope.hideContent = true;
-  //     return $timeout(function() {
-  //       return $scope.hideContent = false;
-  //     }, 1);
-  //   });
-  // };
+  $scope.click_tags = function(card) {
+    current_focus.setCard(card.id);
+    $state.go('addTags', {param1: card.id});
+  }
+
 })
 
 .controller('myCardCtrl', function($scope, Bcard, UserSession, $location, $ionicPopup, $rootScope, $http, $locale) {

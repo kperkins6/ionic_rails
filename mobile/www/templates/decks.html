@@ -23,8 +23,13 @@
           <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
         </label>
       </form>
-      <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity">
-        <ion-item ng-click="click_deck(deck)">Name: {{deck.name}}, Dsc: {{deck.description}}</ion-item>
+      <ion-list ng-controller="viewBusinessCardCtrl"
+                show-delete="true">
+      <!-- <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity"> -->
+        <ion-item ng-click="click_deck(deck)" ng-repeat="deck in decks| filter: search | limitTo:quantity">
+          <h2>Name: {{deck.name}}, Dsc: {{deck.description}}</h2>
+          <ion-delete-button  class="icon ion-minus-circled" on-icon="ion-minus-circled" off-icon="ion-minus" ng-click="delete_deck(deck, $index)">
+        </ion-item>
       </ion-list>
     </ion-content>
 </ion-view>
