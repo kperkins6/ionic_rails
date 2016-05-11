@@ -23,12 +23,11 @@
           <input ng-model="search" name="keywords" type="text" autofocus class="form-control" placeholder="Name, Description, Etc...">
         </label>
       </form>
-      <ion-list ng-controller="viewBusinessCardCtrl"
-                show-delete="true">
-      <!-- <ion-list ng-repeat="deck in decks| filter: search | limitTo:quantity"> -->
+      <ion-list ng-controller="decksCtrl" can-swype"listCanSwipe">
         <ion-item ng-click="click_deck(deck)" ng-repeat="deck in decks| filter: search | limitTo:quantity">
-          <h2>Name: {{deck.name}}, Dsc: {{deck.description}}</h2>
-          <ion-delete-button  class="icon ion-minus-circled" on-icon="ion-minus-circled" off-icon="ion-minus" ng-click="delete_deck(deck, $index)">
+          <ion-option-button  class="icon ion-minus-circled button-assertive" ng-click="delete_deck(deck, $index)">Delete</ion-option-button>
+          <h2>Name: {{deck.name}}, Description: {{deck.description}}</h2>
+          <!-- <ion-option-button class="button button-calm icon-right ion-android-open" ng-click="click_deck(deck)">View Deck</ion-option-button> -->
         </ion-item>
       </ion-list>
     </ion-content>

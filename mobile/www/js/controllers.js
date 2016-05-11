@@ -109,13 +109,15 @@ $scope.login = function() {
 
 })
 
-.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, $ionicHistory, current_focus, $state, $stateParams, $locale) {
+.controller('searchBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, $ionicHistory, current_focus, $state, $stateParams, $locale, $ionicModal, $ionicPopup) {
   $scope.$on('$ionicView.enter', function(){
     $ionicHistory.clearCache();
     $ionicHistory.clearHistory();
   });
   $scope.tagcards=[];
   $scope.bcards=[];
+  $scope.newBcard = {};
+  $scope.card = {};
 
   Tagcard.query().$promise.then(function(response){
     angular.forEach(response, function(tagcard){
@@ -138,6 +140,98 @@ $scope.login = function() {
     current_focus.setCard(card.id);
     $state.go('viewBusinessCard', {param1: card.id});
   }
+
+  $scope.create_bcard = function() {
+    if ($scope.card.name != undefined) {
+      $scope.newBcard.name = $scope.card.name;
+      $scope.newBcard.address = $scope.card.address;
+      $scope.newBcard.company = $scope.card.company;
+      $scope.newBcard.facebook = $scope.card.facebook;
+      $scope.newBcard.pinterest = $scope.card.pinterest;
+      $scope.newBcard.instagram = $scope.card.instagram;
+      $scope.newBcard.phone = $scope.card.phone;
+      $scope.newBcard.email_address = $scope.card.email_address;
+      $scope.newBcard.position = $scope.card.position;
+      $scope.newBcard.twitter = $scope.card.twitter;
+      $scope.newBcard.website = $scope.card.website;
+      var new_bcard= new Bcard($scope.newBcard);
+      new_bcard.$save(
+        function(newBcard){
+          var confirmPopup = $ionicPopup.alert({
+            title: 'Business Card Created Successfully!',
+            template: 'Business Card Created!'
+          });
+          $scope.modal.hide();
+        },
+        function(err){
+          var error = err["data"]["error"] || err.data.join('. ')
+          var confirmPopup = $ionicPopup.alert({
+            title: 'An error occured',
+            template: error
+          });
+        }
+      );
+      $scope.newBcard = {};
+      $scope.bcards.push(new_bcard);
+    } else {
+      var confirmPopup = $ionicPopup.alert({
+        title: 'Name Not Entered',
+        template: 'Business Cards Must Have a Name'
+      });
+    }
+  }
+
+  $scope.delete_bcard = function(bcard, bcard_index) {
+    var myPopup = $ionicPopup.show({
+      template: 'Are you Sure?',
+      title: 'Delete',
+      subTitle: 'This can never be undone!',
+      scope: $scope,
+      buttons: [
+        {
+          text: 'Delete',
+          type: 'button-assertive',
+          onTap: function(e) {
+            $scope.bcards.splice(bcard_index, 1);
+            bcard.delete(bcard);
+          }
+        },
+        {
+          text: 'Cancel',
+          type: 'button-balanced',
+          onTap: function(e) {
+            // $scope.set_view();
+          }
+        }
+      ]
+    });
+  }
+
+  $ionicModal.fromTemplateUrl('my-modal.html', {
+    scope: $scope,
+    animation: 'slide-in-up'
+  }).then(function(modal) {
+    $scope.modal = modal;
+  });
+  $scope.openModal = function() {
+    $scope.modal.show();
+  };
+  $scope.closeModal = function() {
+    $scope.modal.hide();
+  };
+  // Cleanup the modal when we're done with it!
+  $scope.$on('$destroy', function() {
+    $scope.modal.remove();
+  });
+  // Execute action on hide modal
+  $scope.$on('modal.hidden', function() {
+    // Execute action
+  });
+  // Execute action on remove modal
+  $scope.$on('modal.removed', function() {
+    // Execute action
+  });
+
   $scope.orderProp = 'name';
 })
 
@@ -212,20 +306,9 @@ $scope.login = function() {
     $state.transitionTo('viewBusinessCard', {param1:  $scope.bcard.id}, { location:false, reload: true, inherit: true, notify: true });
   }
 
-  // $scope.reload = function() {
-  //   return $state.transitionTo($state.current, $stateParams, {
-  //     reload: true
-  //   }).then(function() {
-  //     $scope.hideContent = true;
-  //     return $timeout(function() {
-  //       return $scope.hideContent = false;
-  //     }, 1);
-  //   });
-  // };
-
 })
 
-.controller('decksCtrl', function($scope, Deck, $rootScope, current_focus, $stateParams, $state, $locale) {
+.controller('decksCtrl', function($scope, Deck, $rootScope, current_focus, $stateParams, $state, $locale, $ionicPopup) {
 
   $scope.newDeck = {};
   $scope.decks=[];
@@ -262,16 +345,34 @@ $scope.login = function() {
           });
         }
       );
+      $scope.decks.push(new_deck);
       window.location.reload();
     }
 
     $scope.delete_deck = function(deck, deck_index) {
-        var deck = {};
-        $scope.decks.splice(deck_index, 1);
-        // Deck.delete({id: deck.id});
-        Deck.delete(deck);
-        // Deck.remove(deck);
-
+      var myPopup = $ionicPopup.show({
+        template: 'Are you Sure?',
+        title: 'Delete',
+        subTitle: 'This can never be undone!',
+        scope: $scope,
+        buttons: [
+          {
+            text: 'Delete',
+            type: 'button-assertive',
+            onTap: function(e) {
+              $scope.decks.splice(deck_index, 1);
+              Deck.delete(deck);
+            }
+          },
+          {
+            text: 'Cancel',
+            type: 'button-balanced',
+            onTap: function(e) {
+              // $scope.set_view();
+            }
+          }
+        ]
+      });
     }
 })
 
@@ -303,7 +404,7 @@ $scope.login = function() {
 
   $scope.click_card = function(card) {
     current_focus.setCard(card.id);
-    $state.go('essCard', {param1: card.id});
+    $state.go('viewBusinessCard', {param1: card.id});
   }
   $scope.add_cards = function(deck) {
     $state.go('addBusinessCards', {param1: deck.id});

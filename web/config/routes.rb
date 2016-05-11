@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     get '/' => 'bcards#index'
     post '/' => 'bcards#create'
     put '/' => 'bcards#update'
+    delete '/' => 'bcards#destroy'
   end
   scope '/tagcards' do
     get '/' => 'tagcards#index'
