@@ -328,7 +328,7 @@ $scope.login = function() {
     }
 
     $scope.create_deck = function() {
-      if (!$scope.newDeck.name || $scope.newDeck.description) {
+      if (!$scope.newDeck.name || !$scope.newDeck.description) {
         var confirmPopup = $ionicPopup.alert({
           title: 'Deck not Created!',
           template: 'Invalid Name or Discriptoin'
