@@ -328,25 +328,32 @@ $scope.login = function() {
     }
 
     $scope.create_deck = function() {
-      var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description, user_id: window.localStorage['userId']});
+      if (!$scope.newDeck.name || $scope.newDeck.description) {
+        var confirmPopup = $ionicPopup.alert({
+          title: 'Deck not Created!',
+          template: 'Invalid Name or Discriptoin'
+        });
+      } else {
+        var new_deck= new Deck({ name: $scope.newDeck.name, description: $scope.newDeck.description, user_id: window.localStorage['userId']});
 
-      new_deck.$save(
-        function(newDeck){
-          var confirmPopup = $ionicPopup.alert({
-            title: 'Deck Created Successfully!',
-            template: 'Deck Created!'
-          });
-        },
-        function(err){
-          var error = err["data"]["error"] || err.data.join('. ')
-          var confirmPopup = $ionicPopup.alert({
-            title: 'An error occured',
-            template: error
-          });
-        }
-      );
-      $scope.decks.push(new_deck);
-      window.location.reload();
+        new_deck.$save(
+          function(newDeck){
+            var confirmPopup = $ionicPopup.alert({
+              title: 'Deck Created Successfully!',
+              template: 'Deck Created!'
+            });
+          },
+          function(err){
+            var error = err["data"]["error"] || err.data.join('. ')
+            var confirmPopup = $ionicPopup.alert({
+              title: 'An error occured',
+              template: error
+            });
+          }
+        );
+        $scope.decks.push(new_deck);
+        window.location.reload();
+      }
     }
 
     $scope.delete_deck = function(deck, deck_index) {
