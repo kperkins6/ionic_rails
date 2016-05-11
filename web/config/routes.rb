@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     get '/' => 'decks#index'
     post '/' => 'decks#create'
     put '/' => 'decks#update'
-    delete '/' => 'decks#delete'
+    delete '/' => 'decks#destroy'
   end
   scope '/tags' do
     get '/' => 'tags#index'
