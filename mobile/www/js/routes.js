@@ -18,6 +18,13 @@ angular.module('app.routes', ['ionicUIRouter'])
       controller: 'LoginCtrl'
   })
 
+  .state('transition', {
+    url: 'transition?destination',
+    controller: function ($state, $stateParams) {
+      $state.go($stateParams.destination);
+    }
+  })
+
   .state('logout', {
       url: '/logout',
       templateUrl: 'templates/logout.html',
