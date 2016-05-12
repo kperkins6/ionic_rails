@@ -1,0 +1,21 @@
+<ion-view title="Tutorial" id="page35">
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+      <ion-item class="item-divider">Tap to save an item!</ion-item>
+        <ion-list>
+          <ion-list ng-repeat="item in suggested_items">
+            <ion-item ng-click="add_item(item)">
+              <h2>{{item}}</h2>
+            </ion-item>
+          </ion-list>
+        </ion-list>
+        <ion-item class="item-divider">Swype To Delete an Item!</ion-item>
+        <ion-list>
+          <ion-list can-swype"listCanSwipe">
+            <ion-item ng-repeat="item in items">
+              <ion-option-button  class="icon ion-minus-circled button-assertive" ng-click="remove_item(item)">Delete</ion-option-button>
+              <h2>{{item}}</h2>
+            </ion-item>
+          </ion-list>
+        </ion-list>
+    </ion-content>
+</ion-view>
