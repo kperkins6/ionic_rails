@@ -308,6 +308,30 @@ $scope.login = function() {
 
 })
 
+.controller('tutorialCtrl', function($scope, $state, $locale, $ionicPopup) {
+
+  $scope.suggested_items = ["Item 1", "Item 2", "Item 3"];
+  $scope.items = ["Item4", "Item5", "Item6"];
+
+  $scope.add_item = function(item) {
+    $scope.items.push(item);
+    $scope.suggested_items.splice($scope.suggested_items.indexOf(item), 1);
+    var confirmPopup = $ionicPopup.alert({
+      title: 'Item Added',
+      template: 'Item Added to Collection!'
+    });
+  }
+  $scope.remove_item = function(item) {
+    $scope.suggested_items.push(item);
+    $scope.items.splice($scope.items.indexOf(item), 1);
+    var confirmPopup = $ionicPopup.alert({
+      title: 'Item Removed',
+      template: 'Item Removed from Collection!'
+    });
+  }
+
+})
+
 .controller('decksCtrl', function($scope, Deck, $rootScope, current_focus, $stateParams, $state, $locale, $ionicPopup) {
 
   $scope.newDeck = {};
@@ -383,7 +407,7 @@ $scope.login = function() {
     }
 })
 
-.controller('viewDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $stateParams, $state, $locale) {
+.controller('viewDeckCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $stateParams, $state, $locale, $ionicPopup) {
   $scope.deck= {};
   $scope.tagcards = [];
   $scope.bcards=[]
@@ -416,6 +440,43 @@ $scope.login = function() {
   $scope.add_cards = function(deck) {
     $state.go('addBusinessCards', {param1: deck.id});
   }
+  $scope.remove_bcard = function(deck, bcard, card_index) {
+    angular.forEach(deck.tagcards, function(tagcard_id){
+      Tagcard.get({id: tagcard_id}).$promise.then(function(tagcard) {
+        if (tagcard.bcard_id == bcard.id) {
+          // deck.tagcards.splice(deck.tagcards.indexOf(tagcard), 1);
+          deck.tagcards.splice(card_index, 1);
+          Deck.update(deck);
+          $scope.bcards.splice(card_index, 1);
+          var confirmPopup = $ionicPopup.alert({
+            title: 'Card Removed',
+            template: "Card Removed from Deck!"
+          });
+        }
+      });
+    });
+    // Tagcard.query().$promise.then(function(response){
+    //   angular.forEach(response, function(tagcard){
+    //     if ($scope.bcard.id == tagcard.bcard_id && tagcard.user_id == window.localStorage['userId']) {
+    //       tCard = tagcard;
+    //     }
+    //   });
+    //   if (tCard != undefined) {
+    //     var index = tCard.tags.indexOf(tag.id);
+    //     if (index >= "0") {
+    //       tCard.tags.splice(index, 1);
+    //       tCard = Tagcard.update(tCard);
+    //       // index = $scope.tags.indexOf(tag)
+    //       $scope.tags.splice(tag_index, 1);
+    //       tagcard = Tagcard.update(tCard);
+    //       // var confirmPopup = $ionicPopup.alert({
+    //       //   title: 'Tag Deleted',
+    //       //   template: 'Deleted'
+    //       // });
+    //     }
+    //   }
+    //   });
+  }
 })
 
 .controller('addBusinessCardsCtrl', function($scope, Deck, Bcard, Tagcard, $rootScope, current_focus, $stateParams, $state, $ionicPopup, $locale) {
@@ -426,22 +487,23 @@ $scope.login = function() {
   $scope.bcard_ids = [];
   $scope.bcards = [];
 
-  Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
-    $scope.deck = deck;
-    Tagcard.query().$promise.then(function(response){
-      angular.forEach(response, function(tagcard){
-        if(tagcard.user_id == window.localStorage['userId']) {
-          $scope.tagcards.push(tagcard);
-          $scope.bcard_ids.push(tagcard.bcard_id);
-        }
-      });
-      // return $scope.tagcards;
-      Bcard.query().$promise.then(function(response){
-        angular.forEach(response, function(bcard){
-          if (!$scope.bcard_ids.includes(bcard.id)) {
-            $scope.bcards.push(bcard);
-          }
+  Bcard.query().$promise.then(function(bcards){
+    Deck.get({id: $stateParams.param1}).$promise.then(function(deck) {
+      $scope.deck = deck;
+      Tagcard.query().$promise.then(function(tagcards){
+        angular.forEach(deck.tagcards, function(tagcard_id) {
+          tagcards.splice(tagcards.indexOf(tagcard_id, 1));
+          Tagcard.get({id: tagcard_id}).$promise.then(function(tcard){
+            Bcard.get({id: tcard.bcard_id}).$promise.then(function(target_card){
+              bcards.splice(bcards.indexOf(target_card));
+              $scope.bcards=bcards;
+              console.log(target_card.id);
+              console.log(bcards);
+            });
+          });
         });
+        console.log("Scope Bcards: " + $scope.bcards);
+        $scope.tagcards = tagcards;
       });
     });
   });

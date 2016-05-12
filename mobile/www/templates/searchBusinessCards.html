@@ -12,7 +12,7 @@
         <!-- <button id="searchBusinessCards-button8" class="button button-stable  button-block button-calm" ng-click="reload()">Search!</button> -->
         <ion-list ng-repeat="bcard in bcards | filter: search | orderBy:orderProp">
           <div class="item item-avatar">
-            <!-- <img src="my-image.png"> -->
+            <img src="images/avatar.png">
             <ion-item ng-click="click_card(bcard)">{{bcard.name}} : {{bcard.address}}</ion-item>
             <!-- ui-sref="viewBusinessCard" -->
           </div>

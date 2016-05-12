@@ -5,12 +5,18 @@
             <p>Deck Description: {{deck.description}}</p>
         </div>
         <button ng-click="add_cards(deck)" class="button button-positive  button-block icon-left ion-android-add-circle">Add Business Cards</button>
-
-        <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
+        <ion-list ng-controller="viewDeckCtrl" can-swype"listCanSwipe">
+            <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)" ng-repeat="bcard in bcards">
+                <img src="images/avatar.png">
+              <ion-option-button  class="icon ion-minus-circled button-assertive" ng-click="remove_bcard(deck, bcard, $index)">Remove</ion-option-button>
+              <h2>Name: {{bcard.name}}, Address: {{bcard.address}}</h2>
+            </ion-item>
+        </ion-list>
+        <!-- <ion-list ng-repeat="bcard in bcards| limitTo:quantity">
           <div class="item item-avatar">
-            <img src="my-image.png">
+            <img src="../img/avatar.png">
             <ion-item ui-sref="viewBusinessCard" ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
         </div>
-       </ion-list>
+       </ion-list> -->
     </ion-content>
 </ion-view>

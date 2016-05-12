@@ -176,6 +176,12 @@ angular.module('app.routes', ['ionicUIRouter'])
     params: { param1: null, param2: null, param3: null }
   })
 
+  .state('tutorial', {
+      url: '/login',
+      templateUrl: 'templates/tutorial.html',
+      controller: 'tutorialCtrl'
+  })
+
   .state('tabsController.searchAttendees', {
     url: '/page20',
     views: {

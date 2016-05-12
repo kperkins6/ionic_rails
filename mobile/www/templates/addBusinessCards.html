@@ -8,7 +8,7 @@
         </form>
         <ion-list ng-repeat="bcard in bcards | filter: search | limitTo:quantity">
           <div class="item item-avatar">
-            <img src="my-image.png">
+            <img src="images/avatar.png">
             <ion-item ng-click="click_card(bcard)">Name: {{bcard.name}}, Address: {{bcard.address}}</ion-item>
           </div>
         </ion-list>
